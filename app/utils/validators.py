@@ -66,7 +66,7 @@ class FileValidator:
             logger.error(error)
             return False, error
 
-        logger.info(f"✅ File validation passed: {file_path}")
+        logger.info(f"[OK] File validation passed: {file_path}")
         return True, ""
 
     @staticmethod
@@ -97,7 +97,7 @@ class FileValidator:
             logger.error(error)
             return False, error
 
-        logger.info(f"✅ Filename validation passed: {filename}")
+        logger.info(f"[OK] Filename validation passed: {filename}")
         return True, ""
 
 
@@ -126,5 +126,5 @@ class SearchValidator:
             logger.warning(error)
             return False, error
 
-        logger.info(f"✅ Query validation passed: {query[:50]}...")
+        logger.info(f"[OK] Query validation passed: {query[:50]}...")
         return True, ""

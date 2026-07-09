@@ -1,0 +1,89 @@
+2026-07-09 11:41:31 - pdf_assistant - INFO - [main.py:90] - [SERVER] Starting Uvicorn server...
+2026-07-09 11:42:25 - pdf_assistant - INFO - [main.py:90] - [SERVER] Starting Uvicorn server...
+2026-07-09 11:45:02 - pdf_assistant - INFO - [main.py:90] - [SERVER] Starting Uvicorn server...
+2026-07-09 11:45:03 - pdf_assistant - INFO - [main.py:25] - [START] Starting PDF Knowledge Assistant...
+2026-07-09 11:45:03 - pdf_assistant - INFO - [main.py:26] - [INFO] App: PDF Knowledge Assistant v1.0.0
+2026-07-09 11:45:03 - pdf_assistant - INFO - [main.py:27] - [INFO] Upload directory: ./uploads/pdfs
+2026-07-09 11:45:03 - pdf_assistant - INFO - [main.py:28] - [INFO] ChromaDB collection: company_documents
+2026-07-09 11:45:03 - pdf_assistant - INFO - [main.py:29] - [OK] Application started successfully
+2026-07-09 11:45:32 - pdf_assistant - INFO - [main.py:90] - [SERVER] Starting Uvicorn server...
+2026-07-09 11:45:33 - pdf_assistant - INFO - [main.py:25] - [START] Starting PDF Knowledge Assistant...
+2026-07-09 11:45:33 - pdf_assistant - INFO - [main.py:26] - [INFO] App: PDF Knowledge Assistant v1.0.0
+2026-07-09 11:45:33 - pdf_assistant - INFO - [main.py:27] - [INFO] Upload directory: ./uploads/pdfs
+2026-07-09 11:45:33 - pdf_assistant - INFO - [main.py:28] - [INFO] ChromaDB collection: company_documents
+2026-07-09 11:45:33 - pdf_assistant - INFO - [main.py:29] - [OK] Application started successfully
+2026-07-09 11:47:48 - pdf_assistant - INFO - [main.py:34] - [STOP] Shutting down PDF Knowledge Assistant...
+2026-07-09 11:49:27 - pdf_assistant - INFO - [main.py:90] - [SERVER] Starting Uvicorn server...
+2026-07-09 11:49:28 - pdf_assistant - INFO - [main.py:25] - [START] Starting PDF Knowledge Assistant...
+2026-07-09 11:49:28 - pdf_assistant - INFO - [main.py:26] - [INFO] App: PDF Knowledge Assistant v1.0.0
+2026-07-09 11:49:28 - pdf_assistant - INFO - [main.py:27] - [INFO] Upload directory: ./uploads/pdfs
+2026-07-09 11:49:28 - pdf_assistant - INFO - [main.py:28] - [INFO] ChromaDB collection: company_documents
+2026-07-09 11:49:28 - pdf_assistant - INFO - [main.py:29] - [OK] Application started successfully
+2026-07-09 12:29:45 - pdf_assistant - INFO - [routes.py:182] - 📋 Listed 0 documents
+2026-07-09 12:29:45 - pdf_assistant - INFO - [routes.py:314] - 📊 System stats: 0 docs, 0 chunks
+2026-07-09 12:29:45 - pdf_assistant - ERROR - [extractor.py:34] - PDF file not found: nonexistent.pdf
+2026-07-09 12:29:45 - pdf_assistant - WARNING - [cleaner.py:130] - [WARN] Page 1 resulted in empty text after cleaning
+2026-07-09 12:29:45 - pdf_assistant - WARNING - [cleaner.py:130] - [WARN] Page 2 resulted in empty text after cleaning
+2026-07-09 12:29:45 - pdf_assistant - INFO - [cleaner.py:134] - [OK] Cleaned 0 pages successfully
+2026-07-09 12:29:45 - pdf_assistant - ERROR - [validators.py:97] - Filename cannot be empty
+2026-07-09 12:29:45 - pdf_assistant - ERROR - [validators.py:86] - Invalid filename: path traversal detected
+2026-07-09 12:29:45 - pdf_assistant - ERROR - [validators.py:92] - Filename is too long (max 255 characters)
+2026-07-09 12:29:45 - pdf_assistant - INFO - [validators.py:100] - [OK] Filename validation passed: document.pdf
+2026-07-09 12:29:45 - pdf_assistant - ERROR - [validators.py:53] - File is empty
+2026-07-09 12:29:45 - pdf_assistant - ERROR - [validators.py:40] - Invalid file extension. Allowed: ['.pdf']
+2026-07-09 12:29:45 - pdf_assistant - ERROR - [validators.py:34] - File does not exist: nonexistent.pdf
+2026-07-09 12:29:45 - pdf_assistant - WARNING - [validators.py:121] - Query cannot be empty
+2026-07-09 12:29:45 - pdf_assistant - WARNING - [validators.py:126] - Query exceeds max length of 1000 characters
+2026-07-09 12:29:45 - pdf_assistant - INFO - [validators.py:129] - [OK] Query validation passed: What is the company revenue?...
+2026-07-09 12:29:45 - pdf_assistant - WARNING - [validators.py:121] - Query cannot be empty
+2026-07-09 12:30:11 - pdf_assistant - INFO - [main.py:34] - [STOP] Shutting down PDF Knowledge Assistant...
+2026-07-09 12:30:12 - pdf_assistant - INFO - [main.py:25] - [START] Starting PDF Knowledge Assistant...
+2026-07-09 12:30:12 - pdf_assistant - INFO - [main.py:26] - [INFO] App: PDF Knowledge Assistant v1.0.0
+2026-07-09 12:30:12 - pdf_assistant - INFO - [main.py:27] - [INFO] Upload directory: ./uploads/pdfs
+2026-07-09 12:30:12 - pdf_assistant - INFO - [main.py:28] - [INFO] ChromaDB collection: company_documents
+2026-07-09 12:30:12 - pdf_assistant - INFO - [main.py:29] - [OK] Application started successfully
+2026-07-09 12:30:28 - pdf_assistant - INFO - [routes.py:182] - 📋 Listed 0 documents
+2026-07-09 12:30:28 - pdf_assistant - INFO - [routes.py:314] - 📊 System stats: 0 docs, 0 chunks
+2026-07-09 12:30:28 - pdf_assistant - ERROR - [extractor.py:34] - PDF file not found: nonexistent.pdf
+2026-07-09 12:30:28 - pdf_assistant - INFO - [cleaner.py:134] - [OK] Cleaned 2 pages successfully
+2026-07-09 12:30:28 - pdf_assistant - ERROR - [validators.py:97] - Filename cannot be empty
+2026-07-09 12:30:28 - pdf_assistant - ERROR - [validators.py:86] - Invalid filename: path traversal detected
+2026-07-09 12:30:28 - pdf_assistant - ERROR - [validators.py:92] - Filename is too long (max 255 characters)
+2026-07-09 12:30:28 - pdf_assistant - INFO - [validators.py:100] - [OK] Filename validation passed: document.pdf
+2026-07-09 12:30:28 - pdf_assistant - ERROR - [validators.py:53] - File is empty
+2026-07-09 12:30:28 - pdf_assistant - ERROR - [validators.py:40] - Invalid file extension. Allowed: ['.pdf']
+2026-07-09 12:30:28 - pdf_assistant - ERROR - [validators.py:34] - File does not exist: nonexistent.pdf
+2026-07-09 12:30:28 - pdf_assistant - WARNING - [validators.py:121] - Query cannot be empty
+2026-07-09 12:30:28 - pdf_assistant - WARNING - [validators.py:126] - Query exceeds max length of 1000 characters
+2026-07-09 12:30:28 - pdf_assistant - INFO - [validators.py:129] - [OK] Query validation passed: What is the company revenue?...
+2026-07-09 12:30:28 - pdf_assistant - WARNING - [validators.py:121] - Query cannot be empty
+2026-07-09 12:31:43 - pdf_assistant - INFO - [routes.py:182] - 📋 Listed 0 documents
+2026-07-09 12:31:43 - pdf_assistant - INFO - [routes.py:314] - 📊 System stats: 0 docs, 0 chunks
+2026-07-09 12:31:43 - pdf_assistant - ERROR - [extractor.py:34] - PDF file not found: nonexistent.pdf
+2026-07-09 12:31:43 - pdf_assistant - INFO - [cleaner.py:134] - [OK] Cleaned 2 pages successfully
+2026-07-09 12:31:43 - pdf_assistant - ERROR - [validators.py:97] - Filename cannot be empty
+2026-07-09 12:31:44 - pdf_assistant - ERROR - [validators.py:86] - Invalid filename: path traversal detected
+2026-07-09 12:31:44 - pdf_assistant - ERROR - [validators.py:92] - Filename is too long (max 255 characters)
+2026-07-09 12:31:44 - pdf_assistant - INFO - [validators.py:100] - [OK] Filename validation passed: document.pdf
+2026-07-09 12:31:44 - pdf_assistant - ERROR - [validators.py:53] - File is empty
+2026-07-09 12:31:44 - pdf_assistant - ERROR - [validators.py:40] - Invalid file extension. Allowed: ['.pdf']
+2026-07-09 12:31:44 - pdf_assistant - ERROR - [validators.py:34] - File does not exist: nonexistent.pdf
+2026-07-09 12:31:44 - pdf_assistant - WARNING - [validators.py:121] - Query cannot be empty
+2026-07-09 12:31:44 - pdf_assistant - WARNING - [validators.py:126] - Query exceeds max length of 1000 characters
+2026-07-09 12:31:44 - pdf_assistant - INFO - [validators.py:129] - [OK] Query validation passed: What is the company revenue?...
+2026-07-09 12:31:44 - pdf_assistant - WARNING - [validators.py:121] - Query cannot be empty
+2026-07-09 12:36:48 - pdf_assistant - INFO - [routes.py:182] - 📋 Listed 0 documents
+2026-07-09 12:36:48 - pdf_assistant - INFO - [routes.py:314] - 📊 System stats: 0 docs, 0 chunks
+2026-07-09 12:36:48 - pdf_assistant - ERROR - [extractor.py:34] - PDF file not found: nonexistent.pdf
+2026-07-09 12:36:48 - pdf_assistant - INFO - [cleaner.py:134] - [OK] Cleaned 2 pages successfully
+2026-07-09 12:36:48 - pdf_assistant - ERROR - [validators.py:97] - Filename cannot be empty
+2026-07-09 12:36:48 - pdf_assistant - ERROR - [validators.py:86] - Invalid filename: path traversal detected
+2026-07-09 12:36:48 - pdf_assistant - ERROR - [validators.py:92] - Filename is too long (max 255 characters)
+2026-07-09 12:36:48 - pdf_assistant - INFO - [validators.py:100] - [OK] Filename validation passed: document.pdf
+2026-07-09 12:36:48 - pdf_assistant - ERROR - [validators.py:53] - File is empty
+2026-07-09 12:36:48 - pdf_assistant - ERROR - [validators.py:40] - Invalid file extension. Allowed: ['.pdf']
+2026-07-09 12:36:48 - pdf_assistant - ERROR - [validators.py:34] - File does not exist: nonexistent.pdf
+2026-07-09 12:36:48 - pdf_assistant - WARNING - [validators.py:121] - Query cannot be empty
+2026-07-09 12:36:48 - pdf_assistant - WARNING - [validators.py:126] - Query exceeds max length of 1000 characters
+2026-07-09 12:36:48 - pdf_assistant - INFO - [validators.py:129] - [OK] Query validation passed: What is the company revenue?...
+2026-07-09 12:36:48 - pdf_assistant - WARNING - [validators.py:121] - Query cannot be empty

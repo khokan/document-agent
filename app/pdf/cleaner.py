@@ -15,12 +15,12 @@ class TextCleaner:
 
     # Common header/footer patterns
     HEADER_PATTERNS = [
-        r"^.*\d{1,2}.*$",  # Lines with mostly numbers (page numbers, etc)
+        r"^\d{1,2}$",  # Lines with mostly numbers (page numbers, etc)
         r"^[A-Za-z\s]{1,5}$",  # Very short lines (likely headers)
     ]
 
     FOOTER_PATTERNS = [
-        r"^Page \d+",
+        r"^Page \d+$",
         r"^-{3,}",
         r"^_{3,}",
         r"Copyright|©",
@@ -127,11 +127,11 @@ class TextCleaner:
                 if cleaned_text:  # Only keep non-empty pages
                     cleaned_pages[page_num] = cleaned_text
                 else:
-                    logger.warning(f"⚠️ Page {page_num} resulted in empty text after cleaning")
+                    logger.warning(f"[WARN] Page {page_num} resulted in empty text after cleaning")
             except Exception as e:
                 logger.error(f"Error cleaning page {page_num}: {str(e)}")
 
-        logger.info(f"✅ Cleaned {len(cleaned_pages)} pages successfully")
+        logger.info(f"[OK] Cleaned {len(cleaned_pages)} pages successfully")
         return cleaned_pages
 
     @staticmethod

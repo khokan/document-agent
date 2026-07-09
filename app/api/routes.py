@@ -67,7 +67,7 @@ async def upload_pdf(file: UploadFile = File(..., description="PDF file to uploa
         # Validate filename
         is_valid, error_msg = FileValidator.validate_filename(file.filename)
         if not is_valid:
-            logger.error(f"❌ Upload rejected: {error_msg}")
+            logger.error(f"[ERR] Upload rejected: {error_msg}")
             raise HTTPException(status_code=400, detail=error_msg)
 
         # Create temporary file path
@@ -76,7 +76,7 @@ async def upload_pdf(file: UploadFile = File(..., description="PDF file to uploa
         temp_file_path = temp_dir / f"temp_{uuid.uuid4()}.pdf"
 
         # Save uploaded file temporarily
-        logger.info(f"📥 Saving uploaded file: {file.filename}")
+        logger.info(f"[INFO] Saving uploaded file: {file.filename}")
         contents = await file.read()
 
         with open(temp_file_path, "wb") as f:
@@ -94,7 +94,7 @@ async def upload_pdf(file: UploadFile = File(..., description="PDF file to uploa
             raise HTTPException(status_code=422, detail="Failed to extract text from PDF")
 
         # Clean extracted text
-        logger.info("🧹 Cleaning extracted text")
+        logger.info("[INFO] Cleaning extracted text")
         cleaned_pages = TextCleaner.clean_pages(page_texts)
         if not cleaned_pages:
             raise HTTPException(status_code=422, detail="No text content found in PDF")
@@ -124,7 +124,7 @@ async def upload_pdf(file: UploadFile = File(..., description="PDF file to uploa
             "page_texts": cleaned_pages,
         }
 
-        logger.info(f"✅ Document uploaded successfully: {document_id}")
+        logger.info(f"[OK] Document uploaded successfully: {document_id}")
 
         return DocumentUploadResponse(
             document_id=document_id,
@@ -137,7 +137,7 @@ async def upload_pdf(file: UploadFile = File(..., description="PDF file to uploa
     except HTTPException:
         raise
     except Exception as e:
-        logger.error(f"❌ Unexpected error during upload: {str(e)}")
+        logger.error(f"[ERR] Unexpected error during upload: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Upload failed: {str(e)}")
 
     finally:

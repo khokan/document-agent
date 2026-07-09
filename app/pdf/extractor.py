@@ -47,9 +47,9 @@ class PDFExtractor:
                             page_texts[page_num] = text
                         else:
                             page_texts[page_num] = ""
-                            logger.warning(f"⚠️ No text extracted from page {page_num}")
+                            logger.warning(f"[WARN] No text extracted from page {page_num}")
 
-                logger.info(f"✅ Successfully extracted text from {len(page_texts)} pages")
+                logger.info(f"[OK] Successfully extracted text from {len(page_texts)} pages")
                 return True, page_texts
 
             except Exception as e:
@@ -63,7 +63,7 @@ class PDFExtractor:
                     text = page.extract_text()
                     page_texts[page_num] = text if text else ""
 
-                logger.info(f"✅ Successfully extracted text from {len(page_texts)} pages (PyPDF)")
+                logger.info(f"[OK] Successfully extracted text from {len(page_texts)} pages (PyPDF)")
                 return True, page_texts
 
         except Exception as e:

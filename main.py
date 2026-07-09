@@ -4,6 +4,8 @@
 Main FastAPI application entry point.
 """
 
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
@@ -11,7 +13,28 @@ from fastapi.responses import JSONResponse
 from app.api import router as documents_router
 from app.utils import config, logger
 
-# Create FastAPI app
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """
+    Handle FastAPI lifespan events (startup and shutdown).
+    
+    This replaces the deprecated @app.on_event() decorators.
+    """
+    # Startup
+    logger.info("[START] Starting PDF Knowledge Assistant...")
+    logger.info(f"[INFO] App: {config.app_name} v{config.app_version}")
+    logger.info(f"[INFO] Upload directory: {config.upload_dir}")
+    logger.info(f"[INFO] ChromaDB collection: {config.chroma_collection_name}")
+    logger.info("[OK] Application started successfully")
+    
+    yield
+    
+    # Shutdown
+    logger.info("[STOP] Shutting down PDF Knowledge Assistant...")
+
+
+# Create FastAPI app with lifespan
 app = FastAPI(
     title=config.app_name,
     description="Local Retrieval-Augmented Generation (RAG) system for PDF document intelligence",
@@ -19,6 +42,7 @@ app = FastAPI(
     docs_url="/docs",
     redoc_url="/redoc",
     openapi_url="/openapi.json",
+    lifespan=lifespan,
 )
 
 # Add CORS middleware
@@ -29,22 +53,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-
-@app.on_event("startup")
-async def startup_event():
-    """Initialize application on startup."""
-    logger.info("🚀 Starting PDF Knowledge Assistant...")
-    logger.info(f"📚 App: {config.app_name} v{config.app_version}")
-    logger.info(f"📂 Upload directory: {config.upload_dir}")
-    logger.info(f"💾 ChromaDB collection: {config.chroma_collection_name}")
-    logger.info("✅ Application started successfully")
-
-
-@app.on_event("shutdown")
-async def shutdown_event():
-    """Cleanup on application shutdown."""
-    logger.info("🛑 Shutting down PDF Knowledge Assistant...")
 
 
 @app.get("/", tags=["Health"])
@@ -76,32 +84,17 @@ async def health_check():
 app.include_router(documents_router)
 
 
-@app.exception_handler(404)
-async def not_found_handler(request, exc):
-    """Custom 404 handler."""
-    return JSONResponse(
-        status_code=404,
-        content={"error": "Not found", "path": str(request.url.path)},
-    )
-
-
-@app.exception_handler(500)
-async def internal_error_handler(request, exc):
-    """Custom 500 handler."""
-    logger.error(f"Internal server error: {str(exc)}")
-    return JSONResponse(
-        status_code=500,
-        content={"error": "Internal server error", "details": str(exc)},
-    )
-
-
 if __name__ == "__main__":
     import uvicorn
 
-    logger.info("🌐 Starting Uvicorn server...")
+    logger.info("[SERVER] Starting Uvicorn server...")
+    host = config.get_from_env("APP_HOST", "0.0.0.0")
+    port = int(config.get_from_env("APP_PORT", "8000"))
+    
     uvicorn.run(
         "main:app",
-        host=config.get_from_env("APP_HOST", "0.0.0.0"),
-        port=int(config.get_from_env("APP_PORT", "8000")),
+        host=host,
+        port=port,
         reload=config.app_debug,
+        log_level="info",
     )
