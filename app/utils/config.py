@@ -183,6 +183,56 @@ class Config:
         """Get temp directory path."""
         return self.get_from_env("TEMP_DIR") or "./uploads/temp"
 
+    @property
+    def chunking_strategy(self) -> str:
+        """Get chunking strategy."""
+        return self.get("chunking.strategy", "recursive")
+
+    @property
+    def embeddings_provider(self) -> str:
+        """Get embeddings provider."""
+        return self.get("embeddings.provider", "ollama")
+
+    @property
+    def embeddings_timeout(self) -> int:
+        """Get embeddings timeout in seconds."""
+        return self.get("embeddings.timeout", 60)
+
+    @property
+    def cache_embeddings(self) -> bool:
+        """Get cache embeddings flag."""
+        return self.get("embeddings.cache_embeddings", True)
+
+    @property
+    def chroma_distance_metric(self) -> str:
+        """Get ChromaDB distance metric."""
+        return self.get("chromadb.distance_metric", "cosine")
+
+    @property
+    def rag_retriever_k(self) -> int:
+        """Get retriever K value."""
+        return self.get("rag.retriever.k", 5)
+
+    @property
+    def rag_retriever_score_threshold(self) -> float:
+        """Get retriever score threshold."""
+        return self.get("rag.retriever.score_threshold", 0.3)
+
+    @property
+    def rag_generator_model(self) -> str:
+        """Get generator LLM model."""
+        return self.get("rag.generator.model", "mistral")
+
+    @property
+    def rag_generator_temperature(self) -> float:
+        """Get generator LLM temperature."""
+        return self.get("rag.generator.temperature", 0.7)
+
+    @property
+    def rag_generator_max_tokens(self) -> int:
+        """Get generator LLM max tokens."""
+        return self.get("rag.generator.max_tokens", 500)
+
 
 # Global config instance
 config = Config()

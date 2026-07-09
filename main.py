@@ -11,6 +11,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
 from app.api import router as documents_router
+from app.api.search import router as search_router
+from app.api.rag import router as rag_router
 from app.utils import config, logger
 
 
@@ -82,6 +84,8 @@ async def health_check():
 
 # Include routers
 app.include_router(documents_router)
+app.include_router(search_router)
+app.include_router(rag_router)
 
 
 if __name__ == "__main__":

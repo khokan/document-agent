@@ -11,19 +11,25 @@ pdf:
     fallback_pypdf: true
 
 chunking:
+  strategy: "recursive"  # Options: "fixed", "recursive", "semantic"
   chunk_size: 500
   chunk_overlap: 100
   min_chunk_size: 50
 
 embeddings:
+  provider: "ollama"
   model: "nomic-embed-text"
   dimension: 768
   ollama_endpoint: "http://localhost:11434"
+  base_url: "http://localhost:11434"
+  timeout: 60
+  cache_embeddings: true
   batch_size: 100
 
 chromadb:
   collection_name: "company_documents"
   persist_directory: "./chroma_db"
+  distance_metric: "cosine"  # Options: "cosine", "l2", "ip"
   batch_size: 100
 
 llm:
@@ -36,6 +42,15 @@ search:
   top_k: 5
   similarity_threshold: 0.3
   use_metadata_filters: true
+
+rag:
+  retriever:
+    k: 5
+    score_threshold: 0.3
+  generator:
+    model: "mistral"
+    temperature: 0.7
+    max_tokens: 500
 
 logging:
   level: "INFO"

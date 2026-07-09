@@ -87,3 +87,457 @@
 2026-07-09 12:36:48 - pdf_assistant - WARNING - [validators.py:126] - Query exceeds max length of 1000 characters
 2026-07-09 12:36:48 - pdf_assistant - INFO - [validators.py:129] - [OK] Query validation passed: What is the company revenue?...
 2026-07-09 12:36:48 - pdf_assistant - WARNING - [validators.py:121] - Query cannot be empty
+2026-07-09 13:03:04 - pdf_assistant - INFO - [main.py:34] - [STOP] Shutting down PDF Knowledge Assistant...
+2026-07-09 13:03:05 - pdf_assistant - INFO - [main.py:25] - [START] Starting PDF Knowledge Assistant...
+2026-07-09 13:03:05 - pdf_assistant - INFO - [main.py:26] - [INFO] App: PDF Knowledge Assistant v1.0.0
+2026-07-09 13:03:05 - pdf_assistant - INFO - [main.py:27] - [INFO] Upload directory: ./uploads/pdfs
+2026-07-09 13:03:05 - pdf_assistant - INFO - [main.py:28] - [INFO] ChromaDB collection: company_documents
+2026-07-09 13:03:05 - pdf_assistant - INFO - [main.py:29] - [OK] Application started successfully
+2026-07-09 13:03:13 - pdf_assistant - INFO - [main.py:34] - [STOP] Shutting down PDF Knowledge Assistant...
+2026-07-09 13:03:15 - pdf_assistant - INFO - [main.py:25] - [START] Starting PDF Knowledge Assistant...
+2026-07-09 13:03:15 - pdf_assistant - INFO - [main.py:26] - [INFO] App: PDF Knowledge Assistant v1.0.0
+2026-07-09 13:03:15 - pdf_assistant - INFO - [main.py:27] - [INFO] Upload directory: ./uploads/pdfs
+2026-07-09 13:03:15 - pdf_assistant - INFO - [main.py:28] - [INFO] ChromaDB collection: company_documents
+2026-07-09 13:03:15 - pdf_assistant - INFO - [main.py:29] - [OK] Application started successfully
+2026-07-09 13:03:21 - pdf_assistant - INFO - [main.py:34] - [STOP] Shutting down PDF Knowledge Assistant...
+2026-07-09 13:03:23 - pdf_assistant - INFO - [main.py:25] - [START] Starting PDF Knowledge Assistant...
+2026-07-09 13:03:23 - pdf_assistant - INFO - [main.py:26] - [INFO] App: PDF Knowledge Assistant v1.0.0
+2026-07-09 13:03:23 - pdf_assistant - INFO - [main.py:27] - [INFO] Upload directory: ./uploads/pdfs
+2026-07-09 13:03:23 - pdf_assistant - INFO - [main.py:28] - [INFO] ChromaDB collection: company_documents
+2026-07-09 13:03:23 - pdf_assistant - INFO - [main.py:29] - [OK] Application started successfully
+2026-07-09 13:03:26 - pdf_assistant - INFO - [main.py:34] - [STOP] Shutting down PDF Knowledge Assistant...
+2026-07-09 13:03:27 - pdf_assistant - INFO - [main.py:25] - [START] Starting PDF Knowledge Assistant...
+2026-07-09 13:03:27 - pdf_assistant - INFO - [main.py:26] - [INFO] App: PDF Knowledge Assistant v1.0.0
+2026-07-09 13:03:27 - pdf_assistant - INFO - [main.py:27] - [INFO] Upload directory: ./uploads/pdfs
+2026-07-09 13:03:27 - pdf_assistant - INFO - [main.py:28] - [INFO] ChromaDB collection: company_documents
+2026-07-09 13:03:27 - pdf_assistant - INFO - [main.py:29] - [OK] Application started successfully
+2026-07-09 13:03:30 - pdf_assistant - INFO - [main.py:34] - [STOP] Shutting down PDF Knowledge Assistant...
+2026-07-09 13:03:32 - pdf_assistant - INFO - [main.py:25] - [START] Starting PDF Knowledge Assistant...
+2026-07-09 13:03:32 - pdf_assistant - INFO - [main.py:26] - [INFO] App: PDF Knowledge Assistant v1.0.0
+2026-07-09 13:03:32 - pdf_assistant - INFO - [main.py:27] - [INFO] Upload directory: ./uploads/pdfs
+2026-07-09 13:03:32 - pdf_assistant - INFO - [main.py:28] - [INFO] ChromaDB collection: company_documents
+2026-07-09 13:03:32 - pdf_assistant - INFO - [main.py:29] - [OK] Application started successfully
+2026-07-09 13:03:45 - pdf_assistant - INFO - [main.py:34] - [STOP] Shutting down PDF Knowledge Assistant...
+2026-07-09 13:03:47 - pdf_assistant - INFO - [main.py:25] - [START] Starting PDF Knowledge Assistant...
+2026-07-09 13:03:47 - pdf_assistant - INFO - [main.py:26] - [INFO] App: PDF Knowledge Assistant v1.0.0
+2026-07-09 13:03:47 - pdf_assistant - INFO - [main.py:27] - [INFO] Upload directory: ./uploads/pdfs
+2026-07-09 13:03:47 - pdf_assistant - INFO - [main.py:28] - [INFO] ChromaDB collection: company_documents
+2026-07-09 13:03:47 - pdf_assistant - INFO - [main.py:29] - [OK] Application started successfully
+2026-07-09 13:03:51 - pdf_assistant - INFO - [main.py:34] - [STOP] Shutting down PDF Knowledge Assistant...
+2026-07-09 13:03:53 - pdf_assistant - INFO - [main.py:25] - [START] Starting PDF Knowledge Assistant...
+2026-07-09 13:03:53 - pdf_assistant - INFO - [main.py:26] - [INFO] App: PDF Knowledge Assistant v1.0.0
+2026-07-09 13:03:53 - pdf_assistant - INFO - [main.py:27] - [INFO] Upload directory: ./uploads/pdfs
+2026-07-09 13:03:53 - pdf_assistant - INFO - [main.py:28] - [INFO] ChromaDB collection: company_documents
+2026-07-09 13:03:53 - pdf_assistant - INFO - [main.py:29] - [OK] Application started successfully
+2026-07-09 13:03:57 - pdf_assistant - INFO - [main.py:34] - [STOP] Shutting down PDF Knowledge Assistant...
+2026-07-09 13:03:59 - pdf_assistant - INFO - [main.py:25] - [START] Starting PDF Knowledge Assistant...
+2026-07-09 13:03:59 - pdf_assistant - INFO - [main.py:26] - [INFO] App: PDF Knowledge Assistant v1.0.0
+2026-07-09 13:03:59 - pdf_assistant - INFO - [main.py:27] - [INFO] Upload directory: ./uploads/pdfs
+2026-07-09 13:03:59 - pdf_assistant - INFO - [main.py:28] - [INFO] ChromaDB collection: company_documents
+2026-07-09 13:03:59 - pdf_assistant - INFO - [main.py:29] - [OK] Application started successfully
+2026-07-09 13:03:59 - pdf_assistant - INFO - [main.py:34] - [STOP] Shutting down PDF Knowledge Assistant...
+2026-07-09 13:04:31 - pdf_assistant - INFO - [main.py:25] - [START] Starting PDF Knowledge Assistant...
+2026-07-09 13:04:31 - pdf_assistant - INFO - [main.py:26] - [INFO] App: PDF Knowledge Assistant v1.0.0
+2026-07-09 13:04:31 - pdf_assistant - INFO - [main.py:27] - [INFO] Upload directory: ./uploads/pdfs
+2026-07-09 13:04:31 - pdf_assistant - INFO - [main.py:28] - [INFO] ChromaDB collection: company_documents
+2026-07-09 13:04:31 - pdf_assistant - INFO - [main.py:29] - [OK] Application started successfully
+2026-07-09 13:04:34 - pdf_assistant - INFO - [main.py:34] - [STOP] Shutting down PDF Knowledge Assistant...
+2026-07-09 13:04:47 - pdf_assistant - INFO - [main.py:25] - [START] Starting PDF Knowledge Assistant...
+2026-07-09 13:04:47 - pdf_assistant - INFO - [main.py:26] - [INFO] App: PDF Knowledge Assistant v1.0.0
+2026-07-09 13:04:47 - pdf_assistant - INFO - [main.py:27] - [INFO] Upload directory: ./uploads/pdfs
+2026-07-09 13:04:47 - pdf_assistant - INFO - [main.py:28] - [INFO] ChromaDB collection: company_documents
+2026-07-09 13:04:47 - pdf_assistant - INFO - [main.py:29] - [OK] Application started successfully
+2026-07-09 13:04:47 - pdf_assistant - INFO - [main.py:34] - [STOP] Shutting down PDF Knowledge Assistant...
+2026-07-09 13:05:05 - pdf_assistant - INFO - [main.py:25] - [START] Starting PDF Knowledge Assistant...
+2026-07-09 13:05:05 - pdf_assistant - INFO - [main.py:26] - [INFO] App: PDF Knowledge Assistant v1.0.0
+2026-07-09 13:05:05 - pdf_assistant - INFO - [main.py:27] - [INFO] Upload directory: ./uploads/pdfs
+2026-07-09 13:05:05 - pdf_assistant - INFO - [main.py:28] - [INFO] ChromaDB collection: company_documents
+2026-07-09 13:05:05 - pdf_assistant - INFO - [main.py:29] - [OK] Application started successfully
+2026-07-09 13:05:06 - pdf_assistant - INFO - [main.py:34] - [STOP] Shutting down PDF Knowledge Assistant...
+2026-07-09 13:05:35 - pdf_assistant - INFO - [main.py:25] - [START] Starting PDF Knowledge Assistant...
+2026-07-09 13:05:35 - pdf_assistant - INFO - [main.py:26] - [INFO] App: PDF Knowledge Assistant v1.0.0
+2026-07-09 13:05:35 - pdf_assistant - INFO - [main.py:27] - [INFO] Upload directory: ./uploads/pdfs
+2026-07-09 13:05:35 - pdf_assistant - INFO - [main.py:28] - [INFO] ChromaDB collection: company_documents
+2026-07-09 13:05:35 - pdf_assistant - INFO - [main.py:29] - [OK] Application started successfully
+2026-07-09 13:05:36 - pdf_assistant - INFO - [main.py:34] - [STOP] Shutting down PDF Knowledge Assistant...
+2026-07-09 13:07:02 - pdf_assistant - INFO - [chromadb_service.py:28] - [VECTOR STORE] Connected to ChromaDB at './chroma_db' (collection='company_documents', metric='cosine')
+2026-07-09 13:07:02 - pdf_assistant - INFO - [client.py:19] - [EMBEDDINGS] OllamaClient initialized (endpoint=http://localhost:11434, timeout=60s)
+2026-07-09 13:07:02 - pdf_assistant - INFO - [ollama_service.py:18] - [EMBEDDINGS] OllamaEmbeddingService initialized (model=nomic-embed-text)
+2026-07-09 13:07:02 - pdf_assistant - INFO - [retriever.py:21] - [RAG] Retriever initialized (default_k=5, threshold=0.3)
+2026-07-09 13:07:02 - pdf_assistant - INFO - [client.py:19] - [EMBEDDINGS] OllamaClient initialized (endpoint=http://localhost:11434, timeout=60s)
+2026-07-09 13:07:02 - pdf_assistant - INFO - [generator.py:20] - [RAG] Generator initialized (model=mistral, temperature=0.7, max_tokens=500)
+2026-07-09 13:07:02 - pdf_assistant - INFO - [pipeline.py:18] - [RAG] RAGPipeline initialized successfully
+2026-07-09 14:01:44 - pdf_assistant - INFO - [chromadb_service.py:28] - [VECTOR STORE] Connected to ChromaDB at './chroma_db' (collection='company_documents', metric='cosine')
+2026-07-09 14:01:44 - pdf_assistant - INFO - [client.py:19] - [EMBEDDINGS] OllamaClient initialized (endpoint=http://localhost:11434, timeout=60s)
+2026-07-09 14:01:44 - pdf_assistant - INFO - [ollama_service.py:18] - [EMBEDDINGS] OllamaEmbeddingService initialized (model=nomic-embed-text)
+2026-07-09 14:01:44 - pdf_assistant - INFO - [retriever.py:21] - [RAG] Retriever initialized (default_k=5, threshold=0.3)
+2026-07-09 14:01:44 - pdf_assistant - INFO - [client.py:19] - [EMBEDDINGS] OllamaClient initialized (endpoint=http://localhost:11434, timeout=60s)
+2026-07-09 14:01:44 - pdf_assistant - INFO - [generator.py:20] - [RAG] Generator initialized (model=mistral, temperature=0.7, max_tokens=500)
+2026-07-09 14:01:44 - pdf_assistant - INFO - [pipeline.py:18] - [RAG] RAGPipeline initialized successfully
+2026-07-09 14:01:50 - pdf_assistant - INFO - [chromadb_service.py:28] - [VECTOR STORE] Connected to ChromaDB at './chroma_db' (collection='company_documents', metric='cosine')
+2026-07-09 14:01:50 - pdf_assistant - INFO - [client.py:19] - [EMBEDDINGS] OllamaClient initialized (endpoint=http://localhost:11434, timeout=60s)
+2026-07-09 14:01:50 - pdf_assistant - INFO - [ollama_service.py:18] - [EMBEDDINGS] OllamaEmbeddingService initialized (model=nomic-embed-text)
+2026-07-09 14:01:50 - pdf_assistant - INFO - [retriever.py:21] - [RAG] Retriever initialized (default_k=5, threshold=0.3)
+2026-07-09 14:01:50 - pdf_assistant - INFO - [client.py:19] - [EMBEDDINGS] OllamaClient initialized (endpoint=http://localhost:11434, timeout=60s)
+2026-07-09 14:01:50 - pdf_assistant - INFO - [generator.py:20] - [RAG] Generator initialized (model=mistral, temperature=0.7, max_tokens=500)
+2026-07-09 14:01:50 - pdf_assistant - INFO - [pipeline.py:18] - [RAG] RAGPipeline initialized successfully
+2026-07-09 14:01:55 - pdf_assistant - INFO - [chromadb_service.py:28] - [VECTOR STORE] Connected to ChromaDB at './chroma_db' (collection='company_documents', metric='cosine')
+2026-07-09 14:01:55 - pdf_assistant - INFO - [client.py:19] - [EMBEDDINGS] OllamaClient initialized (endpoint=http://localhost:11434, timeout=60s)
+2026-07-09 14:01:55 - pdf_assistant - INFO - [ollama_service.py:18] - [EMBEDDINGS] OllamaEmbeddingService initialized (model=nomic-embed-text)
+2026-07-09 14:01:55 - pdf_assistant - INFO - [retriever.py:21] - [RAG] Retriever initialized (default_k=5, threshold=0.3)
+2026-07-09 14:01:55 - pdf_assistant - INFO - [client.py:19] - [EMBEDDINGS] OllamaClient initialized (endpoint=http://localhost:11434, timeout=60s)
+2026-07-09 14:01:55 - pdf_assistant - INFO - [generator.py:20] - [RAG] Generator initialized (model=mistral, temperature=0.7, max_tokens=500)
+2026-07-09 14:01:55 - pdf_assistant - INFO - [pipeline.py:18] - [RAG] RAGPipeline initialized successfully
+2026-07-09 14:01:59 - pdf_assistant - INFO - [chromadb_service.py:28] - [VECTOR STORE] Connected to ChromaDB at './chroma_db' (collection='company_documents', metric='cosine')
+2026-07-09 14:01:59 - pdf_assistant - INFO - [client.py:19] - [EMBEDDINGS] OllamaClient initialized (endpoint=http://localhost:11434, timeout=60s)
+2026-07-09 14:01:59 - pdf_assistant - INFO - [ollama_service.py:18] - [EMBEDDINGS] OllamaEmbeddingService initialized (model=nomic-embed-text)
+2026-07-09 14:01:59 - pdf_assistant - INFO - [retriever.py:21] - [RAG] Retriever initialized (default_k=5, threshold=0.3)
+2026-07-09 14:01:59 - pdf_assistant - INFO - [client.py:19] - [EMBEDDINGS] OllamaClient initialized (endpoint=http://localhost:11434, timeout=60s)
+2026-07-09 14:01:59 - pdf_assistant - INFO - [generator.py:20] - [RAG] Generator initialized (model=mistral, temperature=0.7, max_tokens=500)
+2026-07-09 14:01:59 - pdf_assistant - INFO - [pipeline.py:18] - [RAG] RAGPipeline initialized successfully
+2026-07-09 14:02:33 - pdf_assistant - INFO - [chromadb_service.py:28] - [VECTOR STORE] Connected to ChromaDB at './chroma_db' (collection='company_documents', metric='cosine')
+2026-07-09 14:02:33 - pdf_assistant - INFO - [client.py:19] - [EMBEDDINGS] OllamaClient initialized (endpoint=http://localhost:11434, timeout=60s)
+2026-07-09 14:02:33 - pdf_assistant - INFO - [ollama_service.py:18] - [EMBEDDINGS] OllamaEmbeddingService initialized (model=nomic-embed-text)
+2026-07-09 14:02:33 - pdf_assistant - INFO - [retriever.py:21] - [RAG] Retriever initialized (default_k=5, threshold=0.3)
+2026-07-09 14:02:33 - pdf_assistant - INFO - [client.py:19] - [EMBEDDINGS] OllamaClient initialized (endpoint=http://localhost:11434, timeout=60s)
+2026-07-09 14:02:33 - pdf_assistant - INFO - [generator.py:20] - [RAG] Generator initialized (model=mistral, temperature=0.7, max_tokens=500)
+2026-07-09 14:02:33 - pdf_assistant - INFO - [pipeline.py:18] - [RAG] RAGPipeline initialized successfully
+2026-07-09 14:02:42 - pdf_assistant - INFO - [chromadb_service.py:28] - [VECTOR STORE] Connected to ChromaDB at './chroma_db' (collection='company_documents', metric='cosine')
+2026-07-09 14:02:42 - pdf_assistant - INFO - [client.py:19] - [EMBEDDINGS] OllamaClient initialized (endpoint=http://localhost:11434, timeout=60s)
+2026-07-09 14:02:42 - pdf_assistant - INFO - [ollama_service.py:18] - [EMBEDDINGS] OllamaEmbeddingService initialized (model=nomic-embed-text)
+2026-07-09 14:02:42 - pdf_assistant - INFO - [retriever.py:21] - [RAG] Retriever initialized (default_k=5, threshold=0.3)
+2026-07-09 14:02:42 - pdf_assistant - INFO - [client.py:19] - [EMBEDDINGS] OllamaClient initialized (endpoint=http://localhost:11434, timeout=60s)
+2026-07-09 14:02:42 - pdf_assistant - INFO - [generator.py:20] - [RAG] Generator initialized (model=mistral, temperature=0.7, max_tokens=500)
+2026-07-09 14:02:42 - pdf_assistant - INFO - [pipeline.py:18] - [RAG] RAGPipeline initialized successfully
+2026-07-09 14:02:46 - pdf_assistant - INFO - [chromadb_service.py:28] - [VECTOR STORE] Connected to ChromaDB at './chroma_db' (collection='company_documents', metric='cosine')
+2026-07-09 14:02:46 - pdf_assistant - INFO - [client.py:19] - [EMBEDDINGS] OllamaClient initialized (endpoint=http://localhost:11434, timeout=60s)
+2026-07-09 14:02:46 - pdf_assistant - INFO - [ollama_service.py:18] - [EMBEDDINGS] OllamaEmbeddingService initialized (model=nomic-embed-text)
+2026-07-09 14:02:46 - pdf_assistant - INFO - [retriever.py:21] - [RAG] Retriever initialized (default_k=5, threshold=0.3)
+2026-07-09 14:02:46 - pdf_assistant - INFO - [client.py:19] - [EMBEDDINGS] OllamaClient initialized (endpoint=http://localhost:11434, timeout=60s)
+2026-07-09 14:02:46 - pdf_assistant - INFO - [generator.py:20] - [RAG] Generator initialized (model=mistral, temperature=0.7, max_tokens=500)
+2026-07-09 14:02:46 - pdf_assistant - INFO - [pipeline.py:18] - [RAG] RAGPipeline initialized successfully
+2026-07-09 14:03:05 - pdf_assistant - INFO - [chromadb_service.py:28] - [VECTOR STORE] Connected to ChromaDB at './chroma_db' (collection='company_documents', metric='cosine')
+2026-07-09 14:03:05 - pdf_assistant - INFO - [client.py:19] - [EMBEDDINGS] OllamaClient initialized (endpoint=http://localhost:11434, timeout=60s)
+2026-07-09 14:03:05 - pdf_assistant - INFO - [ollama_service.py:18] - [EMBEDDINGS] OllamaEmbeddingService initialized (model=nomic-embed-text)
+2026-07-09 14:03:05 - pdf_assistant - INFO - [retriever.py:21] - [RAG] Retriever initialized (default_k=5, threshold=0.3)
+2026-07-09 14:03:05 - pdf_assistant - INFO - [client.py:19] - [EMBEDDINGS] OllamaClient initialized (endpoint=http://localhost:11434, timeout=60s)
+2026-07-09 14:03:05 - pdf_assistant - INFO - [generator.py:20] - [RAG] Generator initialized (model=mistral, temperature=0.7, max_tokens=500)
+2026-07-09 14:03:05 - pdf_assistant - INFO - [pipeline.py:18] - [RAG] RAGPipeline initialized successfully
+2026-07-09 14:03:05 - pdf_assistant - INFO - [splitter.py:27] - [CHUNKING] Initialized with strategy 'recursive' (size=500, overlap=100)
+2026-07-09 14:03:05 - pdf_assistant - INFO - [splitter.py:75] - [OK] Split document test_doc into 2 total chunks
+2026-07-09 14:03:06 - pdf_assistant - INFO - [ollama_service.py:18] - [EMBEDDINGS] OllamaEmbeddingService initialized (model=nomic-embed-text)
+2026-07-09 14:03:06 - pdf_assistant - INFO - [ollama_service.py:18] - [EMBEDDINGS] OllamaEmbeddingService initialized (model=nomic-embed-text)
+2026-07-09 14:03:06 - pdf_assistant - ERROR - [extractor.py:34] - PDF file not found: nonexistent.pdf
+2026-07-09 14:03:06 - pdf_assistant - INFO - [cleaner.py:134] - [OK] Cleaned 2 pages successfully
+2026-07-09 14:03:06 - pdf_assistant - INFO - [pipeline.py:18] - [RAG] RAGPipeline initialized successfully
+2026-07-09 14:03:06 - pdf_assistant - INFO - [pipeline.py:67] - [OK] RAG pipeline query completed in 0.1ms
+2026-07-09 14:03:06 - pdf_assistant - ERROR - [validators.py:97] - Filename cannot be empty
+2026-07-09 14:03:06 - pdf_assistant - ERROR - [validators.py:86] - Invalid filename: path traversal detected
+2026-07-09 14:03:06 - pdf_assistant - ERROR - [validators.py:92] - Filename is too long (max 255 characters)
+2026-07-09 14:03:06 - pdf_assistant - INFO - [validators.py:100] - [OK] Filename validation passed: document.pdf
+2026-07-09 14:03:06 - pdf_assistant - ERROR - [validators.py:53] - File is empty
+2026-07-09 14:03:06 - pdf_assistant - ERROR - [validators.py:40] - Invalid file extension. Allowed: ['.pdf']
+2026-07-09 14:03:06 - pdf_assistant - ERROR - [validators.py:34] - File does not exist: nonexistent.pdf
+2026-07-09 14:03:06 - pdf_assistant - WARNING - [validators.py:121] - Query cannot be empty
+2026-07-09 14:03:06 - pdf_assistant - WARNING - [validators.py:126] - Query exceeds max length of 1000 characters
+2026-07-09 14:03:06 - pdf_assistant - INFO - [validators.py:129] - [OK] Query validation passed: What is the company revenue?...
+2026-07-09 14:03:06 - pdf_assistant - WARNING - [validators.py:121] - Query cannot be empty
+2026-07-09 14:03:06 - pdf_assistant - INFO - [chromadb_service.py:28] - [VECTOR STORE] Connected to ChromaDB at './chroma_db' (collection='company_documents', metric='cosine')
+2026-07-09 14:03:07 - pdf_assistant - INFO - [chromadb_service.py:74] - [OK] Added 2 chunks to vector store collection 'company_documents'
+2026-07-09 14:03:08 - pdf_assistant - INFO - [chromadb_service.py:28] - [VECTOR STORE] Connected to ChromaDB at './chroma_db' (collection='company_documents', metric='cosine')
+2026-07-09 14:03:08 - pdf_assistant - INFO - [chromadb_service.py:74] - [OK] Added 2 chunks to vector store collection 'company_documents'
+2026-07-09 14:03:08 - pdf_assistant - INFO - [chromadb_service.py:136] - [OK] Deleted all chunks for document 'doc1' from vector store
+2026-07-09 14:03:22 - pdf_assistant - INFO - [chromadb_service.py:28] - [VECTOR STORE] Connected to ChromaDB at './chroma_db' (collection='company_documents', metric='cosine')
+2026-07-09 14:03:22 - pdf_assistant - INFO - [client.py:19] - [EMBEDDINGS] OllamaClient initialized (endpoint=http://localhost:11434, timeout=60s)
+2026-07-09 14:03:22 - pdf_assistant - INFO - [ollama_service.py:18] - [EMBEDDINGS] OllamaEmbeddingService initialized (model=nomic-embed-text)
+2026-07-09 14:03:22 - pdf_assistant - INFO - [retriever.py:21] - [RAG] Retriever initialized (default_k=5, threshold=0.3)
+2026-07-09 14:03:22 - pdf_assistant - INFO - [client.py:19] - [EMBEDDINGS] OllamaClient initialized (endpoint=http://localhost:11434, timeout=60s)
+2026-07-09 14:03:22 - pdf_assistant - INFO - [generator.py:20] - [RAG] Generator initialized (model=mistral, temperature=0.7, max_tokens=500)
+2026-07-09 14:03:22 - pdf_assistant - INFO - [pipeline.py:18] - [RAG] RAGPipeline initialized successfully
+2026-07-09 14:03:45 - pdf_assistant - INFO - [chromadb_service.py:28] - [VECTOR STORE] Connected to ChromaDB at './chroma_db' (collection='company_documents', metric='cosine')
+2026-07-09 14:03:45 - pdf_assistant - INFO - [client.py:19] - [EMBEDDINGS] OllamaClient initialized (endpoint=http://localhost:11434, timeout=60s)
+2026-07-09 14:03:45 - pdf_assistant - INFO - [ollama_service.py:18] - [EMBEDDINGS] OllamaEmbeddingService initialized (model=nomic-embed-text)
+2026-07-09 14:03:45 - pdf_assistant - INFO - [retriever.py:21] - [RAG] Retriever initialized (default_k=5, threshold=0.3)
+2026-07-09 14:03:45 - pdf_assistant - INFO - [client.py:19] - [EMBEDDINGS] OllamaClient initialized (endpoint=http://localhost:11434, timeout=60s)
+2026-07-09 14:03:45 - pdf_assistant - INFO - [generator.py:20] - [RAG] Generator initialized (model=mistral, temperature=0.7, max_tokens=500)
+2026-07-09 14:03:45 - pdf_assistant - INFO - [pipeline.py:18] - [RAG] RAGPipeline initialized successfully
+2026-07-09 14:03:45 - pdf_assistant - INFO - [splitter.py:27] - [CHUNKING] Initialized with strategy 'recursive' (size=500, overlap=100)
+2026-07-09 14:03:45 - pdf_assistant - INFO - [splitter.py:75] - [OK] Split document test_doc into 2 total chunks
+2026-07-09 14:03:45 - pdf_assistant - INFO - [ollama_service.py:18] - [EMBEDDINGS] OllamaEmbeddingService initialized (model=nomic-embed-text)
+2026-07-09 14:03:45 - pdf_assistant - INFO - [ollama_service.py:18] - [EMBEDDINGS] OllamaEmbeddingService initialized (model=nomic-embed-text)
+2026-07-09 14:03:45 - pdf_assistant - ERROR - [extractor.py:34] - PDF file not found: nonexistent.pdf
+2026-07-09 14:03:45 - pdf_assistant - INFO - [cleaner.py:134] - [OK] Cleaned 2 pages successfully
+2026-07-09 14:03:45 - pdf_assistant - INFO - [pipeline.py:18] - [RAG] RAGPipeline initialized successfully
+2026-07-09 14:03:45 - pdf_assistant - INFO - [pipeline.py:67] - [OK] RAG pipeline query completed in 0.2ms
+2026-07-09 14:03:45 - pdf_assistant - ERROR - [validators.py:97] - Filename cannot be empty
+2026-07-09 14:03:45 - pdf_assistant - ERROR - [validators.py:86] - Invalid filename: path traversal detected
+2026-07-09 14:03:45 - pdf_assistant - ERROR - [validators.py:92] - Filename is too long (max 255 characters)
+2026-07-09 14:03:45 - pdf_assistant - INFO - [validators.py:100] - [OK] Filename validation passed: document.pdf
+2026-07-09 14:03:45 - pdf_assistant - ERROR - [validators.py:53] - File is empty
+2026-07-09 14:03:45 - pdf_assistant - ERROR - [validators.py:40] - Invalid file extension. Allowed: ['.pdf']
+2026-07-09 14:03:45 - pdf_assistant - ERROR - [validators.py:34] - File does not exist: nonexistent.pdf
+2026-07-09 14:03:45 - pdf_assistant - WARNING - [validators.py:121] - Query cannot be empty
+2026-07-09 14:03:45 - pdf_assistant - WARNING - [validators.py:126] - Query exceeds max length of 1000 characters
+2026-07-09 14:03:45 - pdf_assistant - INFO - [validators.py:129] - [OK] Query validation passed: What is the company revenue?...
+2026-07-09 14:03:45 - pdf_assistant - WARNING - [validators.py:121] - Query cannot be empty
+2026-07-09 14:03:45 - pdf_assistant - INFO - [chromadb_service.py:28] - [VECTOR STORE] Connected to ChromaDB at './chroma_db' (collection='company_documents', metric='cosine')
+2026-07-09 14:03:45 - pdf_assistant - INFO - [chromadb_service.py:74] - [OK] Added 2 chunks to vector store collection 'company_documents'
+2026-07-09 14:03:45 - pdf_assistant - INFO - [chromadb_service.py:28] - [VECTOR STORE] Connected to ChromaDB at './chroma_db' (collection='company_documents', metric='cosine')
+2026-07-09 14:03:45 - pdf_assistant - INFO - [chromadb_service.py:74] - [OK] Added 2 chunks to vector store collection 'company_documents'
+2026-07-09 14:03:45 - pdf_assistant - INFO - [chromadb_service.py:136] - [OK] Deleted all chunks for document 'doc1' from vector store
+2026-07-09 14:03:47 - pdf_assistant - INFO - [main.py:27] - [START] Starting PDF Knowledge Assistant...
+2026-07-09 14:03:47 - pdf_assistant - INFO - [main.py:28] - [INFO] App: PDF Knowledge Assistant v1.0.0
+2026-07-09 14:03:47 - pdf_assistant - INFO - [main.py:29] - [INFO] Upload directory: ./uploads/pdfs
+2026-07-09 14:03:47 - pdf_assistant - INFO - [main.py:30] - [INFO] ChromaDB collection: company_documents
+2026-07-09 14:03:47 - pdf_assistant - INFO - [main.py:31] - [OK] Application started successfully
+2026-07-09 14:03:50 - pdf_assistant - INFO - [main.py:36] - [STOP] Shutting down PDF Knowledge Assistant...
+2026-07-09 14:03:56 - pdf_assistant - INFO - [chromadb_service.py:28] - [VECTOR STORE] Connected to ChromaDB at './chroma_db' (collection='company_documents', metric='cosine')
+2026-07-09 14:03:56 - pdf_assistant - INFO - [client.py:19] - [EMBEDDINGS] OllamaClient initialized (endpoint=http://localhost:11434, timeout=60s)
+2026-07-09 14:03:56 - pdf_assistant - INFO - [ollama_service.py:18] - [EMBEDDINGS] OllamaEmbeddingService initialized (model=nomic-embed-text)
+2026-07-09 14:03:56 - pdf_assistant - INFO - [retriever.py:21] - [RAG] Retriever initialized (default_k=5, threshold=0.3)
+2026-07-09 14:03:56 - pdf_assistant - INFO - [client.py:19] - [EMBEDDINGS] OllamaClient initialized (endpoint=http://localhost:11434, timeout=60s)
+2026-07-09 14:03:56 - pdf_assistant - INFO - [generator.py:20] - [RAG] Generator initialized (model=mistral, temperature=0.7, max_tokens=500)
+2026-07-09 14:03:56 - pdf_assistant - INFO - [pipeline.py:18] - [RAG] RAGPipeline initialized successfully
+2026-07-09 14:04:04 - pdf_assistant - INFO - [chromadb_service.py:28] - [VECTOR STORE] Connected to ChromaDB at './chroma_db' (collection='company_documents', metric='cosine')
+2026-07-09 14:04:04 - pdf_assistant - INFO - [client.py:19] - [EMBEDDINGS] OllamaClient initialized (endpoint=http://localhost:11434, timeout=60s)
+2026-07-09 14:04:04 - pdf_assistant - INFO - [ollama_service.py:18] - [EMBEDDINGS] OllamaEmbeddingService initialized (model=nomic-embed-text)
+2026-07-09 14:04:04 - pdf_assistant - INFO - [retriever.py:21] - [RAG] Retriever initialized (default_k=5, threshold=0.3)
+2026-07-09 14:04:04 - pdf_assistant - INFO - [client.py:19] - [EMBEDDINGS] OllamaClient initialized (endpoint=http://localhost:11434, timeout=60s)
+2026-07-09 14:04:04 - pdf_assistant - INFO - [generator.py:20] - [RAG] Generator initialized (model=mistral, temperature=0.7, max_tokens=500)
+2026-07-09 14:04:04 - pdf_assistant - INFO - [pipeline.py:18] - [RAG] RAGPipeline initialized successfully
+2026-07-09 14:04:12 - pdf_assistant - INFO - [main.py:27] - [START] Starting PDF Knowledge Assistant...
+2026-07-09 14:04:12 - pdf_assistant - INFO - [main.py:28] - [INFO] App: PDF Knowledge Assistant v1.0.0
+2026-07-09 14:04:12 - pdf_assistant - INFO - [main.py:29] - [INFO] Upload directory: ./uploads/pdfs
+2026-07-09 14:04:12 - pdf_assistant - INFO - [main.py:30] - [INFO] ChromaDB collection: company_documents
+2026-07-09 14:04:12 - pdf_assistant - INFO - [main.py:31] - [OK] Application started successfully
+2026-07-09 14:04:19 - pdf_assistant - INFO - [chromadb_service.py:28] - [VECTOR STORE] Connected to ChromaDB at './chroma_db' (collection='company_documents', metric='cosine')
+2026-07-09 14:04:19 - pdf_assistant - INFO - [client.py:19] - [EMBEDDINGS] OllamaClient initialized (endpoint=http://localhost:11434, timeout=60s)
+2026-07-09 14:04:19 - pdf_assistant - INFO - [ollama_service.py:18] - [EMBEDDINGS] OllamaEmbeddingService initialized (model=nomic-embed-text)
+2026-07-09 14:04:19 - pdf_assistant - INFO - [retriever.py:21] - [RAG] Retriever initialized (default_k=5, threshold=0.3)
+2026-07-09 14:04:19 - pdf_assistant - INFO - [client.py:19] - [EMBEDDINGS] OllamaClient initialized (endpoint=http://localhost:11434, timeout=60s)
+2026-07-09 14:04:19 - pdf_assistant - INFO - [generator.py:20] - [RAG] Generator initialized (model=mistral, temperature=0.7, max_tokens=500)
+2026-07-09 14:04:19 - pdf_assistant - INFO - [pipeline.py:18] - [RAG] RAGPipeline initialized successfully
+2026-07-09 14:04:20 - pdf_assistant - INFO - [routes.py:213] - 📋 Listed 0 documents
+2026-07-09 14:04:20 - pdf_assistant - INFO - [routes.py:353] - 📊 System stats: 0 docs, 0 chunks
+2026-07-09 14:04:20 - pdf_assistant - INFO - [cleaner.py:134] - [OK] Cleaned 2 pages successfully
+2026-07-09 14:04:20 - pdf_assistant - INFO - [splitter.py:27] - [CHUNKING] Initialized with strategy 'recursive' (size=500, overlap=100)
+2026-07-09 14:04:20 - pdf_assistant - INFO - [splitter.py:75] - [OK] Split document acme_2026 into 2 total chunks
+2026-07-09 14:04:20 - pdf_assistant - INFO - [rag.py:33] - [API] RAG query: 'How much did Acme earn in 2026?'
+2026-07-09 14:04:20 - pdf_assistant - INFO - [search.py:36] - [API] Semantic search query: 'What is Acme's revenue?'
+2026-07-09 14:04:25 - pdf_assistant - INFO - [main.py:36] - [STOP] Shutting down PDF Knowledge Assistant...
+2026-07-09 14:04:28 - pdf_assistant - INFO - [chromadb_service.py:28] - [VECTOR STORE] Connected to ChromaDB at './chroma_db' (collection='company_documents', metric='cosine')
+2026-07-09 14:04:28 - pdf_assistant - INFO - [client.py:19] - [EMBEDDINGS] OllamaClient initialized (endpoint=http://localhost:11434, timeout=60s)
+2026-07-09 14:04:28 - pdf_assistant - INFO - [ollama_service.py:18] - [EMBEDDINGS] OllamaEmbeddingService initialized (model=nomic-embed-text)
+2026-07-09 14:04:28 - pdf_assistant - INFO - [retriever.py:21] - [RAG] Retriever initialized (default_k=5, threshold=0.3)
+2026-07-09 14:04:28 - pdf_assistant - INFO - [client.py:19] - [EMBEDDINGS] OllamaClient initialized (endpoint=http://localhost:11434, timeout=60s)
+2026-07-09 14:04:28 - pdf_assistant - INFO - [generator.py:20] - [RAG] Generator initialized (model=mistral, temperature=0.7, max_tokens=500)
+2026-07-09 14:04:28 - pdf_assistant - INFO - [pipeline.py:18] - [RAG] RAGPipeline initialized successfully
+2026-07-09 14:04:36 - pdf_assistant - INFO - [main.py:27] - [START] Starting PDF Knowledge Assistant...
+2026-07-09 14:04:36 - pdf_assistant - INFO - [main.py:28] - [INFO] App: PDF Knowledge Assistant v1.0.0
+2026-07-09 14:04:36 - pdf_assistant - INFO - [main.py:29] - [INFO] Upload directory: ./uploads/pdfs
+2026-07-09 14:04:36 - pdf_assistant - INFO - [main.py:30] - [INFO] ChromaDB collection: company_documents
+2026-07-09 14:04:36 - pdf_assistant - INFO - [main.py:31] - [OK] Application started successfully
+2026-07-09 14:04:49 - pdf_assistant - INFO - [chromadb_service.py:28] - [VECTOR STORE] Connected to ChromaDB at './chroma_db' (collection='company_documents', metric='cosine')
+2026-07-09 14:04:49 - pdf_assistant - INFO - [client.py:19] - [EMBEDDINGS] OllamaClient initialized (endpoint=http://localhost:11434, timeout=60s)
+2026-07-09 14:04:49 - pdf_assistant - INFO - [ollama_service.py:18] - [EMBEDDINGS] OllamaEmbeddingService initialized (model=nomic-embed-text)
+2026-07-09 14:04:49 - pdf_assistant - INFO - [retriever.py:21] - [RAG] Retriever initialized (default_k=5, threshold=0.3)
+2026-07-09 14:04:49 - pdf_assistant - INFO - [client.py:19] - [EMBEDDINGS] OllamaClient initialized (endpoint=http://localhost:11434, timeout=60s)
+2026-07-09 14:04:49 - pdf_assistant - INFO - [generator.py:20] - [RAG] Generator initialized (model=mistral, temperature=0.7, max_tokens=500)
+2026-07-09 14:04:49 - pdf_assistant - INFO - [pipeline.py:18] - [RAG] RAGPipeline initialized successfully
+2026-07-09 14:04:50 - pdf_assistant - INFO - [routes.py:213] - 📋 Listed 0 documents
+2026-07-09 14:04:50 - pdf_assistant - INFO - [routes.py:353] - 📊 System stats: 0 docs, 0 chunks
+2026-07-09 14:04:50 - pdf_assistant - INFO - [cleaner.py:134] - [OK] Cleaned 2 pages successfully
+2026-07-09 14:04:50 - pdf_assistant - INFO - [splitter.py:27] - [CHUNKING] Initialized with strategy 'recursive' (size=500, overlap=100)
+2026-07-09 14:04:50 - pdf_assistant - INFO - [splitter.py:75] - [OK] Split document acme_2026 into 2 total chunks
+2026-07-09 14:04:50 - pdf_assistant - INFO - [client.py:19] - [EMBEDDINGS] OllamaClient initialized (endpoint=http://localhost:11434, timeout=60s)
+2026-07-09 14:04:50 - pdf_assistant - INFO - [ollama_service.py:18] - [EMBEDDINGS] OllamaEmbeddingService initialized (model=nomic-embed-text)
+2026-07-09 14:04:51 - pdf_assistant - WARNING - [client.py:26] - [RETRY] Ollama request failed, retrying in 2.0s... (Attempt 1)
+2026-07-09 14:04:54 - pdf_assistant - WARNING - [client.py:26] - [RETRY] Ollama request failed, retrying in 2.0s... (Attempt 2)
+2026-07-09 14:04:56 - pdf_assistant - ERROR - [ollama_service.py:42] - [ERR] Failed to generate embedding for text: Client error '404 Not Found' for url 'http://localhost:11434/api/embeddings'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
+2026-07-09 14:04:57 - pdf_assistant - INFO - [client.py:19] - [EMBEDDINGS] OllamaClient initialized (endpoint=http://localhost:11434, timeout=60s)
+2026-07-09 14:04:57 - pdf_assistant - INFO - [ollama_service.py:18] - [EMBEDDINGS] OllamaEmbeddingService initialized (model=nomic-embed-text)
+2026-07-09 14:04:58 - pdf_assistant - WARNING - [client.py:26] - [RETRY] Ollama request failed, retrying in 2.0s... (Attempt 1)
+2026-07-09 14:05:00 - pdf_assistant - WARNING - [client.py:26] - [RETRY] Ollama request failed, retrying in 2.0s... (Attempt 2)
+2026-07-09 14:05:03 - pdf_assistant - WARNING - [client.py:26] - [RETRY] Ollama request failed, retrying in 2.0s... (Attempt 1)
+2026-07-09 14:05:03 - pdf_assistant - WARNING - [client.py:26] - [RETRY] Ollama request failed, retrying in 2.0s... (Attempt 1)
+2026-07-09 14:05:06 - pdf_assistant - WARNING - [client.py:26] - [RETRY] Ollama request failed, retrying in 2.0s... (Attempt 2)
+2026-07-09 14:05:06 - pdf_assistant - WARNING - [client.py:26] - [RETRY] Ollama request failed, retrying in 2.0s... (Attempt 2)
+2026-07-09 14:05:09 - pdf_assistant - ERROR - [ollama_service.py:42] - [ERR] Failed to generate embedding for text: Client error '404 Not Found' for url 'http://localhost:11434/api/embeddings'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
+2026-07-09 14:05:09 - pdf_assistant - ERROR - [ollama_service.py:42] - [ERR] Failed to generate embedding for text: Client error '404 Not Found' for url 'http://localhost:11434/api/embeddings'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
+2026-07-09 14:05:09 - pdf_assistant - INFO - [rag.py:33] - [API] RAG query: 'How much did Acme earn in 2026?'
+2026-07-09 14:05:09 - pdf_assistant - INFO - [search.py:36] - [API] Semantic search query: 'What is Acme's revenue?'
+2026-07-09 14:08:45 - pdf_assistant - INFO - [chromadb_service.py:28] - [VECTOR STORE] Connected to ChromaDB at './chroma_db' (collection='company_documents', metric='cosine')
+2026-07-09 14:08:45 - pdf_assistant - INFO - [client.py:19] - [EMBEDDINGS] OllamaClient initialized (endpoint=http://localhost:11434, timeout=60s)
+2026-07-09 14:08:45 - pdf_assistant - INFO - [ollama_service.py:18] - [EMBEDDINGS] OllamaEmbeddingService initialized (model=nomic-embed-text)
+2026-07-09 14:08:45 - pdf_assistant - INFO - [retriever.py:21] - [RAG] Retriever initialized (default_k=5, threshold=0.3)
+2026-07-09 14:08:45 - pdf_assistant - INFO - [client.py:19] - [EMBEDDINGS] OllamaClient initialized (endpoint=http://localhost:11434, timeout=60s)
+2026-07-09 14:08:45 - pdf_assistant - INFO - [generator.py:20] - [RAG] Generator initialized (model=mistral, temperature=0.7, max_tokens=500)
+2026-07-09 14:08:45 - pdf_assistant - INFO - [pipeline.py:18] - [RAG] RAGPipeline initialized successfully
+2026-07-09 14:08:45 - pdf_assistant - INFO - [splitter.py:27] - [CHUNKING] Initialized with strategy 'recursive' (size=500, overlap=100)
+2026-07-09 14:08:45 - pdf_assistant - INFO - [splitter.py:75] - [OK] Split document test_doc into 2 total chunks
+2026-07-09 14:08:45 - pdf_assistant - INFO - [ollama_service.py:18] - [EMBEDDINGS] OllamaEmbeddingService initialized (model=nomic-embed-text)
+2026-07-09 14:08:45 - pdf_assistant - INFO - [ollama_service.py:18] - [EMBEDDINGS] OllamaEmbeddingService initialized (model=nomic-embed-text)
+2026-07-09 14:08:45 - pdf_assistant - ERROR - [extractor.py:34] - PDF file not found: nonexistent.pdf
+2026-07-09 14:08:45 - pdf_assistant - INFO - [cleaner.py:134] - [OK] Cleaned 2 pages successfully
+2026-07-09 14:08:45 - pdf_assistant - INFO - [pipeline.py:18] - [RAG] RAGPipeline initialized successfully
+2026-07-09 14:08:45 - pdf_assistant - INFO - [pipeline.py:67] - [OK] RAG pipeline query completed in 0.1ms
+2026-07-09 14:08:45 - pdf_assistant - ERROR - [validators.py:97] - Filename cannot be empty
+2026-07-09 14:08:45 - pdf_assistant - ERROR - [validators.py:86] - Invalid filename: path traversal detected
+2026-07-09 14:08:45 - pdf_assistant - ERROR - [validators.py:92] - Filename is too long (max 255 characters)
+2026-07-09 14:08:45 - pdf_assistant - INFO - [validators.py:100] - [OK] Filename validation passed: document.pdf
+2026-07-09 14:08:45 - pdf_assistant - ERROR - [validators.py:53] - File is empty
+2026-07-09 14:08:45 - pdf_assistant - ERROR - [validators.py:40] - Invalid file extension. Allowed: ['.pdf']
+2026-07-09 14:08:45 - pdf_assistant - ERROR - [validators.py:34] - File does not exist: nonexistent.pdf
+2026-07-09 14:08:45 - pdf_assistant - WARNING - [validators.py:121] - Query cannot be empty
+2026-07-09 14:08:45 - pdf_assistant - WARNING - [validators.py:126] - Query exceeds max length of 1000 characters
+2026-07-09 14:08:45 - pdf_assistant - INFO - [validators.py:129] - [OK] Query validation passed: What is the company revenue?...
+2026-07-09 14:08:45 - pdf_assistant - WARNING - [validators.py:121] - Query cannot be empty
+2026-07-09 14:08:45 - pdf_assistant - INFO - [chromadb_service.py:28] - [VECTOR STORE] Connected to ChromaDB at './chroma_db' (collection='company_documents', metric='cosine')
+2026-07-09 14:08:45 - pdf_assistant - INFO - [chromadb_service.py:74] - [OK] Added 2 chunks to vector store collection 'company_documents'
+2026-07-09 14:08:45 - pdf_assistant - INFO - [chromadb_service.py:28] - [VECTOR STORE] Connected to ChromaDB at './chroma_db' (collection='company_documents', metric='cosine')
+2026-07-09 14:08:45 - pdf_assistant - INFO - [chromadb_service.py:74] - [OK] Added 2 chunks to vector store collection 'company_documents'
+2026-07-09 14:08:45 - pdf_assistant - INFO - [chromadb_service.py:136] - [OK] Deleted all chunks for document 'doc1' from vector store
+2026-07-09 14:10:02 - pdf_assistant - INFO - [chromadb_service.py:28] - [VECTOR STORE] Connected to ChromaDB at './chroma_db' (collection='company_documents', metric='cosine')
+2026-07-09 14:10:02 - pdf_assistant - INFO - [client.py:19] - [EMBEDDINGS] OllamaClient initialized (endpoint=http://localhost:11434, timeout=60s)
+2026-07-09 14:10:02 - pdf_assistant - INFO - [ollama_service.py:18] - [EMBEDDINGS] OllamaEmbeddingService initialized (model=nomic-embed-text)
+2026-07-09 14:10:02 - pdf_assistant - INFO - [retriever.py:21] - [RAG] Retriever initialized (default_k=5, threshold=0.3)
+2026-07-09 14:10:02 - pdf_assistant - INFO - [client.py:19] - [EMBEDDINGS] OllamaClient initialized (endpoint=http://localhost:11434, timeout=60s)
+2026-07-09 14:10:02 - pdf_assistant - INFO - [generator.py:20] - [RAG] Generator initialized (model=mistral, temperature=0.7, max_tokens=500)
+2026-07-09 14:10:02 - pdf_assistant - INFO - [pipeline.py:18] - [RAG] RAGPipeline initialized successfully
+2026-07-09 14:10:02 - pdf_assistant - INFO - [routes.py:213] - 📋 Listed 0 documents
+2026-07-09 14:10:02 - pdf_assistant - INFO - [routes.py:353] - 📊 System stats: 0 docs, 0 chunks
+2026-07-09 14:10:02 - pdf_assistant - INFO - [cleaner.py:134] - [OK] Cleaned 2 pages successfully
+2026-07-09 14:10:02 - pdf_assistant - INFO - [splitter.py:27] - [CHUNKING] Initialized with strategy 'recursive' (size=500, overlap=100)
+2026-07-09 14:10:02 - pdf_assistant - INFO - [splitter.py:75] - [OK] Split document acme_2026 into 2 total chunks
+2026-07-09 14:10:02 - pdf_assistant - INFO - [client.py:19] - [EMBEDDINGS] OllamaClient initialized (endpoint=http://localhost:11434, timeout=60s)
+2026-07-09 14:10:02 - pdf_assistant - INFO - [ollama_service.py:18] - [EMBEDDINGS] OllamaEmbeddingService initialized (model=nomic-embed-text)
+2026-07-09 14:10:03 - pdf_assistant - WARNING - [client.py:26] - [RETRY] Ollama request failed, retrying in 2.0s... (Attempt 1)
+2026-07-09 14:10:06 - pdf_assistant - WARNING - [client.py:26] - [RETRY] Ollama request failed, retrying in 2.0s... (Attempt 2)
+2026-07-09 14:10:08 - pdf_assistant - ERROR - [ollama_service.py:42] - [ERR] Failed to generate embedding for text: Client error '404 Not Found' for url 'http://localhost:11434/api/embeddings'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
+2026-07-09 14:10:08 - pdf_assistant - INFO - [client.py:19] - [EMBEDDINGS] OllamaClient initialized (endpoint=http://localhost:11434, timeout=60s)
+2026-07-09 14:10:08 - pdf_assistant - INFO - [ollama_service.py:18] - [EMBEDDINGS] OllamaEmbeddingService initialized (model=nomic-embed-text)
+2026-07-09 14:10:09 - pdf_assistant - WARNING - [client.py:26] - [RETRY] Ollama request failed, retrying in 2.0s... (Attempt 1)
+2026-07-09 14:10:12 - pdf_assistant - WARNING - [client.py:26] - [RETRY] Ollama request failed, retrying in 2.0s... (Attempt 2)
+2026-07-09 14:10:15 - pdf_assistant - WARNING - [client.py:26] - [RETRY] Ollama request failed, retrying in 2.0s... (Attempt 1)
+2026-07-09 14:10:15 - pdf_assistant - WARNING - [client.py:26] - [RETRY] Ollama request failed, retrying in 2.0s... (Attempt 1)
+2026-07-09 14:10:18 - pdf_assistant - WARNING - [client.py:26] - [RETRY] Ollama request failed, retrying in 2.0s... (Attempt 2)
+2026-07-09 14:10:18 - pdf_assistant - WARNING - [client.py:26] - [RETRY] Ollama request failed, retrying in 2.0s... (Attempt 2)
+2026-07-09 14:10:20 - pdf_assistant - ERROR - [ollama_service.py:42] - [ERR] Failed to generate embedding for text: Client error '404 Not Found' for url 'http://localhost:11434/api/embeddings'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
+2026-07-09 14:10:20 - pdf_assistant - ERROR - [ollama_service.py:42] - [ERR] Failed to generate embedding for text: Client error '404 Not Found' for url 'http://localhost:11434/api/embeddings'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
+2026-07-09 14:10:20 - pdf_assistant - INFO - [rag.py:33] - [API] RAG query: 'How much did Acme earn in 2026?'
+2026-07-09 14:10:21 - pdf_assistant - INFO - [search.py:36] - [API] Semantic search query: 'What is Acme's revenue?'
+2026-07-09 14:12:42 - pdf_assistant - INFO - [main.py:36] - [STOP] Shutting down PDF Knowledge Assistant...
+2026-07-09 14:12:45 - pdf_assistant - INFO - [chromadb_service.py:28] - [VECTOR STORE] Connected to ChromaDB at './chroma_db' (collection='company_documents', metric='cosine')
+2026-07-09 14:12:45 - pdf_assistant - INFO - [client.py:19] - [EMBEDDINGS] OllamaClient initialized (endpoint=http://localhost:11434, timeout=60s)
+2026-07-09 14:12:45 - pdf_assistant - INFO - [ollama_service.py:18] - [EMBEDDINGS] OllamaEmbeddingService initialized (model=nomic-embed-text)
+2026-07-09 14:12:45 - pdf_assistant - INFO - [retriever.py:21] - [RAG] Retriever initialized (default_k=5, threshold=0.3)
+2026-07-09 14:12:45 - pdf_assistant - INFO - [client.py:19] - [EMBEDDINGS] OllamaClient initialized (endpoint=http://localhost:11434, timeout=60s)
+2026-07-09 14:12:45 - pdf_assistant - INFO - [generator.py:20] - [RAG] Generator initialized (model=mistral, temperature=0.7, max_tokens=500)
+2026-07-09 14:12:45 - pdf_assistant - INFO - [pipeline.py:18] - [RAG] RAGPipeline initialized successfully
+2026-07-09 14:12:53 - pdf_assistant - INFO - [main.py:27] - [START] Starting PDF Knowledge Assistant...
+2026-07-09 14:12:53 - pdf_assistant - INFO - [main.py:28] - [INFO] App: PDF Knowledge Assistant v1.0.0
+2026-07-09 14:12:53 - pdf_assistant - INFO - [main.py:29] - [INFO] Upload directory: ./uploads/pdfs
+2026-07-09 14:12:53 - pdf_assistant - INFO - [main.py:30] - [INFO] ChromaDB collection: company_documents
+2026-07-09 14:12:53 - pdf_assistant - INFO - [main.py:31] - [OK] Application started successfully
+2026-07-09 14:12:58 - pdf_assistant - INFO - [chromadb_service.py:28] - [VECTOR STORE] Connected to ChromaDB at './chroma_db' (collection='company_documents', metric='cosine')
+2026-07-09 14:12:58 - pdf_assistant - INFO - [client.py:19] - [EMBEDDINGS] OllamaClient initialized (endpoint=http://localhost:11434, timeout=60s)
+2026-07-09 14:12:58 - pdf_assistant - INFO - [ollama_service.py:18] - [EMBEDDINGS] OllamaEmbeddingService initialized (model=nomic-embed-text)
+2026-07-09 14:12:58 - pdf_assistant - INFO - [retriever.py:21] - [RAG] Retriever initialized (default_k=5, threshold=0.3)
+2026-07-09 14:12:58 - pdf_assistant - INFO - [client.py:19] - [EMBEDDINGS] OllamaClient initialized (endpoint=http://localhost:11434, timeout=60s)
+2026-07-09 14:12:58 - pdf_assistant - INFO - [generator.py:20] - [RAG] Generator initialized (model=mistral, temperature=0.7, max_tokens=500)
+2026-07-09 14:12:58 - pdf_assistant - INFO - [pipeline.py:18] - [RAG] RAGPipeline initialized successfully
+2026-07-09 14:12:58 - pdf_assistant - INFO - [routes.py:213] - 📋 Listed 0 documents
+2026-07-09 14:12:58 - pdf_assistant - INFO - [routes.py:353] - 📊 System stats: 0 docs, 0 chunks
+2026-07-09 14:12:58 - pdf_assistant - INFO - [cleaner.py:134] - [OK] Cleaned 2 pages successfully
+2026-07-09 14:12:58 - pdf_assistant - INFO - [splitter.py:27] - [CHUNKING] Initialized with strategy 'recursive' (size=500, overlap=100)
+2026-07-09 14:12:58 - pdf_assistant - INFO - [splitter.py:75] - [OK] Split document acme_2026 into 2 total chunks
+2026-07-09 14:12:58 - pdf_assistant - INFO - [client.py:19] - [EMBEDDINGS] OllamaClient initialized (endpoint=http://localhost:11434, timeout=60s)
+2026-07-09 14:12:58 - pdf_assistant - INFO - [ollama_service.py:18] - [EMBEDDINGS] OllamaEmbeddingService initialized (model=nomic-embed-text)
+2026-07-09 14:12:59 - pdf_assistant - INFO - [client.py:19] - [EMBEDDINGS] OllamaClient initialized (endpoint=http://localhost:11434, timeout=60s)
+2026-07-09 14:12:59 - pdf_assistant - INFO - [ollama_service.py:18] - [EMBEDDINGS] OllamaEmbeddingService initialized (model=nomic-embed-text)
+2026-07-09 14:13:00 - pdf_assistant - INFO - [rag.py:33] - [API] RAG query: 'How much did Acme earn in 2026?'
+2026-07-09 14:13:00 - pdf_assistant - INFO - [search.py:36] - [API] Semantic search query: 'What is Acme's revenue?'
+2026-07-09 14:13:11 - pdf_assistant - INFO - [chromadb_service.py:28] - [VECTOR STORE] Connected to ChromaDB at './chroma_db' (collection='company_documents', metric='cosine')
+2026-07-09 14:13:11 - pdf_assistant - INFO - [client.py:19] - [EMBEDDINGS] OllamaClient initialized (endpoint=http://localhost:11434, timeout=60s)
+2026-07-09 14:13:11 - pdf_assistant - INFO - [ollama_service.py:18] - [EMBEDDINGS] OllamaEmbeddingService initialized (model=nomic-embed-text)
+2026-07-09 14:13:11 - pdf_assistant - INFO - [retriever.py:21] - [RAG] Retriever initialized (default_k=5, threshold=0.3)
+2026-07-09 14:13:11 - pdf_assistant - INFO - [client.py:19] - [EMBEDDINGS] OllamaClient initialized (endpoint=http://localhost:11434, timeout=60s)
+2026-07-09 14:13:11 - pdf_assistant - INFO - [generator.py:20] - [RAG] Generator initialized (model=mistral, temperature=0.7, max_tokens=500)
+2026-07-09 14:13:11 - pdf_assistant - INFO - [pipeline.py:18] - [RAG] RAGPipeline initialized successfully
+2026-07-09 14:13:12 - pdf_assistant - INFO - [routes.py:213] - 📋 Listed 0 documents
+2026-07-09 14:13:12 - pdf_assistant - INFO - [routes.py:353] - 📊 System stats: 0 docs, 0 chunks
+2026-07-09 14:13:12 - pdf_assistant - INFO - [cleaner.py:134] - [OK] Cleaned 2 pages successfully
+2026-07-09 14:13:12 - pdf_assistant - INFO - [splitter.py:27] - [CHUNKING] Initialized with strategy 'recursive' (size=500, overlap=100)
+2026-07-09 14:13:12 - pdf_assistant - INFO - [splitter.py:75] - [OK] Split document acme_2026 into 2 total chunks
+2026-07-09 14:13:12 - pdf_assistant - INFO - [client.py:19] - [EMBEDDINGS] OllamaClient initialized (endpoint=http://localhost:11434, timeout=60s)
+2026-07-09 14:13:12 - pdf_assistant - INFO - [ollama_service.py:18] - [EMBEDDINGS] OllamaEmbeddingService initialized (model=nomic-embed-text)
+2026-07-09 14:13:13 - pdf_assistant - INFO - [client.py:19] - [EMBEDDINGS] OllamaClient initialized (endpoint=http://localhost:11434, timeout=60s)
+2026-07-09 14:13:13 - pdf_assistant - INFO - [ollama_service.py:18] - [EMBEDDINGS] OllamaEmbeddingService initialized (model=nomic-embed-text)
+2026-07-09 14:13:14 - pdf_assistant - INFO - [rag.py:33] - [API] RAG query: 'How much did Acme earn in 2026?'
+2026-07-09 14:13:14 - pdf_assistant - INFO - [search.py:36] - [API] Semantic search query: 'What is Acme's revenue?'
+2026-07-09 14:13:14 - pdf_assistant - INFO - [splitter.py:27] - [CHUNKING] Initialized with strategy 'recursive' (size=500, overlap=100)
+2026-07-09 14:13:14 - pdf_assistant - INFO - [splitter.py:75] - [OK] Split document test_doc into 2 total chunks
+2026-07-09 14:13:14 - pdf_assistant - INFO - [ollama_service.py:18] - [EMBEDDINGS] OllamaEmbeddingService initialized (model=nomic-embed-text)
+2026-07-09 14:13:14 - pdf_assistant - INFO - [ollama_service.py:18] - [EMBEDDINGS] OllamaEmbeddingService initialized (model=nomic-embed-text)
+2026-07-09 14:13:14 - pdf_assistant - ERROR - [extractor.py:34] - PDF file not found: nonexistent.pdf
+2026-07-09 14:13:14 - pdf_assistant - INFO - [cleaner.py:134] - [OK] Cleaned 2 pages successfully
+2026-07-09 14:13:14 - pdf_assistant - INFO - [pipeline.py:18] - [RAG] RAGPipeline initialized successfully
+2026-07-09 14:13:14 - pdf_assistant - INFO - [pipeline.py:67] - [OK] RAG pipeline query completed in 0.1ms
+2026-07-09 14:13:14 - pdf_assistant - ERROR - [validators.py:97] - Filename cannot be empty
+2026-07-09 14:13:14 - pdf_assistant - ERROR - [validators.py:86] - Invalid filename: path traversal detected
+2026-07-09 14:13:14 - pdf_assistant - ERROR - [validators.py:92] - Filename is too long (max 255 characters)
+2026-07-09 14:13:14 - pdf_assistant - INFO - [validators.py:100] - [OK] Filename validation passed: document.pdf
+2026-07-09 14:13:14 - pdf_assistant - ERROR - [validators.py:53] - File is empty
+2026-07-09 14:13:14 - pdf_assistant - ERROR - [validators.py:40] - Invalid file extension. Allowed: ['.pdf']
+2026-07-09 14:13:14 - pdf_assistant - ERROR - [validators.py:34] - File does not exist: nonexistent.pdf
+2026-07-09 14:13:14 - pdf_assistant - WARNING - [validators.py:121] - Query cannot be empty
+2026-07-09 14:13:14 - pdf_assistant - WARNING - [validators.py:126] - Query exceeds max length of 1000 characters
+2026-07-09 14:13:14 - pdf_assistant - INFO - [validators.py:129] - [OK] Query validation passed: What is the company revenue?...
+2026-07-09 14:13:14 - pdf_assistant - WARNING - [validators.py:121] - Query cannot be empty
+2026-07-09 14:13:14 - pdf_assistant - INFO - [chromadb_service.py:28] - [VECTOR STORE] Connected to ChromaDB at './chroma_db' (collection='company_documents', metric='cosine')
+2026-07-09 14:13:14 - pdf_assistant - INFO - [chromadb_service.py:74] - [OK] Added 2 chunks to vector store collection 'company_documents'
+2026-07-09 14:13:14 - pdf_assistant - INFO - [chromadb_service.py:28] - [VECTOR STORE] Connected to ChromaDB at './chroma_db' (collection='company_documents', metric='cosine')
+2026-07-09 14:13:14 - pdf_assistant - INFO - [chromadb_service.py:74] - [OK] Added 2 chunks to vector store collection 'company_documents'
+2026-07-09 14:13:14 - pdf_assistant - INFO - [chromadb_service.py:136] - [OK] Deleted all chunks for document 'doc1' from vector store
+2026-07-09 14:16:41 - pdf_assistant - INFO - [chromadb_service.py:28] - [VECTOR STORE] Connected to ChromaDB at './chroma_db' (collection='company_documents', metric='cosine')
+2026-07-09 14:16:41 - pdf_assistant - INFO - [client.py:19] - [EMBEDDINGS] OllamaClient initialized (endpoint=http://localhost:11434, timeout=60s)
+2026-07-09 14:16:41 - pdf_assistant - INFO - [ollama_service.py:18] - [EMBEDDINGS] OllamaEmbeddingService initialized (model=nomic-embed-text)
+2026-07-09 14:16:41 - pdf_assistant - INFO - [retriever.py:21] - [RAG] Retriever initialized (default_k=5, threshold=0.3)
+2026-07-09 14:16:41 - pdf_assistant - INFO - [client.py:19] - [EMBEDDINGS] OllamaClient initialized (endpoint=http://localhost:11434, timeout=60s)
+2026-07-09 14:16:41 - pdf_assistant - INFO - [generator.py:20] - [RAG] Generator initialized (model=mistral, temperature=0.7, max_tokens=500)
+2026-07-09 14:16:41 - pdf_assistant - INFO - [pipeline.py:18] - [RAG] RAGPipeline initialized successfully
+2026-07-09 14:16:41 - pdf_assistant - INFO - [routes.py:213] - 📋 Listed 0 documents
+2026-07-09 14:16:41 - pdf_assistant - INFO - [routes.py:353] - 📊 System stats: 0 docs, 0 chunks
+2026-07-09 14:16:41 - pdf_assistant - INFO - [cleaner.py:134] - [OK] Cleaned 2 pages successfully
+2026-07-09 14:16:41 - pdf_assistant - INFO - [splitter.py:27] - [CHUNKING] Initialized with strategy 'recursive' (size=500, overlap=100)
+2026-07-09 14:16:41 - pdf_assistant - INFO - [splitter.py:75] - [OK] Split document acme_2026 into 2 total chunks
+2026-07-09 14:16:41 - pdf_assistant - INFO - [client.py:19] - [EMBEDDINGS] OllamaClient initialized (endpoint=http://localhost:11434, timeout=60s)
+2026-07-09 14:16:41 - pdf_assistant - INFO - [ollama_service.py:18] - [EMBEDDINGS] OllamaEmbeddingService initialized (model=nomic-embed-text)
+2026-07-09 14:16:44 - pdf_assistant - INFO - [client.py:19] - [EMBEDDINGS] OllamaClient initialized (endpoint=http://localhost:11434, timeout=60s)
+2026-07-09 14:16:44 - pdf_assistant - INFO - [ollama_service.py:18] - [EMBEDDINGS] OllamaEmbeddingService initialized (model=nomic-embed-text)
+2026-07-09 14:16:45 - pdf_assistant - INFO - [rag.py:33] - [API] RAG query: 'How much did Acme earn in 2026?'
+2026-07-09 14:16:45 - pdf_assistant - INFO - [search.py:36] - [API] Semantic search query: 'What is Acme's revenue?'
+2026-07-09 14:19:12 - pdf_assistant - INFO - [chromadb_service.py:28] - [VECTOR STORE] Connected to ChromaDB at './chroma_db' (collection='company_documents', metric='cosine')
+2026-07-09 14:19:12 - pdf_assistant - INFO - [client.py:19] - [EMBEDDINGS] OllamaClient initialized (endpoint=http://localhost:11434, timeout=60s)
+2026-07-09 14:19:12 - pdf_assistant - INFO - [ollama_service.py:18] - [EMBEDDINGS] OllamaEmbeddingService initialized (model=nomic-embed-text)
+2026-07-09 14:19:12 - pdf_assistant - INFO - [retriever.py:21] - [RAG] Retriever initialized (default_k=5, threshold=0.3)
+2026-07-09 14:19:12 - pdf_assistant - INFO - [client.py:19] - [EMBEDDINGS] OllamaClient initialized (endpoint=http://localhost:11434, timeout=60s)
+2026-07-09 14:19:12 - pdf_assistant - INFO - [generator.py:20] - [RAG] Generator initialized (model=mistral, temperature=0.7, max_tokens=500)
+2026-07-09 14:19:12 - pdf_assistant - INFO - [pipeline.py:18] - [RAG] RAGPipeline initialized successfully
+2026-07-09 14:19:13 - pdf_assistant - INFO - [routes.py:213] - 📋 Listed 0 documents
+2026-07-09 14:19:13 - pdf_assistant - INFO - [routes.py:353] - 📊 System stats: 0 docs, 0 chunks
+2026-07-09 14:19:13 - pdf_assistant - INFO - [cleaner.py:134] - [OK] Cleaned 2 pages successfully
+2026-07-09 14:19:13 - pdf_assistant - INFO - [splitter.py:27] - [CHUNKING] Initialized with strategy 'recursive' (size=500, overlap=100)
+2026-07-09 14:19:13 - pdf_assistant - INFO - [splitter.py:75] - [OK] Split document acme_2026 into 2 total chunks
+2026-07-09 14:19:13 - pdf_assistant - INFO - [client.py:19] - [EMBEDDINGS] OllamaClient initialized (endpoint=http://localhost:11434, timeout=60s)
+2026-07-09 14:19:13 - pdf_assistant - INFO - [ollama_service.py:18] - [EMBEDDINGS] OllamaEmbeddingService initialized (model=nomic-embed-text)
+2026-07-09 14:19:14 - pdf_assistant - INFO - [client.py:19] - [EMBEDDINGS] OllamaClient initialized (endpoint=http://localhost:11434, timeout=60s)
+2026-07-09 14:19:14 - pdf_assistant - INFO - [ollama_service.py:18] - [EMBEDDINGS] OllamaEmbeddingService initialized (model=nomic-embed-text)
+2026-07-09 14:19:16 - pdf_assistant - INFO - [rag.py:33] - [API] RAG query: 'How much did Acme earn in 2026?'
+2026-07-09 14:19:16 - pdf_assistant - INFO - [search.py:36] - [API] Semantic search query: 'What is Acme's revenue?'

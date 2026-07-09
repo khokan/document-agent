@@ -26,10 +26,37 @@ from app.models import (
 from app.pdf import PDFExtractor, TextCleaner
 from app.utils import FileValidator, config, logger
 
+from app.api.deps import vector_service, embedding_service
+from app.chunking.splitter import ChunkSplitter
+
 router = APIRouter(prefix="/documents", tags=["Documents"])
 
 # In-memory document store (replace with database in production)
 DOCUMENTS_STORE = {}
+
+
+async def _process_and_store_document(document_id: str, filename: str, page_texts: dict) -> int:
+    """Helper to chunk, embed, and store document in vector database."""
+    # 1. Chunk document
+    splitter = ChunkSplitter()
+    doc_metadata = {"filename": filename}
+    chunks = splitter.split_document(document_id, page_texts, doc_metadata)
+    
+    if chunks:
+        # 2. Generate embeddings
+        texts = [c["text"] for c in chunks]
+        embeddings = await embedding_service.get_embeddings(texts)
+        
+        # 3. Add to vector store
+        await vector_service.add_chunks(chunks, embeddings)
+        
+        # 4. Save embedding cache if dirty
+        from app.embeddings.cache import embedding_cache
+        embedding_cache.save()
+        
+        return len(chunks)
+    return 0
+
 
 
 @router.post(
@@ -111,6 +138,10 @@ async def upload_pdf(file: UploadFile = File(..., description="PDF file to uploa
             with open(final_path, "wb") as dst:
                 dst.write(src.read())
 
+        # Process chunking, embedding, and storage
+        logger.info(f"[INFO] Processing and storing document: {document_id}")
+        chunk_count = await _process_and_store_document(document_id, file.filename, cleaned_pages)
+
         # Store document metadata
         DOCUMENTS_STORE[document_id] = {
             "document_id": document_id,
@@ -119,19 +150,19 @@ async def upload_pdf(file: UploadFile = File(..., description="PDF file to uploa
             "upload_date": datetime.utcnow(),
             "status": "indexed",
             "page_count": len(cleaned_pages),
-            "chunk_count": 0,  # Will be updated after chunking
+            "chunk_count": chunk_count,
             "file_path": str(final_path),
             "page_texts": cleaned_pages,
         }
 
-        logger.info(f"[OK] Document uploaded successfully: {document_id}")
+        logger.info(f"[OK] Document uploaded and indexed successfully: {document_id} ({chunk_count} chunks)")
 
         return DocumentUploadResponse(
             document_id=document_id,
             filename=file.filename,
             upload_date=datetime.utcnow(),
             status="indexed",
-            chunk_count=0,
+            chunk_count=chunk_count,
         )
 
     except HTTPException:
@@ -219,6 +250,9 @@ async def delete_document(document_id: str):
             os.remove(file_path)
             logger.info(f"🗑️ Deleted file: {file_path}")
 
+        # Delete chunks from ChromaDB
+        await vector_service.delete_document_chunks(document_id)
+
         # Remove from store
         del DOCUMENTS_STORE[document_id]
 
@@ -266,19 +300,24 @@ async def reindex_document(document_id: str):
         # Re-clean text
         cleaned_pages = TextCleaner.clean_pages(page_texts)
 
+        # Update vector store
+        await vector_service.delete_document_chunks(document_id)
+        chunk_count = await _process_and_store_document(document_id, doc_info["filename"], cleaned_pages)
+
         # Update document
         doc_info["page_texts"] = cleaned_pages
         doc_info["page_count"] = len(cleaned_pages)
+        doc_info["chunk_count"] = chunk_count
         doc_info["status"] = "reindexed"
 
-        logger.info(f"✅ Document reindexed: {document_id}")
+        logger.info(f"✅ Document reindexed: {document_id} ({chunk_count} chunks)")
 
         return DocumentUploadResponse(
             document_id=document_id,
             filename=doc_info["filename"],
             upload_date=doc_info["upload_date"],
             status="reindexed",
-            chunk_count=doc_info.get("chunk_count", 0),
+            chunk_count=chunk_count,
         )
 
     except HTTPException:
