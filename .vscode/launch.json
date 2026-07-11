@@ -1,0 +1,46 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Current File (pytest)",
+            "type": "python",
+            "request": "launch",
+            "module": "pytest",
+            "args": ["${file}", "-v"],
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}",
+            "env": {},
+            "justMyCode": true,
+            "python": "${workspaceFolder}/venv/Scripts/python.exe"
+        },
+        {
+            "name": "Python: main.py",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/main.py",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}",
+            "args": [],
+            "env": {},
+            "justMyCode": true,
+            "python": "${workspaceFolder}/venv/Scripts/python.exe"
+        },
+        {
+            "name": "Python: Current File with Args",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}",
+            "args": [
+                "--input",
+                "data.txt",
+                "--output",
+                "results.txt"
+            ],
+            "env": {},
+            "justMyCode": true,
+            "python": "${workspaceFolder}/venv/Scripts/python.exe"
+        }
+    ]
+}
