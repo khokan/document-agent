@@ -29,8 +29,8 @@ async def semantic_search(
     """
     Perform semantic search on indexed document chunks.
 
-    Returns:
-        List of matching sources with relevance scores
+    Returns matching document chunks with relevance scores.
+    Supports metadata filtering and score threshold.
     """
     try:
         logger.info(f"[API] Semantic search query: '{request.question}'")
@@ -39,12 +39,15 @@ async def semantic_search(
         filters_dict = None
         if request.filters:
             filters_dict = request.filters.model_dump(exclude_none=True)
+            if filters_dict:
+                logger.info(f"[API] Search filters applied: {filters_dict}")
 
-        # Retrieve documents
+        # Retrieve documents with optional score threshold
         matches = await retriever.retrieve(
             query=request.question,
             top_k=request.top_k,
-            filters=filters_dict
+            filters=filters_dict,
+            score_threshold=request.score_threshold
         )
 
         # Format output matching SearchResultSource schema
@@ -61,6 +64,7 @@ async def semantic_search(
                 )
             )
 
+        logger.info(f"[OK] Semantic search returned {len(results)} results")
         return results
 
     except Exception as e:

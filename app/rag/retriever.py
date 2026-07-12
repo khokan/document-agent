@@ -57,6 +57,10 @@ class Retriever:
         filtered_matches = []
         for match in raw_matches:
             if match["score"] >= threshold:
+                # Enrich metadata with original_filename if missing
+                metadata = match.get("metadata", {})
+                if "original_filename" not in metadata and "filename" in metadata:
+                    metadata["original_filename"] = metadata["filename"]
                 filtered_matches.append(match)
             else:
                 logger.debug(

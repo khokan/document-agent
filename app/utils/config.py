@@ -233,6 +233,41 @@ class Config:
         """Get generator LLM max tokens."""
         return self.get("rag.generator.max_tokens", 500)
 
+    @property
+    def rag_generator_timeout_seconds(self) -> int:
+        """Get generator LLM timeout in seconds."""
+        return self.get("rag.generator.timeout_seconds", 120)
+
+    @property
+    def rag_generator_system_prompt(self) -> str:
+        """Get generator system prompt template."""
+        return self.get(
+            "rag.generator.system_prompt",
+            "You are a professional PDF Knowledge Assistant. Answer the user's question "
+            "using ONLY the provided document context sections below. If the context does "
+            "not contain the answer, politely state that you do not have sufficient information to answer."
+        )
+
+    @property
+    def rag_ranker_strategy(self) -> str:
+        """Get retrieval result ranking strategy."""
+        return self.get("rag.ranker.strategy", "score_based")
+
+    @property
+    def rag_cache_enabled(self) -> bool:
+        """Get RAG response cache enabled flag."""
+        return self.get("rag.cache.enabled", True)
+
+    @property
+    def rag_cache_max_entries(self) -> int:
+        """Get RAG response cache max entries."""
+        return self.get("rag.cache.max_entries", 100)
+
+    @property
+    def rag_cache_ttl_seconds(self) -> int:
+        """Get RAG response cache TTL in seconds."""
+        return self.get("rag.cache.ttl_seconds", 3600)
+
 
 # Global config instance
 config = Config()

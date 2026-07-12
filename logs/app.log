@@ -541,3 +541,62 @@ For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/St
 2026-07-09 14:19:14 - pdf_assistant - INFO - [ollama_service.py:18] - [EMBEDDINGS] OllamaEmbeddingService initialized (model=nomic-embed-text)
 2026-07-09 14:19:16 - pdf_assistant - INFO - [rag.py:33] - [API] RAG query: 'How much did Acme earn in 2026?'
 2026-07-09 14:19:16 - pdf_assistant - INFO - [search.py:36] - [API] Semantic search query: 'What is Acme's revenue?'
+2026-07-12 10:30:27 - pdf_assistant - INFO - [cache.py:39] - [RAG] ResponseCache initialized (enabled=True, max_entries=100, ttl=3600s)
+2026-07-12 10:30:28 - pdf_assistant - INFO - [chromadb_service.py:28] - [VECTOR STORE] Connected to ChromaDB at './chroma_db' (collection='company_documents', metric='cosine')
+2026-07-12 10:30:28 - pdf_assistant - INFO - [client.py:19] - [EMBEDDINGS] OllamaClient initialized (endpoint=http://localhost:11434, timeout=60s)
+2026-07-12 10:30:28 - pdf_assistant - INFO - [ollama_service.py:18] - [EMBEDDINGS] OllamaEmbeddingService initialized (model=nomic-embed-text)
+2026-07-12 10:30:28 - pdf_assistant - INFO - [retriever.py:21] - [RAG] Retriever initialized (default_k=5, threshold=0.3)
+2026-07-12 10:30:28 - pdf_assistant - INFO - [client.py:19] - [EMBEDDINGS] OllamaClient initialized (endpoint=http://localhost:11434, timeout=60s)
+2026-07-12 10:30:28 - pdf_assistant - INFO - [generator.py:23] - [RAG] Generator initialized (model=mistral, temperature=0.7, max_tokens=500, timeout=120s)
+2026-07-12 10:30:28 - pdf_assistant - INFO - [ranker.py:24] - [RAG] ResultRanker initialized (strategy='score_based')
+2026-07-12 10:30:28 - pdf_assistant - INFO - [pipeline.py:28] - [RAG] RAGPipeline initialized successfully
+2026-07-12 10:30:31 - pdf_assistant - INFO - [main.py:98] - [SERVER] Starting Uvicorn server...
+2026-07-12 10:30:32 - pdf_assistant - INFO - [cache.py:39] - [RAG] ResponseCache initialized (enabled=True, max_entries=100, ttl=3600s)
+2026-07-12 10:30:33 - pdf_assistant - INFO - [chromadb_service.py:28] - [VECTOR STORE] Connected to ChromaDB at './chroma_db' (collection='company_documents', metric='cosine')
+2026-07-12 10:30:33 - pdf_assistant - INFO - [client.py:19] - [EMBEDDINGS] OllamaClient initialized (endpoint=http://localhost:11434, timeout=60s)
+2026-07-12 10:30:33 - pdf_assistant - INFO - [ollama_service.py:18] - [EMBEDDINGS] OllamaEmbeddingService initialized (model=nomic-embed-text)
+2026-07-12 10:30:33 - pdf_assistant - INFO - [retriever.py:21] - [RAG] Retriever initialized (default_k=5, threshold=0.3)
+2026-07-12 10:30:33 - pdf_assistant - INFO - [client.py:19] - [EMBEDDINGS] OllamaClient initialized (endpoint=http://localhost:11434, timeout=60s)
+2026-07-12 10:30:33 - pdf_assistant - INFO - [generator.py:23] - [RAG] Generator initialized (model=mistral, temperature=0.7, max_tokens=500, timeout=120s)
+2026-07-12 10:30:33 - pdf_assistant - INFO - [ranker.py:24] - [RAG] ResultRanker initialized (strategy='score_based')
+2026-07-12 10:30:33 - pdf_assistant - INFO - [pipeline.py:28] - [RAG] RAGPipeline initialized successfully
+2026-07-12 10:30:33 - pdf_assistant - INFO - [main.py:27] - [START] Starting PDF Knowledge Assistant...
+2026-07-12 10:30:33 - pdf_assistant - INFO - [main.py:28] - [INFO] App: PDF Knowledge Assistant v1.0.0
+2026-07-12 10:30:33 - pdf_assistant - INFO - [main.py:29] - [INFO] Upload directory: ./uploads/pdfs
+2026-07-12 10:30:33 - pdf_assistant - INFO - [main.py:30] - [INFO] ChromaDB collection: company_documents
+2026-07-12 10:30:33 - pdf_assistant - INFO - [main.py:31] - [INFO] RAG Ranker strategy: score_based
+2026-07-12 10:30:33 - pdf_assistant - INFO - [main.py:32] - [INFO] RAG Cache enabled: True
+2026-07-12 10:30:33 - pdf_assistant - INFO - [main.py:33] - [INFO] RAG Generator model: mistral
+2026-07-12 10:30:33 - pdf_assistant - INFO - [main.py:34] - [INFO] RAG Generator timeout: 120s
+2026-07-12 10:30:33 - pdf_assistant - INFO - [main.py:35] - [OK] Application started successfully
+2026-07-12 11:02:58 - pdf_assistant - INFO - [main.py:40] - [STOP] Shutting down PDF Knowledge Assistant...
+2026-07-12 11:03:29 - pdf_assistant - INFO - [cache.py:39] - [RAG] ResponseCache initialized (enabled=True, max_entries=100, ttl=3600s)
+2026-07-12 11:03:30 - pdf_assistant - INFO - [chromadb_service.py:28] - [VECTOR STORE] Connected to ChromaDB at './chroma_db' (collection='company_documents', metric='cosine')
+2026-07-12 11:03:30 - pdf_assistant - INFO - [client.py:19] - [EMBEDDINGS] OllamaClient initialized (endpoint=http://localhost:11434, timeout=60s)
+2026-07-12 11:03:30 - pdf_assistant - INFO - [ollama_service.py:18] - [EMBEDDINGS] OllamaEmbeddingService initialized (model=nomic-embed-text)
+2026-07-12 11:03:30 - pdf_assistant - INFO - [retriever.py:21] - [RAG] Retriever initialized (default_k=5, threshold=0.3)
+2026-07-12 11:03:30 - pdf_assistant - INFO - [client.py:19] - [EMBEDDINGS] OllamaClient initialized (endpoint=http://localhost:11434, timeout=60s)
+2026-07-12 11:03:30 - pdf_assistant - INFO - [generator.py:23] - [RAG] Generator initialized (model=mistral, temperature=0.7, max_tokens=500, timeout=120s)
+2026-07-12 11:03:30 - pdf_assistant - INFO - [ranker.py:24] - [RAG] ResultRanker initialized (strategy='score_based')
+2026-07-12 11:03:30 - pdf_assistant - INFO - [pipeline.py:28] - [RAG] RAGPipeline initialized successfully
+2026-07-12 11:03:30 - pdf_assistant - INFO - [ranker.py:24] - [RAG] ResultRanker initialized (strategy='score_based')
+2026-07-12 11:03:30 - pdf_assistant - INFO - [ranker.py:24] - [RAG] ResultRanker initialized (strategy='score_based')
+2026-07-12 11:03:38 - pdf_assistant - INFO - [ranker.py:24] - [RAG] ResultRanker initialized (strategy='score_based')
+2026-07-12 11:53:08 - pdf_assistant - INFO - [cache.py:39] - [RAG] ResponseCache initialized (enabled=True, max_entries=100, ttl=3600s)
+2026-07-12 11:53:08 - pdf_assistant - INFO - [chromadb_service.py:28] - [VECTOR STORE] Connected to ChromaDB at './chroma_db' (collection='company_documents', metric='cosine')
+2026-07-12 11:53:08 - pdf_assistant - INFO - [client.py:19] - [EMBEDDINGS] OllamaClient initialized (endpoint=http://localhost:11434, timeout=60s)
+2026-07-12 11:53:08 - pdf_assistant - INFO - [ollama_service.py:18] - [EMBEDDINGS] OllamaEmbeddingService initialized (model=nomic-embed-text)
+2026-07-12 11:53:08 - pdf_assistant - INFO - [retriever.py:21] - [RAG] Retriever initialized (default_k=5, threshold=0.3)
+2026-07-12 11:53:08 - pdf_assistant - INFO - [client.py:19] - [EMBEDDINGS] OllamaClient initialized (endpoint=http://localhost:11434, timeout=60s)
+2026-07-12 11:53:08 - pdf_assistant - INFO - [generator.py:23] - [RAG] Generator initialized (model=mistral, temperature=0.7, max_tokens=500, timeout=120s)
+2026-07-12 11:53:08 - pdf_assistant - INFO - [ranker.py:24] - [RAG] ResultRanker initialized (strategy='score_based')
+2026-07-12 11:53:08 - pdf_assistant - INFO - [pipeline.py:28] - [RAG] RAGPipeline initialized successfully
+2026-07-12 11:56:00 - pdf_assistant - INFO - [ranker.py:24] - [RAG] ResultRanker initialized (strategy='score_based')
+2026-07-12 11:56:02 - pdf_assistant - INFO - [pipeline.py:28] - [RAG] RAGPipeline initialized successfully
+2026-07-12 11:56:47 - pdf_assistant - INFO - [pipeline.py:152] - [OK] RAG chat completed in 1.2ms (retrieval=0.9ms, generation=0.1ms)
+2026-07-12 11:57:15 - pdf_assistant - INFO - [ranker.py:24] - [RAG] ResultRanker initialized (strategy='score_based')
+2026-07-12 11:57:19 - pdf_assistant - INFO - [pipeline.py:28] - [RAG] RAGPipeline initialized successfully
+2026-07-12 11:57:21 - pdf_assistant - INFO - [pipeline.py:81] - [OK] RAG pipeline completed in 0.5ms (retrieval=0.2ms, generation=0.2ms)
+2026-07-12 11:58:13 - pdf_assistant - INFO - [ranker.py:24] - [RAG] ResultRanker initialized (strategy='score_based')
+2026-07-12 11:58:13 - pdf_assistant - INFO - [pipeline.py:28] - [RAG] RAGPipeline initialized successfully
+2026-07-12 11:58:14 - pdf_assistant - INFO - [pipeline.py:215] - [OK] Document summary completed for 'doc1' in 1.1ms

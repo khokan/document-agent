@@ -28,6 +28,10 @@ async def lifespan(app: FastAPI):
     logger.info(f"[INFO] App: {config.app_name} v{config.app_version}")
     logger.info(f"[INFO] Upload directory: {config.upload_dir}")
     logger.info(f"[INFO] ChromaDB collection: {config.chroma_collection_name}")
+    logger.info(f"[INFO] RAG Ranker strategy: {config.rag_ranker_strategy}")
+    logger.info(f"[INFO] RAG Cache enabled: {config.rag_cache_enabled}")
+    logger.info(f"[INFO] RAG Generator model: {config.rag_generator_model}")
+    logger.info(f"[INFO] RAG Generator timeout: {config.rag_generator_timeout_seconds}s")
     logger.info("[OK] Application started successfully")
     
     yield

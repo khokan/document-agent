@@ -47,10 +47,18 @@ rag:
   retriever:
     k: 5
     score_threshold: 0.3
+  ranker:
+    strategy: "score_based"  # Options: "score_based", "recency_bias", "diversity_aware"
   generator:
     model: "mistral"
     temperature: 0.7
     max_tokens: 500
+    timeout_seconds: 120
+    system_prompt: "You are a professional PDF Knowledge Assistant. Answer the user's question using ONLY the provided document context sections below. If the context does not contain the answer, politely state that you do not have sufficient information to answer."
+  cache:
+    enabled: true
+    max_entries: 100
+    ttl_seconds: 3600
 
 logging:
   level: "INFO"
