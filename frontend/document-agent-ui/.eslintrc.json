@@ -1,0 +1,8 @@
+{
+  "extends": "@react/eslint-config",
+  "rules": {
+    "no-console": ["warn", { "allow": ["warn", "error"] }],
+    "@typescript-eslint/no-explicit-any": "error",
+    "react-refresh/only-export-components": "warn"
+  }
+}

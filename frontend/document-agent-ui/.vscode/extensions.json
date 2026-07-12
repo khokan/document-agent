@@ -1,0 +1,21 @@
+{
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "msjsdiag.debugger-for-chrome",
+    "firefox-devtools.vscode-firefox-debug",
+    "ms-edgetools.vscode-edge-devtools",
+    "dsznajder.es7-react-js-snippets",
+    "formulahendry.auto-rename-tag",
+    "bradlc.vscode-tailwindcss",
+    "zignd.html-css-class-completion",
+    "usernamehw.errorlens",
+    "gruntfuggly.todo-tree",
+    "ms-vscode.vscode-typescript-next",
+    "orta.vscode-jest-runner",
+    "eamodio.gitlens",
+    "github.copilot",
+    "wix.vscode-import-cost",
+    "mechatroner.rainbow-csv"
+  ]
+}
