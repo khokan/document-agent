@@ -1,5 +1,5 @@
 """
-🔌 FastAPI routes for PDF document management and search.
+FastAPI routes for PDF document management and search.
 
 Implements endpoints for:
 - PDF upload
@@ -115,7 +115,7 @@ async def upload_pdf(file: UploadFile = File(..., description="PDF file to uploa
             raise HTTPException(status_code=422, detail=error_msg)
 
         # Extract text from PDF
-        logger.info(f"📑 Extracting text from {file.filename}")
+        logger.info(f"[INFO] Extracting text from {file.filename}")
         success, page_texts = PDFExtractor.extract_text_by_page(str(temp_file_path))
         if not success or not page_texts:
             raise HTTPException(status_code=422, detail="Failed to extract text from PDF")
@@ -176,9 +176,9 @@ async def upload_pdf(file: UploadFile = File(..., description="PDF file to uploa
         if temp_file_path and Path(temp_file_path).exists():
             try:
                 os.remove(temp_file_path)
-                logger.debug(f"🧹 Cleaned up temporary file: {temp_file_path}")
+                logger.debug(f"[INFO] Cleaned up temporary file: {temp_file_path}")
             except Exception as e:
-                logger.warning(f"Could not clean up temp file: {str(e)}")
+                logger.warning(f"[WARN] Could not clean up temp file: {str(e)}")
 
 
 @router.get(
@@ -210,7 +210,7 @@ async def list_documents():
             )
             total_chunks += doc_info.get("chunk_count", 0)
 
-        logger.info(f"📋 Listed {len(documents)} documents")
+        logger.info(f"[INFO] Listed {len(documents)} documents")
 
         return DocumentListResponse(
             documents=documents,
@@ -219,7 +219,7 @@ async def list_documents():
         )
 
     except Exception as e:
-        logger.error(f"❌ Error listing documents: {str(e)}")
+        logger.error(f"[ERR] Error listing documents: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Failed to list documents: {str(e)}")
 
 
@@ -248,7 +248,7 @@ async def delete_document(document_id: str):
         file_path = Path(doc_info.get("file_path", ""))
         if file_path.exists():
             os.remove(file_path)
-            logger.info(f"🗑️ Deleted file: {file_path}")
+            logger.info(f"[INFO] Deleted file: {file_path}")
 
         # Delete chunks from ChromaDB
         await vector_service.delete_document_chunks(document_id)
@@ -256,12 +256,12 @@ async def delete_document(document_id: str):
         # Remove from store
         del DOCUMENTS_STORE[document_id]
 
-        logger.info(f"✅ Document deleted: {document_id}")
+        logger.info(f"[OK] Document deleted: {document_id}")
 
     except HTTPException:
         raise
     except Exception as e:
-        logger.error(f"❌ Error deleting document: {str(e)}")
+        logger.error(f"[ERR] Error deleting document: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Failed to delete document: {str(e)}")
 
 
@@ -292,7 +292,7 @@ async def reindex_document(document_id: str):
             raise HTTPException(status_code=404, detail="Document file not found on disk")
 
         # Re-extract text
-        logger.info(f"🔄 Reindexing document: {document_id}")
+        logger.info(f"[INFO] Reindexing document: {document_id}")
         success, page_texts = PDFExtractor.extract_text_by_page(file_path)
         if not success:
             raise HTTPException(status_code=422, detail="Failed to extract text during reindex")
@@ -310,7 +310,7 @@ async def reindex_document(document_id: str):
         doc_info["chunk_count"] = chunk_count
         doc_info["status"] = "reindexed"
 
-        logger.info(f"✅ Document reindexed: {document_id} ({chunk_count} chunks)")
+        logger.info(f"[OK] Document reindexed: {document_id} ({chunk_count} chunks)")
 
         return DocumentUploadResponse(
             document_id=document_id,
@@ -323,7 +323,7 @@ async def reindex_document(document_id: str):
     except HTTPException:
         raise
     except Exception as e:
-        logger.error(f"❌ Error reindexing document: {str(e)}")
+        logger.error(f"[ERR] Error reindexing document: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Reindex failed: {str(e)}")
 
 
@@ -350,7 +350,7 @@ async def get_system_stats():
             if file_path.exists():
                 total_size_mb += file_path.stat().st_size / (1024 * 1024)
 
-        logger.info(f"📊 System stats: {total_docs} docs, {total_chunks} chunks")
+        logger.info(f"[INFO] System stats: {total_docs} docs, {total_chunks} chunks")
 
         return SystemStats(
             total_documents=total_docs,
@@ -361,5 +361,5 @@ async def get_system_stats():
         )
 
     except Exception as e:
-        logger.error(f"❌ Error getting system stats: {str(e)}")
+        logger.error(f"[ERR] Error getting system stats: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Failed to get stats: {str(e)}")

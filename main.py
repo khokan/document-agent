@@ -1,5 +1,5 @@
 """
-🤖 PDF Knowledge Assistant - RAG Engine
+PDF Knowledge Assistant - RAG Engine
 
 Main FastAPI application entry point.
 """

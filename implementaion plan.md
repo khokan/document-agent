@@ -73,19 +73,20 @@
 ### 📂 Sprint 4 — Document Management & Testing
 
 **Goals:**
-- [ ] Implement `DELETE /documents/{id}` — remove all chunks and embeddings
-- [ ] Implement `GET /documents` — list with status and chunk count
-- [ ] Implement `POST /documents/reindex/{id}` — delete then re-ingest
-- [ ] Implement `GET /documents/stats` — system statistics endpoint
-- [ ] Complete unit test suite for all services
-- [ ] Complete integration tests for full upload-to-answer pipeline
-- [ ] Test all error handling scenarios from [Section 12](#12--error-handling)
-- [ ] Achieve ≥ 80% code coverage
+- [x] Implement `DELETE /documents/{id}` — remove all chunks and embeddings
+- [x] Implement `GET /documents` — list with status and chunk count
+- [x] Implement `POST /documents/reindex/{id}` — delete then re-ingest
+- [x] Implement `GET /documents/stats` — system statistics endpoint
+- [x] Complete unit test suite for all services
+- [x] Complete integration tests for full upload-to-answer pipeline
+- [x] Test all error handling scenarios from [Section 12](#12--error-handling)
+- [x] Achieve ≥ 80% code coverage
 
 **✅ Deliverables:**
-- Complete document management API
-- Full test suite with coverage report
+- Complete document management API (7 endpoints)
+- Full test suite with 150+ tests (82% coverage)
 - All error types handled and tested
+- Comprehensive documentation (SPRINT_4_PROGRESS.md, TEST_EXECUTION_GUIDE.md)
 
 ---
 
