@@ -32,6 +32,14 @@ async def lifespan(app: FastAPI):
     logger.info(f"[INFO] RAG Cache enabled: {config.rag_cache_enabled}")
     logger.info(f"[INFO] RAG Generator model: {config.rag_generator_model}")
     logger.info(f"[INFO] RAG Generator timeout: {config.rag_generator_timeout_seconds}s")
+    
+    # Sync document store with vector store on startup
+    try:
+        from app.api.routes import _sync_documents_from_vector_store
+        await _sync_documents_from_vector_store()
+    except Exception as e:
+        logger.error(f"[ERR] Failed to sync on startup: {str(e)}")
+    
     logger.info("[OK] Application started successfully")
     
     yield

@@ -142,3 +142,66 @@ class ChromaDBService:
             "count": count,
             "collection_name": self.collection_name,
         }
+
+    async def get_all_document_ids(self) -> List[str]:
+        """Get all unique document IDs currently stored in the vector database."""
+        try:
+            # Get all items with limit to avoid memory issues
+            all_results = await asyncio.to_thread(
+                self.collection.get,
+                limit=100000  # Adjust based on your needs
+            )
+            
+            if not all_results or not all_results.get("metadatas"):
+                return []
+            
+            # Extract unique document_ids from metadata
+            document_ids = set()
+            for metadata in all_results["metadatas"]:
+                if metadata and "document_id" in metadata:
+                    document_ids.add(metadata["document_id"])
+            
+            return list(document_ids)
+        except Exception as e:
+            logger.error(f"[ERR] Failed to get document IDs from vector store: {str(e)}")
+            return []
+
+    async def get_document_metadata(self, document_id: str) -> Dict[str, Any]:
+        """
+        Get aggregated metadata for a specific document.
+        
+        Returns document info including filename, chunk count, page info, etc.
+        """
+        try:
+            # Get all chunks for this document
+            all_results = await asyncio.to_thread(
+                self.collection.get,
+                where={"document_id": document_id},
+                limit=100000
+            )
+            
+            if not all_results or not all_results.get("metadatas") or not all_results["metadatas"]:
+                return {}
+            
+            metadatas = all_results["metadatas"]
+            chunk_count = len(all_results["ids"])
+            
+            # Aggregate metadata from chunks
+            first_metadata = metadatas[0]
+            unique_pages = set()
+            
+            for metadata in metadatas:
+                if metadata and "page_number" in metadata:
+                    unique_pages.add(metadata["page_number"])
+            
+            return {
+                "document_id": document_id,
+                "filename": first_metadata.get("filename", "unknown"),
+                "original_filename": first_metadata.get("original_filename", first_metadata.get("filename", "unknown")),
+                "chunk_count": chunk_count,
+                "page_count": len(unique_pages) if unique_pages else 1,
+                "status": "indexed",
+            }
+        except Exception as e:
+            logger.error(f"[ERR] Failed to get document metadata: {str(e)}")
+            return {}

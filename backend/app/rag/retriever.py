@@ -53,20 +53,35 @@ class Retriever:
             filters=filters
         )
 
-        # 3. Filter by similarity threshold
+        # 3. Filter by similarity threshold and deduplicate
         filtered_matches = []
+        seen_content = set()  # Track (page_number, text) to avoid duplicates from same document
+        
         for match in raw_matches:
             if match["score"] >= threshold:
                 # Enrich metadata with original_filename if missing
                 metadata = match.get("metadata", {})
                 if "original_filename" not in metadata and "filename" in metadata:
                     metadata["original_filename"] = metadata["filename"]
-                filtered_matches.append(match)
+                
+                # Deduplicate by content: if we already have the same page and text, skip it
+                page_num = metadata.get("page_number", 1)
+                text = match["text"]
+                content_key = (page_num, text)
+                
+                if content_key not in seen_content:
+                    seen_content.add(content_key)
+                    filtered_matches.append(match)
+                else:
+                    logger.debug(
+                        f"[RAG] Skip duplicate chunk from page {page_num} "
+                        f"(already retrieved from another document_id)"
+                    )
             else:
                 logger.debug(
                     f"[RAG] Skip chunk '{match['chunk_id']}' with score {match['score']:.3f} "
                     f"(threshold={threshold:.3f})"
                 )
 
-        logger.info(f"[OK] Retrieved {len(filtered_matches)} chunks above threshold {threshold:.2f}")
+        logger.info(f"[OK] Retrieved {len(filtered_matches)} chunks above threshold {threshold:.2f} (deduplicated from {len(raw_matches)})")
         return filtered_matches

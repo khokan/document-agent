@@ -11,6 +11,7 @@ Implements endpoints for:
 
 import os
 import uuid
+import hashlib
 from datetime import datetime
 from pathlib import Path
 
@@ -33,6 +34,19 @@ router = APIRouter(prefix="/documents", tags=["Documents"])
 
 # In-memory document store (replace with database in production)
 DOCUMENTS_STORE = {}
+
+# Track file hashes to detect duplicate uploads
+FILE_HASH_MAP = {}  # Maps file_hash -> document_id
+
+
+def _calculate_file_hash(file_bytes: bytes) -> str:
+    """Calculate SHA256 hash of file contents."""
+    return hashlib.sha256(file_bytes).hexdigest()
+
+
+def _check_duplicate_upload(file_hash: str) -> str | None:
+    """Check if file has already been uploaded. Returns existing document_id if found."""
+    return FILE_HASH_MAP.get(file_hash)
 
 
 async def _process_and_store_document(document_id: str, filename: str, page_texts: dict) -> int:
@@ -109,6 +123,24 @@ async def upload_pdf(file: UploadFile = File(..., description="PDF file to uploa
         with open(temp_file_path, "wb") as f:
             f.write(contents)
 
+        # Calculate file hash for deduplication
+        file_hash = _calculate_file_hash(contents)
+        
+        # Check if this file has already been uploaded
+        existing_doc_id = _check_duplicate_upload(file_hash)
+        if existing_doc_id:
+            logger.warning(f"[WARN] Duplicate file detected. Already indexed as: {existing_doc_id}")
+            existing_doc = DOCUMENTS_STORE.get(existing_doc_id)
+            if existing_doc:
+                logger.info(f"[OK] Returning existing document: {existing_doc_id}")
+                return DocumentUploadResponse(
+                    document_id=existing_doc_id,
+                    filename=existing_doc["filename"],
+                    upload_date=existing_doc["upload_date"],
+                    status="indexed",
+                    chunk_count=existing_doc["chunk_count"],
+                )
+
         # Validate PDF
         is_valid, error_msg = FileValidator.validate_pdf_file(str(temp_file_path))
         if not is_valid:
@@ -126,8 +158,18 @@ async def upload_pdf(file: UploadFile = File(..., description="PDF file to uploa
         if not cleaned_pages:
             raise HTTPException(status_code=422, detail="No text content found in PDF")
 
-        # Generate document ID
-        document_id = f"{Path(file.filename).stem}_{uuid.uuid4().hex[:8]}"
+        # Generate document ID using filename only (no UUID) to support re-uploads
+        document_id = Path(file.filename).stem
+
+        # If document already exists, delete old chunks first
+        if document_id in DOCUMENTS_STORE:
+            logger.info(f"[INFO] Document '{document_id}' already exists. Removing old chunks...")
+            try:
+                await vector_service.delete_document_chunks(document_id)
+                logger.info(f"[OK] Deleted old chunks for document: {document_id}")
+            except Exception as e:
+                logger.error(f"[ERR] Failed to delete old chunks: {str(e)}")
+                raise HTTPException(status_code=500, detail=f"Failed to re-index document: {str(e)}")
 
         # Save to permanent storage
         pdf_dir = Path(config.upload_dir)
@@ -142,7 +184,7 @@ async def upload_pdf(file: UploadFile = File(..., description="PDF file to uploa
         logger.info(f"[INFO] Processing and storing document: {document_id}")
         chunk_count = await _process_and_store_document(document_id, file.filename, cleaned_pages)
 
-        # Store document metadata
+        # Store document metadata and file hash
         DOCUMENTS_STORE[document_id] = {
             "document_id": document_id,
             "filename": file.filename,
@@ -153,7 +195,11 @@ async def upload_pdf(file: UploadFile = File(..., description="PDF file to uploa
             "chunk_count": chunk_count,
             "file_path": str(final_path),
             "page_texts": cleaned_pages,
+            "file_hash": file_hash,
         }
+        
+        # Store file hash mapping for future duplicate detection
+        FILE_HASH_MAP[file_hash] = document_id
 
         logger.info(f"[OK] Document uploaded and indexed successfully: {document_id} ({chunk_count} chunks)")
 
@@ -210,7 +256,8 @@ async def list_documents():
             )
             total_chunks += doc_info.get("chunk_count", 0)
 
-        logger.info(f"[INFO] Listed {len(documents)} documents")
+        doc_ids = list(DOCUMENTS_STORE.keys())
+        logger.info(f"[INFO] Listed {len(documents)} documents: {doc_ids}")
 
         return DocumentListResponse(
             documents=documents,
@@ -225,8 +272,8 @@ async def list_documents():
 
 @router.delete(
     "/{document_id}",
-    status_code=status.HTTP_204_NO_CONTENT,
-    responses={404: {"model": ErrorResponse}},
+    status_code=status.HTTP_200_OK,
+    responses={404: {"model": ErrorResponse}, 400: {"model": ErrorResponse}},
 )
 async def delete_document(document_id: str):
     """
@@ -235,11 +282,23 @@ async def delete_document(document_id: str):
     Args:
         document_id: ID of document to delete
 
+    Returns:
+        Status message confirming deletion
+
     Raises:
-        HTTPException: If document not found
+        HTTPException: If document not found or ID is invalid
     """
     try:
+        # Validate document_id
+        if not document_id or document_id == "undefined" or document_id.strip() == "":
+            logger.warning(f"[WARN] Invalid document_id provided: '{document_id}'")
+            raise HTTPException(
+                status_code=400, 
+                detail=f"Invalid document ID: '{document_id}'. Document ID cannot be empty or undefined."
+            )
+        
         if document_id not in DOCUMENTS_STORE:
+            logger.warning(f"[WARN] Attempt to delete non-existent document: {document_id}")
             raise HTTPException(status_code=404, detail=f"Document not found: {document_id}")
 
         doc_info = DOCUMENTS_STORE[document_id]
@@ -252,11 +311,24 @@ async def delete_document(document_id: str):
 
         # Delete chunks from ChromaDB
         await vector_service.delete_document_chunks(document_id)
+        
+        # Remove file hash mapping
+        file_hash = doc_info.get("file_hash")
+        if file_hash and file_hash in FILE_HASH_MAP:
+            del FILE_HASH_MAP[file_hash]
+            logger.debug(f"[INFO] Removed file hash mapping: {file_hash}")
 
         # Remove from store
         del DOCUMENTS_STORE[document_id]
 
         logger.info(f"[OK] Document deleted: {document_id}")
+        
+        return {
+            "status": "success",
+            "message": f"Document '{document_id}' has been successfully deleted",
+            "document_id": document_id,
+            "deleted_at": datetime.utcnow().isoformat(),
+        }
 
     except HTTPException:
         raise
@@ -340,17 +412,33 @@ async def get_system_stats():
         SystemStats with document counts and storage information
     """
     try:
+        # Count from both in-memory store and vector store
         total_docs = len(DOCUMENTS_STORE)
         total_chunks = sum(doc.get("chunk_count", 0) for doc in DOCUMENTS_STORE.values())
 
-        # Calculate total size
+        # Get actual counts from vector store for comparison
+        vector_store_stats = await vector_service.get_stats()
+        vector_doc_ids = await vector_service.get_all_document_ids()
+        
+        actual_chunks_in_db = vector_store_stats.get("count", 0)
+        actual_docs_in_db = len(vector_doc_ids)
+
+        # Calculate total size from disk
         total_size_mb = 0.0
         for doc_info in DOCUMENTS_STORE.values():
             file_path = Path(doc_info.get("file_path", ""))
             if file_path.exists():
                 total_size_mb += file_path.stat().st_size / (1024 * 1024)
 
-        logger.info(f"[INFO] System stats: {total_docs} docs, {total_chunks} chunks")
+        # Log if there's a mismatch
+        if total_docs != actual_docs_in_db or total_chunks != actual_chunks_in_db:
+            logger.warning(
+                f"[WARN] Document store mismatch detected:\n"
+                f"  Tracked: {total_docs} docs, {total_chunks} chunks\n"
+                f"  Vector DB: {actual_docs_in_db} docs, {actual_chunks_in_db} chunks"
+            )
+        else:
+            logger.info(f"[INFO] System stats: {total_docs} docs, {total_chunks} chunks (synced)")
 
         return SystemStats(
             total_documents=total_docs,
@@ -363,3 +451,172 @@ async def get_system_stats():
     except Exception as e:
         logger.error(f"[ERR] Error getting system stats: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Failed to get stats: {str(e)}")
+
+
+async def _cleanup_orphaned_chunks():
+    """
+    Cleanup orphaned chunks in vector store that don't belong to any document in DOCUMENTS_STORE.
+    This handles cases where documents were deleted but chunks remain in the database.
+    """
+    try:
+        vector_doc_ids = await vector_service.get_all_document_ids()
+        tracked_doc_ids = set(DOCUMENTS_STORE.keys())
+        orphaned_doc_ids = vector_doc_ids - tracked_doc_ids
+        
+        if orphaned_doc_ids:
+            logger.warning(f"[WARN] Found {len(orphaned_doc_ids)} orphaned document(s) in vector store: {orphaned_doc_ids}")
+            for orphaned_id in orphaned_doc_ids:
+                logger.info(f"[INFO] Deleting orphaned chunks for document: {orphaned_id}")
+                await vector_service.delete_document_chunks(orphaned_id)
+            logger.info(f"[OK] Cleaned up {len(orphaned_doc_ids)} orphaned document(s)")
+        else:
+            logger.debug("[OK] No orphaned documents found in vector store")
+    except Exception as e:
+        logger.error(f"[ERR] Failed to cleanup orphaned chunks: {str(e)}")
+
+
+async def _sync_documents_from_vector_store():
+    """
+    Sync DOCUMENTS_STORE with actual vector store data on startup.
+    This ensures consistency after app restarts or crashes.
+    
+    - Loads all documents from vector store into memory
+    - Cleans up orphaned chunks
+    - Restores document metadata
+    """
+    try:
+        logger.info("[INFO] Starting document store sync from vector store...")
+        
+        # Get all document IDs from vector store
+        vector_doc_ids = await vector_service.get_all_document_ids()
+        
+        if not vector_doc_ids:
+            logger.info("[OK] No documents found in vector store")
+            return
+        
+        logger.info(f"[INFO] Found {len(vector_doc_ids)} document(s) in vector store")
+        
+        # Load metadata for each document into DOCUMENTS_STORE
+        loaded_count = 0
+        for doc_id in vector_doc_ids:
+            try:
+                metadata = await vector_service.get_document_metadata(doc_id)
+                if metadata:
+                    # Store in memory for fast access
+                    DOCUMENTS_STORE[doc_id] = {
+                        "document_id": doc_id,
+                        "filename": metadata.get("filename", "unknown"),
+                        "original_filename": metadata.get("original_filename", metadata.get("filename", "unknown")),
+                        "upload_date": datetime.utcnow(),  # Use current time (actual date is not stored in chunks)
+                        "status": metadata.get("status", "indexed"),
+                        "chunk_count": metadata.get("chunk_count", 0),
+                        "page_count": metadata.get("page_count", 0),
+                        "file_path": str(Path(config.upload_dir) / f"{doc_id}.pdf"),
+                    }
+                    loaded_count += 1
+                    logger.debug(f"[DEBUG] Loaded document: {doc_id} ({metadata.get('chunk_count', 0)} chunks)")
+            except Exception as e:
+                logger.error(f"[ERR] Failed to load document {doc_id}: {str(e)}")
+        
+        logger.info(f"[OK] Loaded {loaded_count} document(s) into memory")
+        
+        # Cleanup orphaned chunks
+        await _cleanup_orphaned_chunks()
+        logger.info("[OK] Document store synchronized with vector store")
+        
+    except Exception as e:
+        logger.error(f"[ERR] Failed to sync document store: {str(e)}")
+
+
+@router.post(
+    "/cleanup",
+    status_code=status.HTTP_200_OK,
+    responses={500: {"model": ErrorResponse}},
+)
+async def cleanup_orphaned_documents():
+    """
+    Cleanup orphaned chunks in vector store.
+    
+    This endpoint removes any chunks that don't belong to documents in the tracked list.
+    Useful for syncing the system after crashes or manual deletions.
+    
+    Returns:
+        Status message with number of cleaned up documents
+    """
+    try:
+        vector_doc_ids = await vector_service.get_all_document_ids()
+        tracked_doc_ids = set(DOCUMENTS_STORE.keys())
+        orphaned_doc_ids = vector_doc_ids - tracked_doc_ids
+        
+        if orphaned_doc_ids:
+            logger.warning(f"[WARN] Cleaning up {len(orphaned_doc_ids)} orphaned document(s): {orphaned_doc_ids}")
+            for orphaned_id in orphaned_doc_ids:
+                await vector_service.delete_document_chunks(orphaned_id)
+            logger.info(f"[OK] Cleaned up {len(orphaned_doc_ids)} orphaned document(s)")
+            
+            return {
+                "status": "success",
+                "message": f"Cleaned up {len(orphaned_doc_ids)} orphaned document(s)",
+                "orphaned_documents": list(orphaned_doc_ids),
+            }
+        else:
+            return {
+                "status": "success",
+                "message": "No orphaned documents found",
+                "orphaned_documents": [],
+            }
+    
+    except Exception as e:
+        logger.error(f"[ERR] Cleanup failed: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Cleanup failed: {str(e)}")
+
+
+@router.get(
+    "/health",
+    status_code=status.HTTP_200_OK,
+)
+async def document_store_health():
+    """
+    Check the health and consistency of the document store.
+    
+    Returns:
+        Detailed health status including any mismatches between tracked and actual documents
+    """
+    try:
+        tracked_doc_ids = set(DOCUMENTS_STORE.keys())
+        vector_doc_ids = set(await vector_service.get_all_document_ids())
+        
+        tracked_chunks = sum(doc.get("chunk_count", 0) for doc in DOCUMENTS_STORE.values())
+        vector_stats = await vector_service.get_stats()
+        vector_chunks = vector_stats.get("count", 0)
+        
+        orphaned_docs = vector_doc_ids - tracked_doc_ids
+        missing_docs = tracked_doc_ids - vector_doc_ids
+        
+        is_healthy = (tracked_doc_ids == vector_doc_ids) and (tracked_chunks == vector_chunks)
+        
+        status_msg = "healthy" if is_healthy else "inconsistent"
+        
+        logger.info(
+            f"[{status_msg.upper()}] Document store health:\n"
+            f"  Tracked: {len(tracked_doc_ids)} docs, {tracked_chunks} chunks\n"
+            f"  Vector DB: {len(vector_doc_ids)} docs, {vector_chunks} chunks"
+        )
+        
+        return {
+            "status": status_msg,
+            "tracked_documents": len(tracked_doc_ids),
+            "tracked_chunks": tracked_chunks,
+            "vector_db_documents": len(vector_doc_ids),
+            "vector_db_chunks": vector_chunks,
+            "orphaned_documents": list(orphaned_docs),
+            "missing_documents": list(missing_docs),
+            "is_consistent": is_healthy,
+            "needs_cleanup": len(orphaned_docs) > 0,
+            "tracked_doc_ids": list(tracked_doc_ids),
+            "vector_doc_ids": list(vector_doc_ids),
+        }
+    
+    except Exception as e:
+        logger.error(f"[ERR] Health check failed: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Health check failed: {str(e)}")
