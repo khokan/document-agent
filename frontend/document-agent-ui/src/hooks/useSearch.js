@@ -26,11 +26,36 @@ export const useSearch = () => {
     try {
       logger.info('Performing search', { query });
       const response = await searchAPI.search(query);
+      // Backend returns array directly, not wrapped in object
+      let resultsArray = Array.isArray(response) ? response : response.results || [];
+
+      console.log('📊 Raw results from backend:', resultsArray.length, resultsArray);
+
+      // Deduplicate results based on document_id, page, and text content
+      const uniqueResults = [];
+      const seen = new Set();
+
+      for (const result of resultsArray) {
+        const key = `${result.document_id}-${result.page}-${result.text.substring(0, 100)}`;
+        if (!seen.has(key)) {
+          seen.add(key);
+          uniqueResults.push(result);
+        }
+      }
+
+      console.log(
+        '🎯 After deduplication:',
+        uniqueResults.length,
+        'results (removed',
+        resultsArray.length - uniqueResults.length,
+        'duplicates)'
+      );
+
       searchStore.setQuery(query);
-      searchStore.setResults(response.results);
-      searchStore.setSearchTime(response.search_time_ms);
-      setResults(response.results);
-      logger.info('Search completed', { resultCount: response.results.length });
+      searchStore.setResults(uniqueResults);
+      searchStore.setSearchTime(response.search_time_ms || 0);
+      setResults(uniqueResults);
+      logger.info('Search completed', { resultCount: uniqueResults.length });
     } catch (err) {
       const error = err instanceof Error ? err : new Error('Search failed');
       setError(error);

@@ -17,9 +17,13 @@ export const searchAPI = {
   async search(query, limit = 10) {
     logger.info('Performing search', { query, limit });
     try {
-      const request = { query, limit };
-      return await client.post(ENDPOINTS.SEARCH, request);
+      const request = { question: query, top_k: limit };
+      console.log('🔍 Search request payload:', JSON.stringify(request));
+      const response = await client.post(ENDPOINTS.SEARCH, request);
+      console.log('✅ Search response:', response);
+      return response;
     } catch (error) {
+      console.error('❌ Search error:', error);
       logger.error('Search failed', error instanceof Error ? error : { error });
       throw error;
     }

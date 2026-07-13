@@ -40,7 +40,7 @@ export const SearchPage = () => {
               <Button type="submit" isLoading={loading}>
                 🔍 Search
               </Button>
-              {results.length > 0 && (
+              {results && results.length > 0 && (
                 <Button variant="outline" onClick={clearSearch}>
                   Clear
                 </Button>
@@ -58,28 +58,34 @@ export const SearchPage = () => {
 
       {loading && <Spinner size="lg" message="Searching documents..." />}
 
-      {results.length > 0 && (
+      {results && results.length > 0 && (
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
               Found {results.length} results
             </h2>
-            <p className="text-sm text-gray-600 dark:text-gray-400">Search completed in {formatDuration(0)}ms</p>
+            <p className="text-sm text-gray-600 dark:text-gray-400">
+              Search completed in {formatDuration(0)}ms
+            </p>
           </div>
 
           <div className="space-y-3">
-            {results.map((result) => (
-              <Card key={result.id}>
+            {results.map((result, index) => (
+              <Card key={`${result.document_id}-${result.page}-${index}`}>
                 <CardBody className="space-y-2">
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
-                      <h3 className="font-semibold text-gray-900 dark:text-white">{result.document_name}</h3>
+                      <h3 className="font-semibold text-gray-900 dark:text-white">
+                        {result.filename}
+                      </h3>
                       <p className="text-sm text-gray-600 dark:text-gray-400">
-                        📄 Page {result.page_number} • Score: {(result.score * 100).toFixed(1)}%
+                        📄 Page {result.page} • Score: {(result.score * 100).toFixed(1)}%
                       </p>
                     </div>
                   </div>
-                  <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">{result.content}</p>
+                  <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
+                    {result.text}
+                  </p>
                 </CardBody>
               </Card>
             ))}
@@ -87,14 +93,14 @@ export const SearchPage = () => {
         </div>
       )}
 
-      {!loading && results.length === 0 && query && (
+      {!loading && (!results || results.length === 0) && query && (
         <div className="text-center py-8 text-gray-500 dark:text-gray-400">
           <p className="text-lg">No results found for "{query}"</p>
           <p className="text-sm">Try using different keywords</p>
         </div>
       )}
 
-      {!loading && results.length === 0 && !query && (
+      {!loading && (!results || results.length === 0) && !query && (
         <div className="text-center py-8 text-gray-500 dark:text-gray-400">
           <p className="text-lg">Enter a search query to get started</p>
         </div>

@@ -29,7 +29,10 @@ class HttpClient {
   }
 
   async post(url, data, options = {}) {
-    const response = await fetch(`${this.baseURL}${url}`, {
+    const fullUrl = `${this.baseURL}${url}`;
+    console.log('📤 POST Request:', { url, fullUrl, data, options });
+
+    const response = await fetch(fullUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -39,9 +42,27 @@ class HttpClient {
       ...options,
     });
 
+    console.log('📥 POST Response:', {
+      status: response.status,
+      statusText: response.statusText,
+      ok: response.ok,
+    });
+
     if (!response.ok) {
-      const error = await response.json().catch(() => ({}));
-      throw new Error(`HTTP ${response.status}: ${error.message || response.statusText}`);
+      let errorData = {};
+      try {
+        errorData = await response.json();
+        console.error('❌ Error response body:', errorData);
+        if (errorData.detail && Array.isArray(errorData.detail)) {
+          console.error(
+            '❌ Validation errors:',
+            errorData.detail.map((e) => `${e.loc?.join('.')} - ${e.msg}`).join(', ')
+          );
+        }
+      } catch {
+        console.error('❌ Could not parse error response');
+      }
+      throw new Error(`HTTP ${response.status}: ${errorData.message || response.statusText}`);
     }
 
     return response.json();
