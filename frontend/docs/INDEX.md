@@ -1,53 +1,98 @@
 ## 🎯 Frontend Documentation Index
 ### PDF Knowledge Assistant — React UI
 
-> **Master Index for All Frontend Documentation** | **July 2026**
+> **Documentation has been consolidated** | **July 2026**
 
 ---
 
-## 📚 Complete Documentation Structure
+## � Development Documentation
+
+**For development, see the consolidated docs in `document-agent-ui/docs/`:**
+
+### Start Here
+- **[START_HERE.md](../document-agent-ui/docs/START_HERE.md)** — 5-minute quick start ⭐
+- **[QUICKSTART_SETUP.md](../document-agent-ui/docs/QUICKSTART_SETUP.md)** — Complete setup guide
+- **[QUICK_REFERENCE.md](../document-agent-ui/docs/QUICK_REFERENCE.md)** — Commands & shortcuts
+
+### Development Guides
+- **[DEBUGGING_GUIDE.md](../document-agent-ui/docs/DEBUGGING_GUIDE.md)** — VS Code debugging
+- **[BUILD_DEPLOYMENT_GUIDE.md](../document-agent-ui/docs/BUILD_DEPLOYMENT_GUIDE.md)** — Build & deploy
+
+---
+
+## 📋 Project Reference Documentation
+
+These files contain project specifications and planning:
+
+- **PRD.md** — Product Requirements Document
+- **PROJECT_KICKOFF.md** — Project initialization notes
+- **ARCHITECTURE.md** — Technical architecture & design patterns
+- **IMPLEMENTATION_PLAN.md** — Sprint-based implementation roadmap
+
+---
+
+## 🚀 Quick Start
+
+```bash
+# Navigate to frontend
+cd document-agent-ui
+
+# Install & run
+npm install
+npm run dev
+
+# Open browser
+# Visit: http://localhost:5173
+```
+
+For detailed instructions → [START_HERE.md](../document-agent-ui/docs/START_HERE.md)
+
+---
+
+## � Folder Structure
 
 ```
 frontend/
-├── 📄 README.md                      # START HERE: Project overview
-├── 📋 PRD.md                         # Product requirements (5K lines)
-├── 🏗️  ARCHITECTURE.md               # Technical architecture (6K lines)
-├── 🚀 IMPLEMENTATION_PLAN.md         # Sprint roadmap (4K lines)
-├── ⚡ QUICKSTART.md                  # Developer setup (3K lines)
-└── 📊 DOCUMENTATION_SUMMARY.md       # This guide (this file)
+├── README.md                  # Frontend overview
+├── document-agent-ui/         # React app
+│   ├── docs/                  # Developer docs (consolidated)
+│   ├── src/                   # Source code
+│   ├── public/                # Static files
+│   └── package.json
+└── docs/                      # Project reference (PRD, etc)
 ```
 
 ---
 
-## 🗂️ Quick Navigation
+## 🎯 For Your Role
 
-### For Different Roles
+### 👨‍💻 Developers (Start Here!)
+1. **[document-agent-ui/docs/START_HERE.md](../document-agent-ui/docs/START_HERE.md)** — 5 min
+2. **[document-agent-ui/docs/QUICKSTART_SETUP.md](../document-agent-ui/docs/QUICKSTART_SETUP.md)** — 10 min
+3. **[document-agent-ui/docs/QUICK_REFERENCE.md](../document-agent-ui/docs/QUICK_REFERENCE.md)** — Keep handy
 
-#### 👔 Project Managers & Product Owners
-```
-1. README.md                    # 10 min - Project overview
-2. PRD.md                       # 30 min - Requirements & features
-3. IMPLEMENTATION_PLAN.md       # 20 min - Sprint timelines & tasks
-4. QUICKSTART.md               # 10 min - Team onboarding info
-```
+**When debugging:**
+→ [document-agent-ui/docs/DEBUGGING_GUIDE.md](../document-agent-ui/docs/DEBUGGING_GUIDE.md)
 
-**Key Sections to Review**:
-- PRD → Objectives & Success Criteria
-- IMPLEMENTATION_PLAN → Sprint Overview & Timeline
-- IMPLEMENTATION_PLAN → Acceptance Criteria
+### � Product Managers / Stakeholders
+1. **README.md** — Project overview
+2. **PRD.md** — Requirements & features
+3. **IMPLEMENTATION_PLAN.md** — Roadmap & timelines
+4. **ARCHITECTURE.md** — Technical design
 
-#### 👨‍💻 Developers
-```
-1. README.md                    # 10 min - Project overview
-2. QUICKSTART.md               # 1 hour - Complete setup
-3. ARCHITECTURE.md             # 2 hours - Learn patterns & structure
-4. PRD.md                       # 1 hour - Reference specifications
-5. IMPLEMENTATION_PLAN.md       # 30 min - Pick first task
-```
+---
 
-**Key Sections to Review**:
-- QUICKSTART → Project Setup & Commands
-- ARCHITECTURE → Component Patterns & State Management
+## ✨ Key Features
+
+- ✅ Modern React 18 with TypeScript
+- ✅ Vite for fast development
+- ✅ Tailwind CSS for styling
+- ✅ Full VS Code debugging support
+- ✅ Comprehensive documentation
+
+---
+
+**Note**: All developer documentation has been consolidated in `document-agent-ui/docs/` for easier access alongside source code.
 - QUICKSTART → Development Guidelines
 - IMPLEMENTATION_PLAN → Sprint 1 Tasks
 

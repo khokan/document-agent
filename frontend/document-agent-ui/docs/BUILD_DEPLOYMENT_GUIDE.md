@@ -213,8 +213,6 @@ npm run build
 
 ## Performance Metrics After Build
 
-After running `npm run build`, check:
-
 ### Bundle Size
 ```bash
 # View dist folder size

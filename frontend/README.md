@@ -77,12 +77,16 @@ Visit `http://localhost:5173` in your browser.
 
 ## 📚 Documentation
 
+**All developer documentation is in the `document-agent-ui/docs/` folder:**
+
 | Document | Purpose |
 |----------|---------|
-| **[PRD.md](./PRD.md)** | Product requirements and specifications |
-| **[ARCHITECTURE.md](./ARCHITECTURE.md)** | Technical architecture and design patterns |
-| **[IMPLEMENTATION_PLAN.md](./IMPLEMENTATION_PLAN.md)** | Sprint-by-sprint implementation roadmap |
-| **[QUICKSTART.md](./QUICKSTART.md)** | Developer setup and quick start guide |
+| **[document-agent-ui/docs/START_HERE.md](./document-agent-ui/docs/START_HERE.md)** | 5-minute quick start ⭐ |
+| **[document-agent-ui/docs/QUICKSTART_SETUP.md](./document-agent-ui/docs/QUICKSTART_SETUP.md)** | Complete setup guide |
+| **[document-agent-ui/docs/QUICK_REFERENCE.md](./document-agent-ui/docs/QUICK_REFERENCE.md)** | Commands & shortcuts |
+| **[document-agent-ui/docs/DEBUGGING_GUIDE.md](./document-agent-ui/docs/DEBUGGING_GUIDE.md)** | VS Code debugging |
+| **[document-agent-ui/docs/BUILD_DEPLOYMENT_GUIDE.md](./document-agent-ui/docs/BUILD_DEPLOYMENT_GUIDE.md)** | Build & deployment |
+| **[document-agent-ui/docs/README.md](./document-agent-ui/docs/README.md)** | Full documentation index |
 
 ---
 
