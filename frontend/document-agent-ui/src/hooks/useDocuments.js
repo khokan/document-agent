@@ -20,9 +20,17 @@ export const useDocuments = (page = 1, pageSize = 10) => {
       setLoading(true);
       try {
         const response = await documentAPI.list(page, pageSize);
-        documentStore.setDocuments(response.documents);
-        documentStore.setTotal(response.total);
-        setDocuments(response.documents);
+        console.log('📋 Documents API response:', response);
+
+        // Handle both wrapped and direct array responses
+        const docsList = Array.isArray(response)
+          ? response
+          : response.documents || response.data || [];
+        console.log('📄 Parsed documents:', docsList);
+
+        documentStore.setDocuments(docsList);
+        documentStore.setTotal(response.total || docsList.length);
+        setDocuments(docsList);
       } catch (err) {
         const error = err instanceof Error ? err : new Error('Failed to fetch documents');
         setError(error);
@@ -43,8 +51,11 @@ export const useDocuments = (page = 1, pageSize = 10) => {
       logger.debug('Upload response', { uploadResponse: response });
       // Refetch the list
       const listResponse = await documentAPI.list(page, pageSize);
-      documentStore.setDocuments(listResponse.documents);
-      setDocuments(listResponse.documents);
+      const docsList = Array.isArray(listResponse)
+        ? listResponse
+        : listResponse.documents || listResponse.data || [];
+      documentStore.setDocuments(docsList);
+      setDocuments(docsList);
       return response;
     } catch (err) {
       const error = err instanceof Error ? err : new Error('Failed to upload document');
@@ -57,9 +68,14 @@ export const useDocuments = (page = 1, pageSize = 10) => {
     try {
       logger.info('Deleting document', { documentId });
       await documentAPI.delete(documentId);
-      // Remove from local state
-      setDocuments((prev) => prev.filter((doc) => doc.id !== documentId));
       logger.info('Document deleted successfully');
+      // Refetch the documents list
+      const listResponse = await documentAPI.list(page, pageSize);
+      const docsList = Array.isArray(listResponse)
+        ? listResponse
+        : listResponse.documents || listResponse.data || [];
+      documentStore.setDocuments(docsList);
+      setDocuments(docsList);
     } catch (err) {
       const error = err instanceof Error ? err : new Error('Failed to delete document');
       setError(error);

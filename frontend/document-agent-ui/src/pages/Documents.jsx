@@ -68,7 +68,11 @@ export const DocumentsPage = () => {
               )}
             </label>
           </div>
-          <Button onClick={handleUpload} disabled={!selectedFile || uploading} isLoading={uploading}>
+          <Button
+            onClick={handleUpload}
+            disabled={!selectedFile || uploading}
+            isLoading={uploading}
+          >
             Upload PDF
           </Button>
         </CardBody>
@@ -92,11 +96,13 @@ export const DocumentsPage = () => {
         ) : (
           <div className="grid gap-4">
             {documents.map((doc) => (
-              <Card key={doc.id}>
+              <Card key={doc.id || doc.document_id}>
                 <CardBody>
                   <div className="flex items-center justify-between">
                     <div className="flex-1">
-                      <h3 className="font-semibold text-gray-900 dark:text-white">{doc.filename}</h3>
+                      <h3 className="font-semibold text-gray-900 dark:text-white">
+                        {doc.filename}
+                      </h3>
                       <p className="text-sm text-gray-600 dark:text-gray-400">
                         📄 {doc.pages} pages • {formatFileSize(doc.size)} •{' '}
                         {formatDate(doc.upload_date)}
@@ -107,7 +113,7 @@ export const DocumentsPage = () => {
                       <Button
                         variant="danger"
                         size="sm"
-                        onClick={() => handleDelete(doc.id)}
+                        onClick={() => handleDelete(doc.id || doc.document_id)}
                       >
                         Delete
                       </Button>

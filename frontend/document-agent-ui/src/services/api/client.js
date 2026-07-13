@@ -68,23 +68,34 @@ class HttpClient {
     return response.json();
   }
 
-  async delete(url, options = {}) {
-    const response = await fetch(`${this.baseURL}${url}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        ...(options.headers || {}),
-      },
-      ...options,
-    });
+	async delete(url, options = {}) {
+		const fullUrl = `${this.baseURL}${url}`;
+		console.log('🗑️ DELETE Request:', { url, fullUrl, options });
+		
+		const response = await fetch(fullUrl, {
+			method: 'DELETE',
+			headers: {
+				'Content-Type': 'application/json',
+				...(options.headers || {}),
+			},
+			...options,
+		});
 
-    if (!response.ok) {
-      const error = await response.json().catch(() => ({}));
-      throw new Error(`HTTP ${response.status}: ${error.message || response.statusText}`);
-    }
+		console.log('📥 DELETE Response:', { status: response.status, statusText: response.statusText, ok: response.ok });
 
-    return response.json();
-  }
+		if (!response.ok) {
+			let errorData = {};
+			try {
+				errorData = await response.json();
+				console.error('❌ Error response body:', errorData);
+			} catch {
+				console.error('❌ Could not parse error response');
+			}
+			throw new Error(`HTTP ${response.status}: ${errorData.message || response.statusText}`);
+		}
+
+		return response.json();
+	}
 
   async uploadFile(url, file) {
     const formData = new FormData();
