@@ -11,6 +11,8 @@ const navLinks = [
   { label: 'Dashboard', to: '/', icon: '📊' },
   { label: 'Documents', to: '/documents', icon: '📁' },
   { label: 'Search', to: '/search', icon: '🔍' },
+  { label: 'Ask (RAG)', to: '/ask', icon: '🤖' },
+  { label: 'Chat', to: '/chat', icon: '💬' },
 ];
 
 export const Sidebar = () => {

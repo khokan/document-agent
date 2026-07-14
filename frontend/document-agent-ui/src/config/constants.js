@@ -34,12 +34,19 @@ export const ENDPOINTS = {
   DOCUMENTS_LIST: '/documents',
   DOCUMENTS_UPLOAD: '/documents/upload',
   DOCUMENTS_DELETE: (id) => `/documents/${id}`,
+  DOCUMENTS_REINDEX: (id) => `/documents/reindex/${id}`,
   DOCUMENTS_STATS: '/documents/stats',
+  DOCUMENTS_CLEANUP: '/documents/cleanup',
+  DOCUMENTS_HEALTH: '/documents/health',
 
   // Search
   SEARCH: '/search',
-  SEARCH_ADVANCED: '/search/advanced',
-  SEARCH_STATS: '/search/stats',
+
+  // RAG
+  RAG_QUERY: '/rag/query',
+  RAG_CHAT: '/rag/chat',
+  RAG_SUMMARIZE: '/rag/summarize',
+  RAG_STREAM: '/rag/stream',
 
   // Health
   HEALTH: '/health',

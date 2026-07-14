@@ -164,66 +164,68 @@ frontend/document-agent-ui/
 │   ├── favicon.ico
 │   └── vite.svg
 ├── src/
-│   ├── main.tsx               # Application entry point
-│   ├── App.tsx                # Main App component
+│   ├── main.jsx               # Application entry point
+│   ├── App.jsx                # Main App component (routes)
 │   ├── index.css              # Global styles
-│   ├── vite-env.d.ts          # Vite environment types
-│   ├── types/
-│   │   ├── index.ts           # Type exports
-│   │   ├── api.ts             # API response types
-│   │   ├── documents.ts       # Document-related types
-│   │   ├── search.ts          # Search-related types
-│   │   └── common.ts          # Common types
 │   ├── components/
 │   │   ├── ui/               # Reusable UI components
-│   │   │   ├── Button.tsx
-│   │   │   ├── Card.tsx
-│   │   │   ├── Input.tsx
-│   │   │   ├── Badge.tsx
-│   │   │   ├── Spinner.tsx
-│   │   │   └── index.ts
+│   │   │   ├── Button.jsx
+│   │   │   ├── Card.jsx
+│   │   │   ├── Input.jsx
+│   │   │   ├── Badge.jsx
+│   │   │   ├── Spinner.jsx
+│   │   │   └── index.js
 │   │   └── layout/           # Layout components
-│   │       ├── Header.tsx
-│   │       ├── Sidebar.tsx
-│   │       ├── Layout.tsx
-│   │       └── index.ts
+│   │       ├── Header.jsx
+│   │       ├── Sidebar.jsx
+│   │       ├── Layout.jsx
+│   │       └── index.js
 │   ├── pages/
-│   │   ├── Dashboard.tsx
-│   │   ├── Documents.tsx
-│   │   ├── Search.tsx
-│   │   ├── NotFound.tsx
-│   │   └── index.ts
+│   │   ├── Dashboard.jsx     # System statistics & overview
+│   │   ├── Documents.jsx     # Document management
+│   │   ├── Search.jsx        # Semantic search
+│   │   ├── Query.jsx         # RAG query (ask questions)
+│   │   ├── Chat.jsx          # Multi-turn chat with RAG
+│   │   ├── NotFound.jsx      # 404 page
+│   │   └── index.js          # Barrel exports
 │   ├── hooks/                # Custom React hooks
-│   │   ├── useDocuments.ts
-│   │   ├── useSearch.ts
-│   │   ├── useNotification.ts
-│   │   └── index.ts
-│   ├── stores/               # State management
-│   │   ├── documentStore.ts
-│   │   ├── searchStore.ts
-│   │   ├── uiStore.ts
-│   │   └── index.ts
+│   │   ├── useDocuments.js   # Document CRUD operations
+│   │   ├── useSearch.js      # Semantic search
+│   │   ├── useRagQuery.js    # RAG query (ask + answer + sources)
+│   │   ├── useChat.js        # Multi-turn chat with history
+│   │   ├── useNotification.js
+│   │   └── index.js          # Barrel exports
+│   ├── stores/               # State management (Zustand)
+│   │   ├── documentStore.js
+│   │   ├── searchStore.js
+│   │   ├── uiStore.js
+│   │   └── index.js
 │   ├── services/             # API services
 │   │   ├── api/
-│   │   │   ├── client.ts
-│   │   │   ├── documents.ts
-│   │   │   ├── health.ts
-│   │   │   └── index.ts
-│   │   └── index.ts
+│   │   │   ├── client.js     # HTTP client
+│   │   │   ├── documents.js  # Document CRUD, reindex, cleanup
+│   │   │   ├── search.js     # Semantic search
+│   │   │   ├── rag.js        # RAG (query, chat, summarize, stream)
+│   │   │   ├── health.js     # Health check
+│   │   │   └── index.js      # Barrel exports
+│   │   └── index.js
 │   ├── utils/               # Utility functions
-│   │   ├── logger.ts
-│   │   ├── errorHandler.ts
-│   │   ├── validators.ts
-│   │   ├── formatters.ts
-│   │   └── index.ts
+│   │   ├── logger.js
+│   │   ├── errorHandler.js
+│   │   ├── validators.js
+│   │   ├── formatters.js
+│   │   └── index.js
 │   └── config/              # Configuration
-│       ├── constants.ts
-│       └── index.ts
+│       ├── constants.js     # API endpoints, config values
+│       └── index.js
 ├── docs/
-│   ├── GETTING_STARTED.md
+│   ├── START_HERE.md
+│   ├── QUICKSTART_SETUP.md
+│   ├── QUICK_REFERENCE.md
 │   ├── DEBUGGING_GUIDE.md
 │   ├── BUILD_DEPLOYMENT_GUIDE.md
-│   └── [other documentation]
+│   ├── COMPLETE_REFERENCE.md
+│   └── README.md
 ├── .env.example             # Example environment variables
 ├── .env.local              # Local environment variables (gitignored)
 ├── .eslintrc.json          # ESLint configuration
@@ -232,12 +234,9 @@ frontend/document-agent-ui/
 ├── index.html              # HTML entry point
 ├── package.json            # Dependencies and scripts
 ├── package-lock.json       # Locked dependency versions
-├── tsconfig.json           # TypeScript configuration
-├── vite.config.ts          # Vite build configuration
+├── vite.config.js          # Vite build configuration
 ├── tailwind.config.js      # Tailwind CSS configuration
 ├── postcss.config.js       # PostCSS configuration
-├── verify-setup.sh         # Setup verification (macOS/Linux)
-├── verify-setup.bat        # Setup verification (Windows)
 └── README.md               # Project README
 ```
 
@@ -594,57 +593,74 @@ export const Component: React.FC = () => {
 
 ## API Integration
 
+### API Services
+
+The frontend uses a modular API service layer:
+
+```javascript
+// src/services/api/index.js
+export { documentAPI } from './documents';
+export { searchAPI } from './search';
+export { ragAPI } from './rag';
+export { healthAPI } from './health';
+```
+
+### API Endpoints
+
+| Service | Endpoint | Method | Description |
+|---------|----------|--------|-------------|
+| Documents | `/documents` | GET | List all documents |
+| Documents | `/documents/upload` | POST | Upload PDF |
+| Documents | `/documents/{id}` | DELETE | Delete document |
+| Documents | `/documents/reindex/{id}` | POST | Reindex document |
+| Documents | `/documents/stats` | GET | System statistics |
+| Documents | `/documents/cleanup` | POST | Cleanup orphaned data |
+| Documents | `/documents/health` | GET | Document system health |
+| Search | `/search` | POST | Semantic search |
+| RAG | `/rag/query` | POST | Ask question, get answer + sources |
+| RAG | `/rag/chat` | POST | Multi-turn chat with RAG context |
+| RAG | `/rag/summarize` | POST | Summarize a document |
+| RAG | `/rag/stream` | POST | Stream RAG response via SSE |
+| Health | `/health` | GET | System health check |
+
 ### HttpClient Usage
 
-```typescript
-import { apiClient } from '@/services/api';
+```javascript
+import HttpClient from './services/api/client';
+import { API_CONFIG } from './config';
+
+const client = new HttpClient(API_CONFIG.BASE_URL, API_CONFIG.TIMEOUT);
 
 // GET request
-const response = await apiClient.get('/documents');
+const response = await client.get('/documents');
 
 // POST request
-const response = await apiClient.post('/documents', {
-  name: 'New Document',
-  content: 'Content here'
-});
-
-// PUT request
-const response = await apiClient.put('/documents/1', {
-  name: 'Updated Name'
-});
+const response = await client.post('/documents/upload', formData);
 
 // DELETE request
-await apiClient.delete('/documents/1');
+await client.delete(`/documents/${id}`);
 ```
 
-### Error Handling
+### RAG Query Example
 
-```typescript
-try {
-  const response = await apiClient.get('/documents');
-} catch (error) {
-  if (error instanceof ApiError) {
-    console.error('API Error:', error.statusCode, error.message);
-  } else {
-    console.error('Unknown Error:', error);
-  }
-}
-```
+```javascript
+import { ragAPI } from './services/api';
 
-### Request/Response Interceptors
+// Ask a question
+const result = await ragAPI.query('What is the main topic?', {
+  top_k: 5,
+  score_threshold: 0.7,
+});
 
-In `src/services/api/client.ts`, modify the client:
+// result: { answer, sources, response_time_ms, retrieval_time_ms, generation_time_ms }
 
-```typescript
-// Add request interceptor
-export const apiClient = {
-  async request<T>(url: string, options?: RequestInit): Promise<ApiResponse<T>> {
-    // Pre-request logic here
-    const response = await fetch(url, options);
-    // Post-response logic here
-    return response.json();
-  }
-};
+// Multi-turn chat
+const chatResult = await ragAPI.chat('Tell me more', history, { top_k: 5 });
+
+// Stream response
+await ragAPI.stream('Explain this', (token) => {
+  console.log(token); // Each token as it arrives
+});
 ```
 
 ---

@@ -67,9 +67,9 @@ export const DashboardPage = () => {
           <CardBody>
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-gray-600 dark:text-gray-400 text-sm">Total Pages</p>
+                <p className="text-gray-600 dark:text-gray-400 text-sm">Total Chunks</p>
                 <p className="text-3xl font-bold text-gray-900 dark:text-white">
-                  {formatNumber(stats?.total_pages || 0)}
+                  {formatNumber(stats?.total_chunks || 0)}
                 </p>
               </div>
               <span className="text-4xl">📑</span>
@@ -95,12 +95,12 @@ export const DashboardPage = () => {
           <CardBody>
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-gray-600 dark:text-gray-400 text-sm">Processing</p>
+                <p className="text-gray-600 dark:text-gray-400 text-sm">Embedding Dim</p>
                 <p className="text-3xl font-bold text-gray-900 dark:text-white">
-                  {formatNumber(stats?.processing_documents || 0)}
+                  {formatNumber(stats?.embedding_dimension || 0)}
                 </p>
               </div>
-              <span className="text-4xl">⚙️</span>
+              <span className="text-4xl">🧮</span>
             </div>
           </CardBody>
         </Card>

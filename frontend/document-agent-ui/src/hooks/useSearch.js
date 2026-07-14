@@ -5,7 +5,7 @@
 
 import { useState, useCallback } from 'react';
 import { searchStore } from '../stores';
-import { searchAPI } from '../services/api/health';
+import { searchAPI } from '../services/api/search';
 import { createLogger } from '../utils';
 
 const logger = createLogger('useSearch');

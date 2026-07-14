@@ -57,16 +57,15 @@ npm run type-check       # Check TypeScript
 | Debug Config | `.vscode/launch.json` |
 | Build Tasks | `.vscode/tasks.json` |
 | Settings | `.vscode/settings.json` |
-| App Entry | `src/main.tsx` |
-| Routes | `src/App.tsx` |
-| Pages | `src/pages/` |
-| Components | `src/components/` |
-| Hooks | `src/hooks/` |
+| App Entry | `src/main.jsx` |
+| Routes | `src/App.jsx` |
+| Pages | `src/pages/` (Dashboard, Documents, Search, Query, Chat) |
+| Components | `src/components/` (ui/, layout/) |
+| Hooks | `src/hooks/` (useDocuments, useSearch, useRagQuery, useChat) |
 | State | `src/stores/` |
-| API | `src/services/api/` |
-| Types | `src/types/` |
+| API | `src/services/api/` (documents, search, rag, health) |
+| Config | `src/config/constants.js` (API endpoints) |
 | Utils | `src/utils/` |
-| Config | `src/config/` |
 | Env Vars | `.env.local` |
 
 ## 🔍 Debug Configurations
@@ -110,6 +109,18 @@ export const MyPage: React.FC = () => {
   
   return loading ? <Spinner /> : <div>{documents.length} docs</div>;
 };
+
+// RAG Query hook
+import { useRagQuery } from '@/hooks';
+
+const { answer, sources, loading, ask } = useRagQuery();
+await ask('What is this document about?');
+
+// Chat hook
+import { useChat } from '@/hooks';
+
+const { messages, loading, sendMessage, clearChat } = useChat();
+await sendMessage('Hello');
 ```
 
 ### Make API Call

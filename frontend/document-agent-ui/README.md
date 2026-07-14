@@ -22,12 +22,13 @@
 
 ## ✨ Key Features
 
-- ✅ **Modern React 18** with TypeScript
+- ✅ **Modern React 18** with JavaScript
 - ✅ **Vite** for ultra-fast development
 - ✅ **Tailwind CSS** for beautiful styling
 - ✅ **Full VS Code Debugging** support
 - ✅ **Hot Module Reload** (HMR) for instant updates
-- ✅ **Type-safe** with comprehensive TypeScript
+- ✅ **RAG Query** - Ask questions and get AI-powered answers with sources
+- ✅ **Multi-Turn Chat** - Conversational interface with RAG context
 - ✅ **ESLint + Prettier** for code quality
 
 ---
@@ -51,14 +52,13 @@ npm run dev
 
 ```
 src/
-├── components/       # React components
-├── pages/            # Page components
-├── hooks/            # Custom hooks
-├── stores/           # State management
-├── services/         # API services
-├── types/            # TypeScript types
-├── utils/            # Utilities
-└── config/           # Configuration
+├── components/       # React components (ui/, layout/)
+├── pages/            # Page components (Dashboard, Documents, Search, Query, Chat)
+├── hooks/            # Custom hooks (useDocuments, useSearch, useRagQuery, useChat)
+├── stores/           # State management (Zustand)
+├── services/         # API services (documents, search, rag, health)
+├── utils/            # Utilities (logger, formatters, etc.)
+└── config/           # Configuration (constants, API endpoints)
 ```
 
 ---

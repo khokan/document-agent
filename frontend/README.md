@@ -12,7 +12,7 @@ This is the frontend component of the PDF Knowledge Assistant, a local Retrieval
 
 ✨ **Document Management**
 - Drag-and-drop PDF upload
-- Document list with metadata
+- Document list with metadata (page count, chunk count)
 - Delete and reindex documents
 - System statistics dashboard
 
@@ -22,8 +22,20 @@ This is the frontend component of the PDF Knowledge Assistant, a local Retrieval
 - Results with source citations
 - Response time metrics
 
+🤖 **RAG Query (Ask)**
+- Ask questions and get AI-powered answers
+- Source citations with relevance scores
+- Retrieval and generation timing breakdown
+- Configurable top-k and score thresholds
+
+💬 **Multi-Turn Chat**
+- Conversational interface with RAG context
+- Chat history with previous messages
+- Source citations per response
+- Clear chat functionality
+
 📊 **Dashboard & Analytics**
-- System statistics overview
+- System statistics overview (total chunks, embedding dimension)
 - Recent documents list
 - Quick action buttons
 - Real-time status indicators
@@ -97,23 +109,38 @@ frontend/
 ├── src/
 │   ├── components/        # React components (organized by feature)
 │   ├── pages/             # Page components (routed)
+│   │   ├── Dashboard.jsx  # System statistics & overview
+│   │   ├── Documents.jsx  # Document management
+│   │   ├── Search.jsx     # Semantic search
+│   │   ├── Query.jsx      # RAG query (ask questions)
+│   │   ├── Chat.jsx       # Multi-turn chat with RAG
+│   │   └── NotFound.jsx   # 404 page
 │   ├── hooks/             # Custom React hooks
+│   │   ├── useDocuments.js
+│   │   ├── useSearch.js
+│   │   ├── useRagQuery.js # RAG query hook
+│   │   ├── useChat.js     # Multi-turn chat hook
+│   │   └── useNotification.js
 │   ├── stores/            # Zustand state stores
 │   ├── services/          # API service layer
+│   │   ├── api/
+│   │   │   ├── client.js
+│   │   │   ├── documents.js
+│   │   │   ├── search.js
+│   │   │   ├── rag.js     # RAG API (query, chat, summarize, stream)
+│   │   │   ├── health.js
+│   │   │   └── index.js
+│   │   └── index.js
 │   ├── utils/             # Utilities (logger, validators, etc.)
-│   ├── types/             # TypeScript type definitions
 │   ├── config/            # Configuration
-│   ├── App.tsx            # Root component
-│   └── main.tsx           # Entry point
+│   ├── App.jsx            # Root component
+│   └── main.jsx           # Entry point
 ├── tests/                 # Test files (unit, integration, e2e)
 ├── public/                # Static assets
-├── vite.config.ts         # Vite configuration
-├── tsconfig.json          # TypeScript configuration
+├── vite.config.js         # Vite configuration
 ├── tailwind.config.js     # TailwindCSS configuration
-├── vitest.config.ts       # Vitest configuration
-├── eslintrc.json          # ESLint configuration
-├── .prettierrc             # Prettier configuration
-└── package.json           # Dependencies and scripts
+├── package.json           # Dependencies and scripts
+└── docs/                  # Documentation
 ```
 
 → See **[ARCHITECTURE.md](./ARCHITECTURE.md)** for detailed structure explanation
@@ -232,7 +259,7 @@ Backend API (FastAPI)
 **Custom Hooks**
 - Reusable logic
 - Encapsulate API calls and state
-- Example: `useDocuments()`, `useSearch()`
+- Example: `useDocuments()`, `useSearch()`, `useRagQuery()`, `useChat()`
 
 → Detailed explanation in **[ARCHITECTURE.md](./ARCHITECTURE.md)**
 
@@ -263,9 +290,10 @@ const { sidebarOpen, darkMode, toggleSidebar } = useUIStore()
 - **Retry**: 3 attempts with exponential backoff
 
 ### Services
-- `documentsApi` - Document CRUD operations
-- `searchApi` - Search endpoint
-- `healthApi` - Health check
+- `documentAPI` - Document CRUD operations, reindex, cleanup, health
+- `searchAPI` - Semantic search endpoint
+- `ragAPI` - RAG query, chat, summarize, stream endpoints
+- `healthAPI` - System health check
 
 ### Features
 - ✅ Request/response logging

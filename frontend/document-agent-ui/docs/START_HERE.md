@@ -103,11 +103,13 @@ The frontend is now running locally.
 
 ### What you can do:
 
-1. **View Dashboard** - See system statistics
+1. **View Dashboard** - See system statistics (total chunks, embedding dimension)
 2. **Upload Documents** - Add PDF files
-3. **Search Documents** - Search your uploaded PDFs
-4. **Toggle Dark Mode** - Click the moon/sun icon in header
-5. **View Navigation** - Click the hamburger menu
+3. **Search Documents** - Semantic search your uploaded PDFs
+4. **Ask Questions (RAG)** - Get AI-powered answers with source citations
+5. **Chat** - Multi-turn conversation with your documents
+6. **Toggle Dark Mode** - Click the moon/sun icon in header
+7. **View Navigation** - Click the hamburger menu
 
 ---
 
@@ -117,7 +119,7 @@ The frontend is now running locally.
 2. Save the file
 3. Browser auto-updates (hot reload)
 
-Example: Edit `src/pages/Dashboard.tsx` and save
+Example: Edit `src/pages/Dashboard.jsx` and save
 
 ---
 

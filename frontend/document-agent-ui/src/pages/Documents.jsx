@@ -104,7 +104,7 @@ export const DocumentsPage = () => {
                         {doc.filename}
                       </h3>
                       <p className="text-sm text-gray-600 dark:text-gray-400">
-                        📄 {doc.pages} pages • {formatFileSize(doc.size)} •{' '}
+                        📄 {doc.page_count || 0} pages • {doc.chunk_count || 0} chunks •{' '}
                         {formatDate(doc.upload_date)}
                       </p>
                     </div>

@@ -5,4 +5,6 @@
 
 export * from './useDocuments';
 export * from './useSearch';
+export * from './useChat';
+export * from './useRagQuery';
 export * from './useNotification';

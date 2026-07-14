@@ -61,21 +61,21 @@
 ### Data Flow
 
 ```
-User Action (Click, Upload)
+User Action (Click, Upload, Ask Question)
     ↓
 Component Event Handler
     ↓
-Store Action / API Call
+Custom Hook (useDocuments, useSearch, useRagQuery, useChat)
     ↓
-API Service (with logging & error handling)
+API Service (documents, search, rag, health)
     ↓
-Axios Client (interceptors, retry)
+HTTP Client (with logging & error handling)
     ↓
-Backend API
+Backend API (FastAPI)
     ↓
 Response
     ↓
-Store Update
+Hook State Update
     ↓
 Component Re-render
     ↓
@@ -128,50 +128,31 @@ frontend/
 ### Component Directory Structure
 ```
 src/components/
-├── ui/                         # Base UI components (Shadcn)
-│   ├── button.tsx
-│   ├── card.tsx
-│   ├── input.tsx
-│   ├── badge.tsx
-│   ├── spinner.tsx
-│   └── modal.tsx
-├── common/                     # Common components
-│   ├── ErrorBoundary.tsx
-│   ├── LoadingSpinner.tsx
-│   └── EmptyState.tsx
+├── ui/                         # Base UI components
+│   ├── Button.jsx
+│   ├── Card.jsx
+│   ├── Input.jsx
+│   ├── Badge.jsx
+│   ├── Spinner.jsx
+│   └── index.js
 ├── layout/                     # Layout components
-│   ├── Header.tsx
-│   ├── Sidebar.tsx
-│   ├── Footer.tsx
-│   └── Layout.tsx
-├── documents/                  # Document-related
-│   ├── DocumentList.tsx
-│   ├── DocumentCard.tsx
-│   ├── UploadArea.tsx
-│   └── FileUploader.tsx
-├── search/                     # Search-related
-│   ├── SearchBar.tsx
-│   ├── FilterPanel.tsx
-│   ├── ResultsList.tsx
-│   ├── ResultItem.tsx
-│   └── SourcesList.tsx
-└── dashboard/                  # Dashboard-related
-    ├── StatsCard.tsx
-    ├── RecentDocuments.tsx
-    └── QuickActions.tsx
+│   ├── Header.jsx
+│   ├── Sidebar.jsx
+│   ├── Layout.jsx
+│   └── index.js
 ```
 
 ### Services Directory Structure
 ```
 src/services/
 ├── api/
-│   ├── client.ts              # Axios instance
-│   ├── interceptors.ts        # Request/response interceptors
-│   ├── documents.ts           # Document endpoints
-│   ├── search.ts              # Search endpoints
-│   └── health.ts              # Health endpoints
-└── mock/
-    └── mockData.ts            # Mock data for dev
+│   ├── client.js              # HTTP client instance
+│   ├── documents.js           # Document CRUD, reindex, cleanup, stats
+│   ├── search.js              # Semantic search endpoint
+│   ├── rag.js                 # RAG (query, chat, summarize, stream)
+│   ├── health.js              # Health check endpoint
+│   └── index.js               # Barrel exports
+└── index.js
 ```
 
 ### Stores Directory Structure
@@ -406,19 +387,93 @@ const DocumentList: React.FC = () => {
 
 ### Multiple Store Coordination
 
-```typescript
-// src/hooks/useSearch.ts
+```javascript
+// src/hooks/useSearch.js
+import { useState, useCallback } from 'react';
+import { searchStore } from '../stores';
+import { searchAPI } from '../services/api/search';
+
 export const useSearch = () => {
-  const { performSearch, results, loading } = useSearchStore()
-  const { documents } = useDocumentStore()
+  const [results, setResults] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-  const handleSearch = async (query: string) => {
-    // Coordinate between stores
-    await performSearch(query)
-  }
+  const search = useCallback(async (query, limit = 10) => {
+    setLoading(true);
+    try {
+      const response = await searchAPI.search(query, limit);
+      setResults(response.results || []);
+      return response;
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
-  return { handleSearch, results, loading, documents }
-}
+  return { results, loading, search };
+};
+
+// src/hooks/useRagQuery.js
+import { useState, useCallback } from 'react';
+import { ragAPI } from '../services/api/rag';
+
+export const useRagQuery = () => {
+  const [answer, setAnswer] = useState('');
+  const [sources, setSources] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [timing, setTiming] = useState(null);
+
+  const ask = useCallback(async (question, options = {}) => {
+    setLoading(true);
+    try {
+      const result = await ragAPI.query(question, options);
+      setAnswer(result.answer || '');
+      setSources(result.sources || []);
+      setTiming({
+        total: result.response_time_ms || 0,
+        retrieval: result.retrieval_time_ms || 0,
+        generation: result.generation_time_ms || 0,
+      });
+      return result;
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  return { answer, sources, loading, timing, ask };
+};
+
+// src/hooks/useChat.js
+import { useState, useCallback } from 'react';
+import { ragAPI } from '../services/api/rag';
+
+export const useChat = () => {
+  const [messages, setMessages] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const sendMessage = useCallback(async (message, options = {}) => {
+    const userMessage = { role: 'user', content: message };
+    setMessages((prev) => [...prev, userMessage]);
+    setLoading(true);
+
+    try {
+      const history = messages.map((msg) => ({ role: msg.role, content: msg.content }));
+      const result = await ragAPI.chat(message, history, options);
+
+      const assistantMessage = {
+        role: 'assistant',
+        content: result.answer || '',
+        sources: result.sources || [],
+      };
+      setMessages((prev) => [...prev, assistantMessage]);
+      return result;
+    } finally {
+      setLoading(false);
+    }
+  }, [messages]);
+
+  const clearChat = useCallback(() => setMessages([]), []);
+
+  return { messages, loading, sendMessage, clearChat };
+};
 ```
 
 ---
@@ -484,65 +539,83 @@ export default apiClient
 
 ### Service Layer
 
-```typescript
-// src/services/api/documents.ts
-import apiClient from './client'
-import { Document, DocumentListResponse, SystemStats } from '@/types/documents'
+```javascript
+// src/services/api/documents.js
+import HttpClient from './client';
+import { API_CONFIG, ENDPOINTS } from '../../config';
 
-export const documentsApi = {
-  async list(): Promise<DocumentListResponse> {
-    const response = await apiClient.get('/documents')
-    return response.data
+const client = new HttpClient(API_CONFIG.BASE_URL, API_CONFIG.TIMEOUT);
+
+export const documentAPI = {
+  async list() {
+    return await client.get(ENDPOINTS.DOCUMENTS_LIST);
   },
 
-  async upload(file: File): Promise<{ document_id: string }> {
-    const formData = new FormData()
-    formData.append('file', file)
-    
-    const response = await apiClient.post('/documents/upload', formData, {
+  async upload(file) {
+    const formData = new FormData();
+    formData.append('file', file);
+    return await client.post(ENDPOINTS.DOCUMENTS_UPLOAD, formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
-      timeout: 60000, // 60s for upload
-    })
-    
-    return response.data
+      timeout: 60000,
+    });
   },
 
-  async delete(id: string): Promise<void> {
-    await apiClient.delete(`/documents/${id}`)
+  async delete(id) {
+    return await client.delete(ENDPOINTS.DOCUMENTS_DELETE(id));
   },
 
-  async reindex(id: string): Promise<{ document_id: string }> {
-    const response = await apiClient.post(`/documents/reindex/${id}`)
-    return response.data
+  async reindex(id) {
+    return await client.post(ENDPOINTS.DOCUMENTS_REINDEX(id));
   },
 
-  async getStats(): Promise<SystemStats> {
-    const response = await apiClient.get('/documents/stats')
-    return response.data
+  async getStats() {
+    return await client.get(ENDPOINTS.DOCUMENTS_STATS);
   },
-}
+};
 
-// src/services/api/search.ts
-export const searchApi = {
-  async search(query: string, filters?: SearchFilters): Promise<SearchResponse> {
-    const response = await apiClient.post('/search', {
-      question: query,
-      filters,
-      top_k: 5,
-    }, {
-      timeout: 45000, // 45s for search
-    })
-    return response.data
+// src/services/api/search.js
+export const searchAPI = {
+  async search(query, limit = 10) {
+    return await client.post(ENDPOINTS.SEARCH, { question: query, top_k: limit });
   },
-}
+};
 
-// src/services/api/health.ts
-export const healthApi = {
-  async check(): Promise<{ status: string; version: string }> {
-    const response = await apiClient.get('/health')
-    return response.data
+// src/services/api/rag.js
+export const ragAPI = {
+  async query(question, options = {}) {
+    return await client.post(ENDPOINTS.RAG_QUERY, {
+      question,
+      top_k: options.top_k || 5,
+      score_threshold: options.score_threshold || null,
+    });
   },
-}
+
+  async chat(message, history = [], options = {}) {
+    return await client.post(ENDPOINTS.RAG_CHAT, {
+      message,
+      history,
+      top_k: options.top_k || 5,
+    });
+  },
+
+  async summarize(documentId, options = {}) {
+    return await client.post(ENDPOINTS.RAG_SUMMARIZE, {
+      document_id: documentId,
+      max_chunks: options.max_chunks || 20,
+    });
+  },
+
+  async stream(question, onToken, options = {}) {
+    // SSE streaming implementation
+  },
+};
+
+// src/services/api/health.js
+export const healthAPI = {
+  async check() {
+    return await client.get(ENDPOINTS.HEALTH);
+  },
+};
 ```
 
 ### Retry Logic with Exponential Backoff
@@ -855,34 +928,28 @@ export const useDocumentStore = create<DocumentStore>((set) => ({
 
 ### Code Splitting
 
-```typescript
-// src/App.tsx
-import { lazy, Suspense } from 'react'
-import LoadingSpinner from '@/components/common/LoadingSpinner'
+```javascript
+// src/App.jsx
+import { Routes, Route } from 'react-router-dom';
+import { Layout } from './components/layout';
+import { DashboardPage, DocumentsPage, SearchPage, QueryPage, ChatPage, NotFound } from './pages';
 
-const Dashboard = lazy(() => import('@/pages/Dashboard'))
-const DocumentsPage = lazy(() => import('@/pages/DocumentsPage'))
-const SearchPage = lazy(() => import('@/pages/SearchPage'))
-
-export default function App() {
+const App = () => {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route element={<Layout />}>
-          <Route
-            path="/"
-            element={
-              <Suspense fallback={<LoadingSpinner />}>
-                <Dashboard />
-              </Suspense>
-            }
-          />
-          {/* Other routes */}
-        </Route>
-      </Routes>
-    </BrowserRouter>
-  )
-}
+    <Routes>
+      <Route element={<Layout />}>
+        <Route path="/" element={<DashboardPage />} />
+        <Route path="/documents" element={<DocumentsPage />} />
+        <Route path="/search" element={<SearchPage />} />
+        <Route path="/ask" element={<QueryPage />} />
+        <Route path="/chat" element={<ChatPage />} />
+        <Route path="*" element={<NotFound />} />
+      </Route>
+    </Routes>
+  );
+};
+
+export default App;
 ```
 
 ### Memoization
