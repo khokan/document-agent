@@ -48,6 +48,13 @@ export const ENDPOINTS = {
   RAG_SUMMARIZE: '/rag/summarize',
   RAG_STREAM: '/rag/stream',
 
+  // Conversations
+  CONVERSATIONS: '/conversations',
+  CONVERSATIONS_GET: (id) => `/conversations/${id}`,
+  CONVERSATIONS_UPDATE: (id) => `/conversations/${id}`,
+  CONVERSATIONS_DELETE: (id) => `/conversations/${id}`,
+  CONVERSATIONS_MESSAGES: (id) => `/conversations/${id}/messages`,
+
   // Health
   HEALTH: '/health',
 };

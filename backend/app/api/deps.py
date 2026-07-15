@@ -9,6 +9,7 @@ from app.rag.generator import Generator
 from app.rag.ranker import ResultRanker
 from app.rag.cache import response_cache
 from app.rag.pipeline import RAGPipeline
+from app.models.database import get_db
 
 # Initialize singletons
 vector_service = ChromaDBService()

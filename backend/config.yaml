@@ -60,6 +60,9 @@ rag:
     max_entries: 100
     ttl_seconds: 3600
 
+database:
+  url: "sqlite:///./data/chat.db"
+
 logging:
   level: "INFO"
   file: "./logs/app.log"

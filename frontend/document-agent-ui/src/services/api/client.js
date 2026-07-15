@@ -97,6 +97,31 @@ class HttpClient {
 		return response.json();
 	}
 
+  async patch(url, data, options = {}) {
+    const fullUrl = `${this.baseURL}${url}`;
+    const response = await fetch(fullUrl, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        ...(options.headers || {}),
+      },
+      body: data ? JSON.stringify(data) : undefined,
+      ...options,
+    });
+
+    if (!response.ok) {
+      let errorData = {};
+      try {
+        errorData = await response.json();
+      } catch {
+        // ignore
+      }
+      throw new Error(`HTTP ${response.status}: ${errorData.message || response.statusText}`);
+    }
+
+    return response.json();
+  }
+
   async uploadFile(url, file) {
     const formData = new FormData();
     formData.append('file', file);

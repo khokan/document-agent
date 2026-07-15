@@ -16,7 +16,10 @@ from app.models.schemas import (
 from app.api.deps import get_rag_pipeline, get_retriever_service
 from app.rag.pipeline import RAGPipeline
 from app.rag.retriever import Retriever
+from app.services.conversation_service import ConversationService
 from app.utils.logger import logger
+from app.models.database import get_db
+from sqlalchemy.orm import Session
 
 router = APIRouter(prefix="/rag", tags=["RAG"])
 
@@ -77,27 +80,45 @@ async def query_rag(
 )
 async def chat_rag(
     request: ChatRequest,
-    pipeline: RAGPipeline = Depends(get_rag_pipeline)
+    pipeline: RAGPipeline = Depends(get_rag_pipeline),
+    db: Session = Depends(get_db),
 ):
     """
     Multi-turn conversation with RAG context.
 
     Accepts conversation history and generates a context-aware response
     using retrieved document chunks and previous messages.
+    Optionally persists messages to database if conversation_id is provided.
     """
     try:
         logger.info(f"[API] RAG chat message: '{request.message}' (history={len(request.history)} msgs)")
+
+        service = ConversationService(db)
+
+        # Resolve conversation: create new if no conversation_id
+        conversation_id = request.conversation_id
+        if conversation_id:
+            conv = service.get_conversation(conversation_id)
+            if not conv:
+                conv = service.create_conversation()
+                conversation_id = conv.id
+            history = service.get_history_for_llm(conversation_id)
+        else:
+            conv = service.create_conversation()
+            conversation_id = conv.id
+            history = None
+
+        # If no DB history, fall back to request history
+        if not history and request.history:
+            history = [
+                {"role": msg.role, "content": msg.content}
+                for msg in request.history
+            ]
 
         # Convert filters to dict
         filters_dict = None
         if request.filters:
             filters_dict = request.filters.model_dump(exclude_none=True)
-
-        # Convert history to list of dicts
-        history = [
-            {"role": msg.role, "content": msg.content}
-            for msg in request.history
-        ] if request.history else None
 
         # Run chat pipeline
         result = await pipeline.chat(
@@ -108,7 +129,24 @@ async def chat_rag(
             score_threshold=request.score_threshold
         )
 
-        return ChatResponse(**result)
+        # Persist messages
+        service.add_message(conversation_id, "user", request.message)
+        service.add_message(
+            conversation_id,
+            "assistant",
+            result.get("answer", ""),
+            sources=result.get("sources"),
+        )
+
+        return ChatResponse(
+            answer=result.get("answer", ""),
+            sources=result.get("sources", []),
+            query=result.get("query", request.message),
+            conversation_id=conversation_id,
+            response_time_ms=result.get("response_time_ms", 0.0),
+            retrieval_time_ms=result.get("retrieval_time_ms", 0.0),
+            generation_time_ms=result.get("generation_time_ms", 0.0),
+        )
 
     except Exception as e:
         logger.error(f"[API] Error during RAG chat: {str(e)}")

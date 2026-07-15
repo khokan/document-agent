@@ -268,6 +268,13 @@ class Config:
         """Get RAG response cache TTL in seconds."""
         return self.get("rag.cache.ttl_seconds", 3600)
 
+    @property
+    def database_url(self) -> str:
+        """Get database URL for chat persistence."""
+        return self.get_from_env("DATABASE_URL") or self.get(
+            "database.url", "sqlite:///./data/chat.db"
+        )
+
 
 # Global config instance
 config = Config()

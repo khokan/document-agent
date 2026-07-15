@@ -1,16 +1,26 @@
 /**
  * Chat Page
- * Multi-turn conversation with RAG context
+ * Multi-turn conversation with RAG context and conversation persistence
  */
 
 import { useState, useRef, useEffect } from 'react';
 import { Card, CardBody, Button, Input, Spinner } from '../components/ui';
+import { ConversationList } from '../components/chat/ConversationList';
 import { useChat } from '../hooks';
+import { conversationStore } from '../stores/conversationStore';
 import { formatDuration } from '../utils';
 
 export const ChatPage = () => {
   const [input, setInput] = useState('');
-  const { messages, loading, error, sendMessage, clearChat } = useChat();
+  const {
+    messages,
+    conversationId,
+    loading,
+    error,
+    sendMessage,
+    createNewConversation,
+    setActiveConversation,
+  } = useChat();
   const messagesEndRef = useRef(null);
 
   useEffect(() => {
@@ -25,97 +35,111 @@ export const ChatPage = () => {
     await sendMessage(msg);
   };
 
+  const handleNewChat = () => {
+    createNewConversation();
+  };
+
+  const handleSelectConversation = (id) => {
+    setActiveConversation(id);
+    conversationStore.switchConversation(id);
+  };
+
   return (
-    <div className="space-y-6 flex flex-col h-[calc(100vh-120px)]">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-2">Chat</h1>
-          <p className="text-gray-600 dark:text-gray-400">Have a conversation with your documents</p>
+    <div className="flex h-[calc(100vh-120px)]">
+      {/* Conversation Sidebar */}
+      <ConversationList
+        activeConversationId={conversationId}
+        onSelectConversation={handleSelectConversation}
+        onNewChat={handleNewChat}
+      />
+
+      {/* Chat Area */}
+      <div className="flex-1 flex flex-col min-w-0 pl-6">
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-2">Chat</h1>
+            <p className="text-gray-600 dark:text-gray-400">Have a conversation with your documents</p>
+          </div>
         </div>
-        {messages.length > 0 && (
-          <Button variant="outline" onClick={clearChat}>
-            Clear Chat
-          </Button>
-        )}
-      </div>
 
-      {/* Messages Area */}
-      <Card className="flex-1 overflow-hidden flex flex-col">
-        <CardBody className="flex-1 overflow-y-auto space-y-4">
-          {messages.length === 0 && (
-            <div className="text-center py-16 text-gray-500 dark:text-gray-400">
-              <p className="text-4xl mb-4">💬</p>
-              <p className="text-lg">Ask anything about your documents</p>
-              <p className="text-sm mt-2">The AI will search relevant chunks and answer using them</p>
-            </div>
-          )}
+        {/* Messages Area */}
+        <Card className="flex-1 overflow-hidden flex flex-col">
+          <CardBody className="flex-1 overflow-y-auto space-y-4">
+            {messages.length === 0 && (
+              <div className="text-center py-16 text-gray-500 dark:text-gray-400">
+                <p className="text-4xl mb-4">💬</p>
+                <p className="text-lg">Ask anything about your documents</p>
+                <p className="text-sm mt-2">The AI will search relevant chunks and answer using them</p>
+              </div>
+            )}
 
-          {messages.map((msg, index) => (
-            <div
-              key={index}
-              className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
-            >
+            {messages.map((msg, index) => (
               <div
-                className={`max-w-[80%] rounded-lg p-4 ${
-                  msg.role === 'user'
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white'
-                }`}
+                key={index}
+                className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
               >
-                <p className="whitespace-pre-wrap">{msg.content}</p>
+                <div
+                  className={`max-w-[80%] rounded-lg p-4 ${
+                    msg.role === 'user'
+                      ? 'bg-blue-600 text-white'
+                      : 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white'
+                  }`}
+                >
+                  <p className="whitespace-pre-wrap">{msg.content}</p>
 
-                {msg.sources && msg.sources.length > 0 && (
-                  <div className="mt-3 pt-3 border-t border-gray-200 dark:border-gray-600">
-                    <p className="text-xs font-semibold mb-1 opacity-70">Sources:</p>
-                    {msg.sources.map((src, i) => (
-                      <p key={i} className="text-xs opacity-60">
-                        {src.filename} (page {src.page}, score: {(src.score * 100).toFixed(0)}%)
-                      </p>
-                    ))}
-                  </div>
-                )}
+                  {msg.sources && msg.sources.length > 0 && (
+                    <div className="mt-3 pt-3 border-t border-gray-200 dark:border-gray-600">
+                      <p className="text-xs font-semibold mb-1 opacity-70">Sources:</p>
+                      {msg.sources.map((src, i) => (
+                        <p key={i} className="text-xs opacity-60">
+                          {src.filename} (page {src.page}, score: {(src.score * 100).toFixed(0)}%)
+                        </p>
+                      ))}
+                    </div>
+                  )}
 
-                {msg.timing && (
-                  <p className="text-xs mt-2 opacity-50">
-                    {formatDuration(msg.timing.total)}ms
-                  </p>
-                )}
+                  {msg.timing && (
+                    <p className="text-xs mt-2 opacity-50">
+                      {formatDuration(msg.timing.total)}ms
+                    </p>
+                  )}
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
 
-          {loading && (
-            <div className="flex justify-start">
-              <div className="bg-gray-100 dark:bg-gray-700 rounded-lg p-4">
-                <Spinner size="sm" message="Thinking..." />
+            {loading && (
+              <div className="flex justify-start">
+                <div className="bg-gray-100 dark:bg-gray-700 rounded-lg p-4">
+                  <Spinner size="sm" message="Thinking..." />
+                </div>
               </div>
-            </div>
-          )}
+            )}
 
-          <div ref={messagesEndRef} />
-        </CardBody>
-      </Card>
+            <div ref={messagesEndRef} />
+          </CardBody>
+        </Card>
 
-      {/* Input Area */}
-      {error && (
-        <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-lg p-4">
-          <p className="text-red-800 dark:text-red-200">{error.message}</p>
-        </div>
-      )}
+        {/* Input Area */}
+        {error && (
+          <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-lg p-4">
+            <p className="text-red-800 dark:text-red-200">{error.message}</p>
+          </div>
+        )}
 
-      <form onSubmit={handleSend} className="flex gap-4">
-        <Input
-          type="text"
-          placeholder="Ask a question about your documents..."
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          className="flex-1"
-          disabled={loading}
-        />
-        <Button type="submit" isLoading={loading} disabled={!input.trim()}>
-          Send
-        </Button>
-      </form>
+        <form onSubmit={handleSend} className="flex gap-4 mt-4">
+          <Input
+            type="text"
+            placeholder="Ask a question about your documents..."
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            className="flex-1"
+            disabled={loading}
+          />
+          <Button type="submit" isLoading={loading} disabled={!input.trim()}>
+            Send
+          </Button>
+        </form>
+      </div>
     </div>
   );
 };

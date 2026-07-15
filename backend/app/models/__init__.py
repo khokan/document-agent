@@ -12,6 +12,13 @@ from app.models.schemas import (
     SearchResponse,
     SearchResultSource,
     SystemStats,
+    ConversationCreateRequest,
+    ConversationUpdateRequest,
+    ConversationResponse,
+    ConversationDetailResponse,
+    ConversationListResponse,
+    ChatMessageResponse,
+    MessageListResponse,
 )
 
 __all__ = [
@@ -24,4 +31,11 @@ __all__ = [
     "DocumentListResponse",
     "SystemStats",
     "ErrorResponse",
+    "ConversationCreateRequest",
+    "ConversationUpdateRequest",
+    "ConversationResponse",
+    "ConversationDetailResponse",
+    "ConversationListResponse",
+    "ChatMessageResponse",
+    "MessageListResponse",
 ]

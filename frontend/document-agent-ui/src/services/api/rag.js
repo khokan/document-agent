@@ -40,6 +40,7 @@ export const ragAPI = {
       const request = {
         message,
         history,
+        conversation_id: options.conversation_id || null,
         top_k: options.top_k || 5,
         score_threshold: options.score_threshold || null,
         filters: options.filters || null,

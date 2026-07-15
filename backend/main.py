@@ -13,6 +13,7 @@ from fastapi.responses import JSONResponse
 from app.api import router as documents_router
 from app.api.search import router as search_router
 from app.api.rag import router as rag_router
+from app.api.conversations import router as conversations_router
 from app.utils import config, logger
 
 
@@ -25,6 +26,11 @@ async def lifespan(app: FastAPI):
     """
     # Startup
     logger.info("[START] Starting PDF Knowledge Assistant...")
+
+    # Initialize database
+    from app.models.database import init_db
+    init_db()
+    logger.info("[OK] Database initialized")
     logger.info(f"[INFO] App: {config.app_name} v{config.app_version}")
     logger.info(f"[INFO] Upload directory: {config.upload_dir}")
     logger.info(f"[INFO] ChromaDB collection: {config.chroma_collection_name}")
@@ -98,6 +104,7 @@ async def health_check():
 app.include_router(documents_router)
 app.include_router(search_router)
 app.include_router(rag_router)
+app.include_router(conversations_router)
 
 
 if __name__ == "__main__":

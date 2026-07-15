@@ -141,6 +141,7 @@ class ChatRequest(BaseModel):
     history: List[ChatMessage] = Field(
         default=[], description="Previous conversation messages"
     )
+    conversation_id: Optional[str] = Field(None, description="Conversation ID for persistence")
     filters: Optional[SearchFilters] = Field(None, description="Metadata filters")
     top_k: int = Field(default=5, ge=1, le=20, description="Number of context chunks to retrieve")
     score_threshold: Optional[float] = Field(
@@ -167,6 +168,7 @@ class ChatResponse(BaseModel):
     answer: str = Field(..., description="LLM-generated answer")
     sources: List[SearchResultSource] = Field(default=[], description="Source citations")
     query: str = Field(..., description="Current user message")
+    conversation_id: Optional[str] = Field(None, description="Conversation ID")
     response_time_ms: float = Field(default=0.0, description="Total response time")
     retrieval_time_ms: float = Field(default=0.0, description="Retrieval time")
     generation_time_ms: float = Field(default=0.0, description="Generation time")
@@ -267,3 +269,44 @@ class ErrorResponse(BaseModel):
                 "status_code": 400,
             }
         }
+
+
+# --- Conversation Schemas ---
+
+
+class ConversationCreateRequest(BaseModel):
+    title: Optional[str] = Field(None, description="Conversation title")
+
+
+class ConversationUpdateRequest(BaseModel):
+    title: str = Field(..., min_length=1, max_length=255)
+
+
+class ChatMessageResponse(BaseModel):
+    id: str
+    role: str
+    content: str
+    sources: Optional[List[SearchResultSource]] = None
+    created_at: datetime
+
+
+class ConversationResponse(BaseModel):
+    id: str
+    title: str
+    created_at: datetime
+    updated_at: datetime
+    message_count: int = 0
+
+
+class ConversationDetailResponse(ConversationResponse):
+    messages: List[ChatMessageResponse]
+
+
+class ConversationListResponse(BaseModel):
+    conversations: List[ConversationResponse]
+    total: int
+
+
+class MessageListResponse(BaseModel):
+    messages: List[ChatMessageResponse]
+    total: int
