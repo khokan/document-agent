@@ -1,7 +1,7 @@
 app:
   name: "PDF Knowledge Assistant"
   version: "1.0.0"
-  debug: true
+  debug: false
 
 pdf:
   max_size_mb: 100

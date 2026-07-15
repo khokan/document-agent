@@ -3,6 +3,7 @@
 """
 
 from app.vector_store.chromadb_service import ChromaDBService
+from app.embeddings.client import OllamaClient
 from app.embeddings.ollama_service import OllamaEmbeddingService
 from app.rag.retriever import Retriever
 from app.rag.generator import Generator
@@ -13,9 +14,10 @@ from app.models.database import get_db
 
 # Initialize singletons
 vector_service = ChromaDBService()
-embedding_service = OllamaEmbeddingService()
+ollama_client = OllamaClient()
+embedding_service = OllamaEmbeddingService(client=ollama_client)
 retriever_service = Retriever(embedding_service, vector_service)
-generator_service = Generator()
+generator_service = Generator(client=ollama_client)
 ranker_service = ResultRanker()
 rag_pipeline = RAGPipeline(
     retriever=retriever_service,

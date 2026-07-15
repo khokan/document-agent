@@ -461,7 +461,7 @@ async def _cleanup_orphaned_chunks():
     try:
         vector_doc_ids = await vector_service.get_all_document_ids()
         tracked_doc_ids = set(DOCUMENTS_STORE.keys())
-        orphaned_doc_ids = vector_doc_ids - tracked_doc_ids
+        orphaned_doc_ids = set(vector_doc_ids) - tracked_doc_ids
         
         if orphaned_doc_ids:
             logger.warning(f"[WARN] Found {len(orphaned_doc_ids)} orphaned document(s) in vector store: {orphaned_doc_ids}")
@@ -546,7 +546,7 @@ async def cleanup_orphaned_documents():
     try:
         vector_doc_ids = await vector_service.get_all_document_ids()
         tracked_doc_ids = set(DOCUMENTS_STORE.keys())
-        orphaned_doc_ids = vector_doc_ids - tracked_doc_ids
+        orphaned_doc_ids = set(vector_doc_ids) - tracked_doc_ids
         
         if orphaned_doc_ids:
             logger.warning(f"[WARN] Cleaning up {len(orphaned_doc_ids)} orphaned document(s): {orphaned_doc_ids}")
