@@ -13,6 +13,7 @@ const navLinks = [
   { label: 'Search', to: '/search', icon: '🔍' },
   { label: 'Ask (RAG)', to: '/ask', icon: '🤖' },
   { label: 'Chat', to: '/chat', icon: '💬' },
+  { label: 'Summarize', to: '/summarize', icon: '📝' },
 ];
 
 export const Sidebar = () => {

@@ -3,6 +3,7 @@
 """
 
 import asyncio
+import httpx
 from typing import List, Dict, Any, Optional, AsyncGenerator
 from app.utils.logger import logger
 from app.utils.config import config
@@ -42,6 +43,16 @@ class Generator:
     def _build_summary_prompt(self, context_chunks: List[str]) -> str:
         """Construct summarization prompt."""
         return PromptTemplate.build_summary_prompt(context_chunks)
+
+    async def _post_to_llm(self, payload: Dict[str, Any]) -> Dict[str, Any]:
+        """Post to Ollama with the generator's timeout, bypassing OllamaClient."""
+        url = f"{self.client.base_url.rstrip('/')}/api/generate"
+        async with httpx.AsyncClient(
+            timeout=httpx.Timeout(float(self.timeout_seconds))
+        ) as client:
+            response = await client.post(url, json=payload)
+            response.raise_for_status()
+            return response.json()
 
     async def generate_response(
         self,
@@ -84,17 +95,15 @@ class Generator:
         logger.info(f"[RAG] Generating response using model: '{self.model}'")
 
         try:
-            # Apply timeout to prevent hanging on slow LLM responses
-            res = await asyncio.wait_for(
-                self.client.post("/api/generate", payload),
+            data = await asyncio.wait_for(
+                self._post_to_llm(payload),
                 timeout=self.timeout_seconds
             )
-            data = res.json()
             if "response" in data:
                 return data["response"].strip()
             else:
                 raise ValueError(f"Ollama generation response missing 'response' field: {data}")
-        except asyncio.TimeoutError:
+        except (asyncio.TimeoutError, httpx.TimeoutError):
             logger.error(f"[ERR] LLM generation timed out after {self.timeout_seconds}s")
             return (
                 f"The request timed out after {self.timeout_seconds} seconds. "
@@ -133,16 +142,15 @@ class Generator:
         logger.info(f"[RAG] Generating summary using model: '{self.model}'")
 
         try:
-            res = await asyncio.wait_for(
-                self.client.post("/api/generate", payload),
+            data = await asyncio.wait_for(
+                self._post_to_llm(payload),
                 timeout=self.timeout_seconds
             )
-            data = res.json()
             if "response" in data:
                 return data["response"].strip()
             else:
                 raise ValueError(f"Ollama response missing 'response' field: {data}")
-        except asyncio.TimeoutError:
+        except (asyncio.TimeoutError, httpx.TimeoutError):
             logger.error(f"[ERR] Summary generation timed out after {self.timeout_seconds}s")
             return f"Summary generation timed out after {self.timeout_seconds} seconds."
         except Exception as e:
@@ -183,7 +191,6 @@ class Generator:
 
         logger.info(f"[RAG] Streaming response using model: '{self.model}'")
 
-        import httpx
         url = f"{self.client.base_url.rstrip('/')}/api/generate"
 
         try:
@@ -198,7 +205,7 @@ class Generator:
                                 yield data["response"]
                             if data.get("done", False):
                                 break
-        except asyncio.TimeoutError:
+        except (asyncio.TimeoutError, httpx.TimeoutError):
             logger.error(f"[ERR] Streaming timed out after {self.timeout_seconds}s")
             yield f"\n[Timeout after {self.timeout_seconds}s]"
         except Exception as e:

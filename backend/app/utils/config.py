@@ -125,7 +125,7 @@ class Config:
     def ollama_endpoint(self) -> str:
         """Get Ollama API endpoint."""
         return self.get_from_env("OLLAMA_BASE_URL") or self.get(
-            "embeddings.ollama_endpoint", "http://localhost:11434"
+            "embeddings.ollama_endpoint", "http://192.168.102.44:11434"
         )
 
     @property

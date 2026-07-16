@@ -20,8 +20,8 @@ embeddings:
   provider: "ollama"
   model: "nomic-embed-text"
   dimension: 768
-  ollama_endpoint: "http://localhost:11434"
-  base_url: "http://localhost:11434"
+  ollama_endpoint: "http://192.168.105.44:11434"
+  base_url: "http://192.168.105.44:11434"
   timeout: 60
   cache_embeddings: true
   batch_size: 100
@@ -35,7 +35,7 @@ chromadb:
 llm:
   model: "mistral"
   temperature: 0.1
-  max_tokens: 500
+  max_tokens: 256
   timeout_seconds: 30
 
 search:

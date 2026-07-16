@@ -167,7 +167,7 @@ class RAGPipeline:
         self,
         document_id: str,
         filters: Optional[Dict[str, Any]] = None,
-        top_k: int = 20
+        top_k: int = 10
     ) -> Dict[str, Any]:
         """
         Summarize a document using its indexed chunks.

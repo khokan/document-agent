@@ -41,7 +41,7 @@ pip install -r requirements.txt
 
 # 4. Setup Ollama models
 ollama pull mistral
-ollama pull nomic-embed-text
+ollama pull hello
 
 # 5. Configure environment
 cp .env.example .env

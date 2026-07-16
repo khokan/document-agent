@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import { Layout } from './components/layout';
-import { DashboardPage, DocumentsPage, SearchPage, QueryPage, ChatPage, NotFound } from './pages';
+import { DashboardPage, DocumentsPage, SearchPage, QueryPage, ChatPage, NotFound, SummarizePage } from './pages';
 
 const App = () => {
   return (
@@ -11,6 +11,7 @@ const App = () => {
         <Route path="/search" element={<SearchPage />} />
         <Route path="/ask" element={<QueryPage />} />
         <Route path="/chat" element={<ChatPage />} />
+        <Route path="/summarize" element={<SummarizePage />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>

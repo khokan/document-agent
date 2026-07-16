@@ -8,4 +8,5 @@ export * from './Documents';
 export * from './Search';
 export * from './Chat';
 export * from './Query';
+export * from './Summarize';
 export * from './NotFound';
