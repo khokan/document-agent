@@ -5,8 +5,8 @@
 
 // Allowed MIME types
 const ALLOWED_MIME_TYPES = ['application/pdf'];
-const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50MB
-const MAX_FILE_SIZE_MB = 50;
+const MAX_FILE_SIZE = 100 * 1024 * 1024; // 100MB
+const MAX_FILE_SIZE_MB = 100;
 
 export const validatePdfFile = (file) => {
   // Check MIME type

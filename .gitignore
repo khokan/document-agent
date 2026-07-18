@@ -3,6 +3,5 @@
 !.env.example
 
 # Backend state
-backend/data/chat.db
 backend/.embedding_cache.json
 backend/chroma_db/

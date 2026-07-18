@@ -40,17 +40,17 @@ ai:
     remote:
       chat:
         provider: "openai_compatible"
-        model: "llama-3.1-8b-instant"
-        base_url: "https://api.xiaomimimo.com/v1"
+        model: "llama-3.3-70b-versatile"
+        base_url: "https://api.groq.com/openai/v1"
         api_key_env: "OPENAI_API_KEY"
         timeout_seconds: 120
-        temperature: 0.7ba
+        temperature: 0.7
         max_tokens: 500
       embeddings:
         provider: "ollama"
         model: "nomic-embed-text"
         base_url: "http://localhost:11434"
-        timeout_seconds: 60
+        timeout_seconds: 120
         dimension: 768
 
 # Legacy settings are retained for older deployment files and documentation.
@@ -59,7 +59,7 @@ embeddings:
   model: "nomic-embed-text"
   dimension: 768
   ollama_endpoint: "http://localhost:11434"
-  timeout: 60
+  timeout: 120
   cache_embeddings: true
   batch_size: 100
 
@@ -82,7 +82,7 @@ search:
 
 rag:
   retriever:
-    k: 5
+    k: 10
     score_threshold: 0.3
   ranker:
     strategy: "score_based"  # Options: "score_based", "recency_bias", "diversity_aware"

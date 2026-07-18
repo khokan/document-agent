@@ -23,7 +23,7 @@ export const UI_CONFIG = {
 };
 
 export const FILE_CONFIG = {
-  MAX_FILE_SIZE: 50 * 1024 * 1024, // 50MB
+  MAX_FILE_SIZE: 100 * 1024 * 1024, // 100MB
   MAX_FILES_BATCH: 5,
   ALLOWED_EXTENSIONS: ['.pdf'],
 };

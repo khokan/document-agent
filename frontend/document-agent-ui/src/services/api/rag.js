@@ -20,7 +20,7 @@ export const ragAPI = {
       const request = {
         question,
         top_k: options.top_k || 5,
-        score_threshold: options.score_threshold || null,
+        score_threshold: options.score_threshold || 0.3,
         filters: options.filters || null,
       };
       const response = await client.post(ENDPOINTS.RAG_QUERY, request);
@@ -42,7 +42,7 @@ export const ragAPI = {
         history,
         conversation_id: options.conversation_id || null,
         top_k: options.top_k || 5,
-        score_threshold: options.score_threshold || null,
+        score_threshold: options.score_threshold || 0.3,
         filters: options.filters || null,
       };
       const response = await client.post(ENDPOINTS.RAG_CHAT, request);
@@ -81,7 +81,7 @@ export const ragAPI = {
       const request = {
         question,
         top_k: options.top_k || 5,
-        score_threshold: options.score_threshold || null,
+        score_threshold: options.score_threshold || 0.3,
         filters: options.filters || null,
       };
 

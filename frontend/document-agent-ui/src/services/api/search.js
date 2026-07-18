@@ -14,7 +14,7 @@ export const searchAPI = {
   /**
    * Perform a semantic search
    */
-  async search(query, limit = 10) {
+  async search(query, limit = 5) {
     logger.info('Performing search', { query, limit });
     try {
       const request = { question: query, top_k: limit };
