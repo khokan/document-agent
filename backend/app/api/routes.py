@@ -29,6 +29,7 @@ from app.utils import FileValidator, config, logger
 
 from app.api.deps import vector_service, embedding_service
 from app.chunking.splitter import ChunkSplitter
+from app.services.document_catalog import document_catalog
 
 router = APIRouter(prefix="/documents", tags=["Documents"])
 
@@ -59,7 +60,8 @@ async def _process_and_store_document(document_id: str, filename: str, page_text
     if chunks:
         # 2. Generate embeddings
         texts = [c["text"] for c in chunks]
-        embeddings = await embedding_service.get_embeddings(texts)
+        vector_service.require_ready()
+        embeddings = await embedding_service.aembed_documents(texts)
         
         # 3. Add to vector store
         await vector_service.add_chunks(chunks, embeddings)
@@ -127,10 +129,16 @@ async def upload_pdf(file: UploadFile = File(..., description="PDF file to uploa
         file_hash = _calculate_file_hash(contents)
         
         # Check if this file has already been uploaded
-        existing_doc_id = _check_duplicate_upload(file_hash)
+        existing_record = document_catalog.get_by_hash(file_hash)
+        existing_doc_id = existing_record.document_id if existing_record else _check_duplicate_upload(file_hash)
         if existing_doc_id:
             logger.warning(f"[WARN] Duplicate file detected. Already indexed as: {existing_doc_id}")
             existing_doc = DOCUMENTS_STORE.get(existing_doc_id)
+            if not existing_doc and existing_record:
+                existing_doc = {
+                    "filename": existing_record.filename, "upload_date": existing_record.upload_date,
+                    "chunk_count": existing_record.chunk_count,
+                }
             if existing_doc:
                 logger.info(f"[OK] Returning existing document: {existing_doc_id}")
                 return DocumentUploadResponse(
@@ -162,7 +170,7 @@ async def upload_pdf(file: UploadFile = File(..., description="PDF file to uploa
         document_id = Path(file.filename).stem
 
         # If document already exists, delete old chunks first
-        if document_id in DOCUMENTS_STORE:
+        if document_id in DOCUMENTS_STORE or document_catalog.get(document_id):
             logger.info(f"[INFO] Document '{document_id}' already exists. Removing old chunks...")
             try:
                 await vector_service.delete_document_chunks(document_id)
@@ -200,6 +208,10 @@ async def upload_pdf(file: UploadFile = File(..., description="PDF file to uploa
         
         # Store file hash mapping for future duplicate detection
         FILE_HASH_MAP[file_hash] = document_id
+        document_catalog.upsert(
+            document_id=document_id, filename=file.filename, file_path=str(final_path), file_hash=file_hash,
+            page_count=len(cleaned_pages), chunk_count=chunk_count,
+        )
 
         logger.info(f"[OK] Document uploaded and indexed successfully: {document_id} ({chunk_count} chunks)")
 
@@ -243,6 +255,17 @@ async def list_documents():
         documents = []
         total_chunks = 0
 
+        catalogued = document_catalog.list()
+        if catalogued:
+            DOCUMENTS_STORE.update({
+                record.document_id: {
+                    "document_id": record.document_id, "filename": record.filename,
+                    "upload_date": record.upload_date, "status": record.status,
+                    "chunk_count": record.chunk_count, "page_count": record.page_count,
+                    "file_path": record.file_path, "file_hash": record.file_hash,
+                    "embedding_fingerprint": record.embedding_fingerprint,
+                } for record in catalogued
+            })
         for doc_id, doc_info in DOCUMENTS_STORE.items():
             documents.append(
                 DocumentInfo(
@@ -297,11 +320,14 @@ async def delete_document(document_id: str):
                 detail=f"Invalid document ID: '{document_id}'. Document ID cannot be empty or undefined."
             )
         
-        if document_id not in DOCUMENTS_STORE:
+        catalog_record = document_catalog.get(document_id)
+        if document_id not in DOCUMENTS_STORE and not catalog_record:
             logger.warning(f"[WARN] Attempt to delete non-existent document: {document_id}")
             raise HTTPException(status_code=404, detail=f"Document not found: {document_id}")
 
-        doc_info = DOCUMENTS_STORE[document_id]
+        doc_info = DOCUMENTS_STORE.get(document_id) or {
+            "file_path": catalog_record.file_path, "file_hash": catalog_record.file_hash,
+        }
 
         # Delete file from disk
         file_path = Path(doc_info.get("file_path", ""))
@@ -319,7 +345,8 @@ async def delete_document(document_id: str):
             logger.debug(f"[INFO] Removed file hash mapping: {file_hash}")
 
         # Remove from store
-        del DOCUMENTS_STORE[document_id]
+        DOCUMENTS_STORE.pop(document_id, None)
+        document_catalog.delete(document_id)
 
         logger.info(f"[OK] Document deleted: {document_id}")
         
@@ -354,10 +381,16 @@ async def reindex_document(document_id: str):
         HTTPException: If document not found
     """
     try:
-        if document_id not in DOCUMENTS_STORE:
+        record = document_catalog.get(document_id)
+        if document_id not in DOCUMENTS_STORE and not record:
             raise HTTPException(status_code=404, detail=f"Document not found: {document_id}")
 
-        doc_info = DOCUMENTS_STORE[document_id]
+        if record and record.embedding_fingerprint != config.embedding_profile_fingerprint:
+            raise HTTPException(status_code=409, detail="Document uses a different embedding profile; run confirmed full reindexing.")
+        doc_info = DOCUMENTS_STORE.get(document_id) or {
+            "filename": record.filename, "file_path": record.file_path,
+            "upload_date": record.upload_date, "file_hash": record.file_hash,
+        }
         file_path = doc_info.get("file_path", "")
 
         if not Path(file_path).exists():
@@ -381,6 +414,11 @@ async def reindex_document(document_id: str):
         doc_info["page_count"] = len(cleaned_pages)
         doc_info["chunk_count"] = chunk_count
         doc_info["status"] = "reindexed"
+        document_catalog.upsert(
+            document_id=document_id, filename=doc_info["filename"], file_path=file_path,
+            file_hash=doc_info.get("file_hash", ""), page_count=len(cleaned_pages),
+            chunk_count=chunk_count, status="reindexed",
+        )
 
         logger.info(f"[OK] Document reindexed: {document_id} ({chunk_count} chunks)")
 
@@ -413,8 +451,9 @@ async def get_system_stats():
     """
     try:
         # Count from both in-memory store and vector store
-        total_docs = len(DOCUMENTS_STORE)
-        total_chunks = sum(doc.get("chunk_count", 0) for doc in DOCUMENTS_STORE.values())
+        catalogued = document_catalog.list()
+        total_docs = len(catalogued) if catalogued else len(DOCUMENTS_STORE)
+        total_chunks = sum(record.chunk_count for record in catalogued) if catalogued else sum(doc.get("chunk_count", 0) for doc in DOCUMENTS_STORE.values())
 
         # Get actual counts from vector store for comparison
         vector_store_stats = await vector_service.get_stats()
@@ -425,8 +464,9 @@ async def get_system_stats():
 
         # Calculate total size from disk
         total_size_mb = 0.0
-        for doc_info in DOCUMENTS_STORE.values():
-            file_path = Path(doc_info.get("file_path", ""))
+        size_records = catalogued or []
+        for doc_info in (size_records or DOCUMENTS_STORE.values()):
+            file_path = Path(doc_info.file_path if size_records else doc_info.get("file_path", ""))
             if file_path.exists():
                 total_size_mb += file_path.stat().st_size / (1024 * 1024)
 
@@ -440,12 +480,19 @@ async def get_system_stats():
         else:
             logger.info(f"[INFO] System stats: {total_docs} docs, {total_chunks} chunks (synced)")
 
+        index_state = vector_service.index_status()
         return SystemStats(
             total_documents=total_docs,
             total_chunks=total_chunks,
             total_size_mb=round(total_size_mb, 2),
             embedding_dimension=config.embedding_dimension,
             collection_name=config.chroma_collection_name,
+            active_ai_profile=config.active_ai_profile,
+            chat_provider=config.chat_settings.get("provider"),
+            chat_model=config.chat_settings.get("model"),
+            embedding_provider=config.embedding_settings.get("provider"),
+            index_compatible=index_state["compatible"],
+            reindex_required=index_state["reindex_required"],
         )
 
     except Exception as e:

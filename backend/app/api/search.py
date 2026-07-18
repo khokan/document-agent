@@ -8,6 +8,7 @@ from typing import List
 from app.models.schemas import SearchRequest, SearchResultSource, ErrorResponse
 from app.api.deps import get_retriever_service
 from app.rag.retriever import Retriever
+from app.vector_store.chromadb_service import IndexCompatibilityError
 from app.utils.logger import logger
 
 router = APIRouter(prefix="/search", tags=["Search"])
@@ -67,6 +68,8 @@ async def semantic_search(
         logger.info(f"[OK] Semantic search returned {len(results)} results")
         return results
 
+    except IndexCompatibilityError as e:
+        raise HTTPException(status_code=409, detail=str(e))
     except Exception as e:
         logger.error(f"[API] Error during semantic search: {str(e)}")
         raise HTTPException(

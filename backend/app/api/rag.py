@@ -19,6 +19,7 @@ from app.rag.retriever import Retriever
 from app.services.conversation_service import ConversationService
 from app.utils.logger import logger
 from app.models.database import get_db
+from app.vector_store.chromadb_service import IndexCompatibilityError
 from sqlalchemy.orm import Session
 
 router = APIRouter(prefix="/rag", tags=["RAG"])
@@ -61,6 +62,8 @@ async def query_rag(
 
         return SearchResponse(**result)
 
+    except IndexCompatibilityError as e:
+        raise HTTPException(status_code=409, detail=str(e))
     except Exception as e:
         logger.error(f"[API] Error during RAG query execution: {str(e)}")
         raise HTTPException(
@@ -148,6 +151,8 @@ async def chat_rag(
             generation_time_ms=result.get("generation_time_ms", 0.0),
         )
 
+    except IndexCompatibilityError as e:
+        raise HTTPException(status_code=409, detail=str(e))
     except Exception as e:
         logger.error(f"[API] Error during RAG chat: {str(e)}")
         raise HTTPException(
@@ -193,6 +198,8 @@ async def summarize_document(
 
         return SummarizeResponse(**result)
 
+    except IndexCompatibilityError as e:
+        raise HTTPException(status_code=409, detail=str(e))
     except Exception as e:
         logger.error(f"[API] Error during document summarization: {str(e)}")
         raise HTTPException(
@@ -255,6 +262,8 @@ async def stream_rag_response(
             }
         )
 
+    except IndexCompatibilityError as e:
+        raise HTTPException(status_code=409, detail=str(e))
     except Exception as e:
         logger.error(f"[API] Error during RAG streaming: {str(e)}")
         raise HTTPException(

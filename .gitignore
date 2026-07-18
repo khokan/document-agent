@@ -1,1 +1,8 @@
+# Environment files (never commit secrets)
+*.env
+!.env.example
+
+# Backend state
 backend/data/chat.db
+backend/.embedding_cache.json
+backend/chroma_db/

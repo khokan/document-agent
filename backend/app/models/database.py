@@ -12,6 +12,7 @@ from sqlalchemy import (
     String,
     Text,
     DateTime,
+    Integer,
     Index,
     ForeignKey,
 )
@@ -67,6 +68,24 @@ class ChatMessageModel(Base):
     )
 
 
+class DocumentRecord(Base):
+    """Durable source-of-truth for uploaded PDFs and their indexing state."""
+
+    __tablename__ = "documents"
+
+    document_id = Column(String(255), primary_key=True)
+    filename = Column(String(255), nullable=False)
+    file_path = Column(Text, nullable=False)
+    file_hash = Column(String(64), nullable=False, unique=True)
+    upload_date = Column(DateTime, default=datetime.utcnow, nullable=False)
+    status = Column(String(32), nullable=False, default="indexed")
+    page_count = Column(Integer, nullable=False, default=0)
+    chunk_count = Column(Integer, nullable=False, default=0)
+    embedding_fingerprint = Column(String(64), nullable=True)
+
+    __table_args__ = (Index("ix_documents_file_hash", "file_hash"),)
+
+
 # Ensure database directory exists before creating engine
 _db_url = config.database_url
 if "sqlite" in _db_url:
@@ -81,7 +100,7 @@ engine = create_engine(
     echo=False,
 )
 
-SessionLocal = sessionmaker(bind=engine, autocommit=False, autoflush=False)
+SessionLocal = sessionmaker(bind=engine, autocommit=False, autoflush=False, expire_on_commit=False)
 
 
 def get_db():

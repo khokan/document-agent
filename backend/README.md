@@ -2,7 +2,7 @@
 
 > **Local Retrieval-Augmented Generation (RAG) System for Document Intelligence**
 
-A production-grade, locally-hosted PDF document analysis system powered by vector embeddings, semantic search, and large language models. Built with Python, FastAPI, ChromaDB, and Ollama.
+A production-grade PDF document analysis system powered by vector embeddings, semantic search, and LangChain-managed local or remote language models.
 
 ## ✨ Features
 
@@ -12,6 +12,7 @@ A production-grade, locally-hosted PDF document analysis system powered by vecto
 - 🔢 **Vector Embeddings** — nomic-embed-text (768-dimensional vectors)
 - 💾 **Vector Database** — ChromaDB for fast semantic search (<100ms)
 - 🧠 **LLM Integration** — Mistral via Ollama for context-aware answers
+- 🔄 **Switchable providers** — select independent chat and embedding profiles in `config.yaml`, then restart
 - 🔍 **Metadata Filtering** — Filter by company, year, document, department
 - 📊 **Source Citations** — Every answer includes page numbers and scores
 - 🏠 **Fully Offline** — Zero cloud dependencies, all local processing
@@ -294,6 +295,16 @@ docker-compose up
 - ✅ File type & size validation
 - ✅ Input sanitization
 - ✅ OS-level file permissions
+
+## 🔄 Changing AI Providers
+
+Set `ai.active_profile` in `config.yaml` (or `AI_ACTIVE_PROFILE` in `.env`) and restart the API. The default `remote` profile uses Groq-compatible chat generation for fast answers while retaining local Ollama embeddings, so the current index does not need reindexing. Each profile has independent `chat` and `embeddings` settings. Use `openai_compatible` with a provider URL and an `api_key_env` name; keep the actual key only in `.env`.
+
+If the selected embedding profile changes, search and upload are intentionally blocked until the index is rebuilt. This command clears the active Chroma collection and rebuilds it from catalogued PDFs, so it requires explicit confirmation:
+
+```bash
+python -m app.maintenance.reindex --confirm
+```
 
 ## 🤝 Contributing
 

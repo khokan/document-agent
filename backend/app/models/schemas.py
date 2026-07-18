@@ -252,6 +252,12 @@ class SystemStats(BaseModel):
     total_size_mb: float = Field(default=0.0, description="Total storage in MB")
     embedding_dimension: int = Field(default=768, description="Embedding dimension")
     collection_name: str = Field(default="company_documents", description="ChromaDB collection name")
+    active_ai_profile: Optional[str] = Field(None, description="Configured AI profile name")
+    chat_provider: Optional[str] = Field(None, description="Configured chat provider")
+    chat_model: Optional[str] = Field(None, description="Configured chat model")
+    embedding_provider: Optional[str] = Field(None, description="Configured embedding provider")
+    index_compatible: Optional[bool] = Field(None, description="Whether the active embedding profile matches the index")
+    reindex_required: Optional[bool] = Field(None, description="Whether confirmed full reindexing is required")
 
 
 class ErrorResponse(BaseModel):

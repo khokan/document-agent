@@ -13,7 +13,6 @@ class PromptTemplate:
     # -- Predefined Templates --
 
     QA_TEMPLATE = (
-        "{system_prompt}\n\n"
         "Context Sections:\n"
         "{context}\n\n"
         "User Question:\n"
@@ -31,7 +30,6 @@ class PromptTemplate:
     )
 
     CHAT_TEMPLATE = (
-        "{system_prompt}\n\n"
         "Conversation History:\n"
         "{history}\n\n"
         "Context Sections:\n"

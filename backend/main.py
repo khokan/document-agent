@@ -27,6 +27,10 @@ async def lifespan(app: FastAPI):
     # Startup
     logger.info("[START] Starting PDF Knowledge Assistant...")
 
+    # Fail fast for missing provider packages, invalid profile fields, or absent remote keys.
+    from app.ai.factory import validate_active_profile
+    validate_active_profile()
+
     # Initialize database
     from app.models.database import init_db
     init_db()
@@ -38,6 +42,9 @@ async def lifespan(app: FastAPI):
     logger.info(f"[INFO] RAG Cache enabled: {config.rag_cache_enabled}")
     logger.info(f"[INFO] RAG Generator model: {config.rag_generator_model}")
     logger.info(f"[INFO] RAG Generator timeout: {config.rag_generator_timeout_seconds}s")
+    from app.api.deps import vector_service
+    logger.info("[INFO] AI profile: %s", config.active_ai_profile)
+    logger.info("[INFO] Index state: %s", vector_service.index_status())
     
     # Sync document store with vector store on startup
     try:
@@ -93,10 +100,18 @@ async def root():
 @app.get("/health", tags=["Health"])
 async def health_check():
     """Health check endpoint for monitoring."""
+    from app.api.deps import vector_service
     return {
         "status": "healthy",
         "service": config.app_name,
         "version": config.app_version,
+        "ai": {
+            "active_profile": config.active_ai_profile,
+            "chat_provider": config.chat_settings.get("provider"),
+            "chat_model": config.chat_settings.get("model"),
+            "embedding_provider": config.embedding_settings.get("provider"),
+            **vector_service.index_status(),
+        },
     }
 
 

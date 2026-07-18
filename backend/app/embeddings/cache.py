@@ -26,7 +26,8 @@ class EmbeddingCache:
 
     def _get_hash(self, text: str) -> str:
         """Generate SHA-256 hash for text chunk."""
-        return hashlib.sha256(text.encode("utf-8")).hexdigest()
+        scoped_text = f"{config.embedding_profile_fingerprint}:{text}"
+        return hashlib.sha256(scoped_text.encode("utf-8")).hexdigest()
 
     def _load_cache(self) -> None:
         """Load cache from disk."""

@@ -9,6 +9,10 @@ from app.utils.logger import logger
 from app.utils.config import config
 
 
+class IndexCompatibilityError(RuntimeError):
+    """Raised when vectors belong to a different embedding profile."""
+
+
 class ChromaDBService:
     """Service to manage ChromaDB collection operations, document storage, and queries."""
 
@@ -16,6 +20,8 @@ class ChromaDBService:
         self.persist_dir = config.chroma_persist_directory
         self.collection_name = config.chroma_collection_name
         self.distance_metric = config.chroma_distance_metric
+        self.embedding_fingerprint = config.embedding_profile_fingerprint
+        self.embedding_dimension = config.embedding_dimension
 
         # Create persistent client
         self.client = chromadb.PersistentClient(path=self.persist_dir)
@@ -23,12 +29,61 @@ class ChromaDBService:
         # Load/create collection with selected distance metric
         self.collection = self.client.get_or_create_collection(
             name=self.collection_name,
-            metadata={"hnsw:space": self.distance_metric}
+            metadata=self._expected_metadata("ready")
         )
+        self._initialize_empty_collection()
         logger.info(
             f"[VECTOR STORE] Connected to ChromaDB at '{self.persist_dir}' "
             f"(collection='{self.collection_name}', metric='{self.distance_metric}')"
         )
+
+    def _expected_metadata(self, status: str) -> Dict[str, Any]:
+        return {
+            "hnsw:space": self.distance_metric,
+            "embedding_fingerprint": self.embedding_fingerprint,
+            "embedding_dimension": self.embedding_dimension,
+            "index_status": status,
+        }
+
+    def _initialize_empty_collection(self) -> None:
+        """Adopt only genuinely empty legacy collections; never overwrite indexed metadata."""
+        metadata = self.collection.metadata or {}
+        if self.collection.count() == 0 and metadata.get("embedding_fingerprint") != self.embedding_fingerprint:
+            # Exclude hnsw:space — ChromaDB forbids changing it after creation.
+            update = {k: v for k, v in self._expected_metadata("ready").items() if k != "hnsw:space"}
+            self.collection.modify(metadata=update)
+
+    def index_status(self) -> Dict[str, Any]:
+        metadata = self.collection.metadata or {}
+        compatible = (
+            metadata.get("index_status") == "ready"
+            and metadata.get("embedding_fingerprint") == self.embedding_fingerprint
+            and metadata.get("embedding_dimension") == self.embedding_dimension
+        )
+        return {
+            "compatible": compatible,
+            "reindex_required": not compatible,
+            "active_embedding_profile": self.embedding_fingerprint,
+            "stored_embedding_profile": metadata.get("embedding_fingerprint"),
+            "embedding_dimension": self.embedding_dimension,
+            "stored_embedding_dimension": metadata.get("embedding_dimension"),
+        }
+
+    def require_ready(self) -> None:
+        if not self.index_status()["compatible"]:
+            raise IndexCompatibilityError("The active embedding profile differs from the index; run confirmed reindexing first.")
+
+    async def reset_for_reindex(self) -> None:
+        """Destructively reset only this configured collection for the maintenance command."""
+        await asyncio.to_thread(self.client.delete_collection, self.collection_name)
+        self.collection = self.client.get_or_create_collection(
+            name=self.collection_name, metadata=self._expected_metadata("reindexing")
+        )
+
+    async def mark_reindex_complete(self) -> None:
+        # Exclude hnsw:space — ChromaDB forbids changing it after creation.
+        update = {k: v for k, v in self._expected_metadata("ready").items() if k != "hnsw:space"}
+        await asyncio.to_thread(self.collection.modify, metadata=update)
 
     def _normalize_score(self, distance: float) -> float:
         """
@@ -48,7 +103,7 @@ class ChromaDBService:
         # Ensure range [0.0, 1.0]
         return max(0.0, min(1.0, similarity))
 
-    async def add_chunks(self, chunks: List[Dict[str, Any]], embeddings: List[List[float]]) -> None:
+    async def add_chunks(self, chunks: List[Dict[str, Any]], embeddings: List[List[float]], allow_reindex: bool = False) -> None:
         """
         Add text chunks with their dense embeddings and metadata to ChromaDB.
 
@@ -58,6 +113,10 @@ class ChromaDBService:
         """
         if not chunks or not embeddings:
             return
+        if not allow_reindex:
+            self.require_ready()
+        if len(embeddings) != len(chunks) or any(len(vector) != self.embedding_dimension for vector in embeddings):
+            raise ValueError("Embedding provider returned vectors incompatible with the configured dimension")
 
         ids = [c["chunk_id"] for c in chunks]
         texts = [c["text"] for c in chunks]
@@ -90,6 +149,7 @@ class ChromaDBService:
         Returns:
             List of matching records with similarity scores
         """
+        self.require_ready()
         # Convert Pydantic/None filters to ChromaDB format
         where_clause = {}
         if filters:

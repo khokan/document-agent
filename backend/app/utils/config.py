@@ -1,11 +1,13 @@
 """
-🔧 Configuration loader for the PDF Knowledge Assistant.
+Configuration loader for the PDF Knowledge Assistant.
 
 Loads configuration from config.yaml and environment variables.
 Environment variables take precedence over config.yaml.
 """
 
 import os
+import hashlib
+import json
 from pathlib import Path
 from typing import Any, Dict
 
@@ -112,21 +114,46 @@ class Config:
         return self.get("chunking.min_chunk_size", 50)
 
     @property
+    def active_ai_profile(self) -> str:
+        return self.get_from_env("AI_ACTIVE_PROFILE") or self.get("ai.active_profile", "local")
+
+    @property
+    def ai_profile(self) -> Dict[str, Any]:
+        profile = self.get(f"ai.profiles.{self.active_ai_profile}")
+        if not isinstance(profile, dict):
+            raise ValueError(f"AI profile '{self.active_ai_profile}' is not configured")
+        return profile
+
+    @property
+    def chat_settings(self) -> Dict[str, Any]:
+        settings = self.ai_profile.get("chat")
+        if not isinstance(settings, dict):
+            raise ValueError(f"AI profile '{self.active_ai_profile}' has no chat settings")
+        return settings
+
+    @property
+    def embedding_settings(self) -> Dict[str, Any]:
+        settings = self.ai_profile.get("embeddings")
+        if not isinstance(settings, dict):
+            raise ValueError(f"AI profile '{self.active_ai_profile}' has no embedding settings")
+        return settings
+
+    @property
+    def embedding_profile_fingerprint(self) -> str:
+        settings = self.embedding_settings
+        safe_settings = {key: settings.get(key) for key in ("provider", "model", "base_url", "dimension")}
+        encoded = json.dumps(safe_settings, sort_keys=True).encode("utf-8")
+        return hashlib.sha256(encoded).hexdigest()[:16]
+
+    @property
     def embedding_model(self) -> str:
         """Get embedding model name."""
-        return self.get("embeddings.model", "nomic-embed-text")
+        return self.embedding_settings["model"]
 
     @property
     def embedding_dimension(self) -> int:
         """Get embedding dimension."""
-        return self.get("embeddings.dimension", 768)
-
-    @property
-    def ollama_endpoint(self) -> str:
-        """Get Ollama API endpoint."""
-        return self.get_from_env("OLLAMA_BASE_URL") or self.get(
-            "embeddings.ollama_endpoint", "http://192.168.102.44:11434"
-        )
+        return int(self.embedding_settings["dimension"])
 
     @property
     def chroma_collection_name(self) -> str:
@@ -137,6 +164,11 @@ class Config:
     def chroma_persist_directory(self) -> str:
         """Get ChromaDB persist directory."""
         return self.get("chromadb.persist_directory", "./chroma_db")
+
+    @property
+    def chroma_distance_metric(self) -> str:
+        """Get ChromaDB distance metric."""
+        return self.get("chromadb.distance_metric", "cosine")
 
     @property
     def llm_model(self) -> str:
@@ -189,24 +221,9 @@ class Config:
         return self.get("chunking.strategy", "recursive")
 
     @property
-    def embeddings_provider(self) -> str:
-        """Get embeddings provider."""
-        return self.get("embeddings.provider", "ollama")
-
-    @property
-    def embeddings_timeout(self) -> int:
-        """Get embeddings timeout in seconds."""
-        return self.get("embeddings.timeout", 60)
-
-    @property
     def cache_embeddings(self) -> bool:
         """Get cache embeddings flag."""
         return self.get("embeddings.cache_embeddings", True)
-
-    @property
-    def chroma_distance_metric(self) -> str:
-        """Get ChromaDB distance metric."""
-        return self.get("chromadb.distance_metric", "cosine")
 
     @property
     def rag_retriever_k(self) -> int:
@@ -221,22 +238,22 @@ class Config:
     @property
     def rag_generator_model(self) -> str:
         """Get generator LLM model."""
-        return self.get("rag.generator.model", "mistral")
+        return self.chat_settings["model"]
 
     @property
     def rag_generator_temperature(self) -> float:
         """Get generator LLM temperature."""
-        return self.get("rag.generator.temperature", 0.7)
+        return float(self.chat_settings.get("temperature", self.get("rag.generator.temperature", 0.7)))
 
     @property
     def rag_generator_max_tokens(self) -> int:
         """Get generator LLM max tokens."""
-        return self.get("rag.generator.max_tokens", 500)
+        return int(self.chat_settings.get("max_tokens", self.get("rag.generator.max_tokens", 500)))
 
     @property
     def rag_generator_timeout_seconds(self) -> int:
         """Get generator LLM timeout in seconds."""
-        return self.get("rag.generator.timeout_seconds", 120)
+        return int(self.chat_settings.get("timeout_seconds", self.get("rag.generator.timeout_seconds", 120)))
 
     @property
     def rag_generator_system_prompt(self) -> str:

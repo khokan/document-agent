@@ -54,7 +54,9 @@ class ResponseCache:
         """
         key_data = {
             "query": query.strip().lower(),
-            "filters": filters or {}
+            "filters": filters or {},
+            "embedding_profile": config.embedding_profile_fingerprint,
+            "chat_profile": config.active_ai_profile,
         }
         key_str = json.dumps(key_data, sort_keys=True)
         return hashlib.sha256(key_str.encode("utf-8")).hexdigest()

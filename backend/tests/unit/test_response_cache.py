@@ -4,6 +4,7 @@
 
 import time
 import unittest
+from unittest.mock import patch
 from app.rag.cache import ResponseCache
 
 
@@ -150,3 +151,39 @@ class TestResponseCacheStats(unittest.TestCase):
         cache.invalidate("q1")
         self.assertIsNone(cache.get("q1"))
         self.assertIsNotNone(cache.get("q2"))
+
+
+class TestResponseCacheProfileInvalidation(unittest.TestCase):
+    """Verify that profile changes invalidate cache keys."""
+
+    @patch("app.rag.cache.config")
+    def test_different_embedding_profile_produces_different_key(self, mock_config):
+        # Profile A
+        mock_config.embedding_profile_fingerprint = "profile_a"
+        mock_config.active_ai_profile = "local"
+        mock_config.rag_cache_enabled = True
+        mock_config.rag_cache_max_entries = 10
+        mock_config.rag_cache_ttl_seconds = 60
+        cache_a = ResponseCache()
+        key_a = cache_a._make_key("revenue question")
+
+        # Profile B
+        mock_config.embedding_profile_fingerprint = "profile_b"
+        mock_config.active_ai_profile = "remote"
+        cache_b = ResponseCache()
+        key_b = cache_b._make_key("revenue question")
+
+        self.assertNotEqual(key_a, key_b, "Cache keys must differ when embedding profiles differ")
+
+    @patch("app.rag.cache.config")
+    def test_same_profile_same_query_same_key(self, mock_config):
+        mock_config.embedding_profile_fingerprint = "same"
+        mock_config.active_ai_profile = "local"
+        mock_config.rag_cache_enabled = True
+        mock_config.rag_cache_max_entries = 10
+        mock_config.rag_cache_ttl_seconds = 60
+        cache = ResponseCache()
+
+        key1 = cache._make_key("revenue question")
+        key2 = cache._make_key("revenue question")
+        self.assertEqual(key1, key2)

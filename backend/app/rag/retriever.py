@@ -5,14 +5,13 @@
 from typing import List, Dict, Any, Optional
 from app.utils.logger import logger
 from app.utils.config import config
-from app.embeddings.ollama_service import OllamaEmbeddingService
 from app.vector_store.chromadb_service import ChromaDBService
 
 
 class Retriever:
     """Retrieves relevant text chunks from the vector database based on semantic query matching."""
 
-    def __init__(self, embedding_service: OllamaEmbeddingService, vector_service: ChromaDBService):
+    def __init__(self, embedding_service, vector_service: ChromaDBService):
         self.embeddings = embedding_service
         self.vector_store = vector_service
         self.default_k = config.rag_retriever_k
@@ -44,7 +43,8 @@ class Retriever:
 
         # 1. Embed query
         logger.info(f"[RAG] Retrieving context for query: '{query}'")
-        query_vector = await self.embeddings.get_embedding(query)
+        self.vector_store.require_ready()
+        query_vector = await self.embeddings.aembed_query(query)
 
         # 2. Query similarity from vector store
         raw_matches = await self.vector_store.query_similarity(

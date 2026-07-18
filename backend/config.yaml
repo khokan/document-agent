@@ -16,12 +16,49 @@ chunking:
   chunk_overlap: 100
   min_chunk_size: 50
 
+ai:
+  # Change this value and restart the API to select another approved profile.
+  # Hybrid default: fast remote chat generation with the existing local vector index.
+  active_profile: "remote"
+  profiles:
+    local:
+      chat:
+        provider: "ollama"
+        model: "mistral"
+        base_url: "http://localhost:11434"
+        timeout_seconds: 120
+        temperature: 0.7
+        max_tokens: 500
+      embeddings:
+        provider: "ollama"
+        model: "nomic-embed-text"
+        base_url: "http://localhost:11434"
+        timeout_seconds: 60
+        dimension: 768
+    # Configure a free-tier OpenAI-compatible endpoint (for example Groq or OpenRouter).
+    # A remote chat provider may still use local embeddings, or vice versa.
+    remote:
+      chat:
+        provider: "openai_compatible"
+        model: "llama-3.1-8b-instant"
+        base_url: "https://api.xiaomimimo.com/v1"
+        api_key_env: "OPENAI_API_KEY"
+        timeout_seconds: 120
+        temperature: 0.7ba
+        max_tokens: 500
+      embeddings:
+        provider: "ollama"
+        model: "nomic-embed-text"
+        base_url: "http://localhost:11434"
+        timeout_seconds: 60
+        dimension: 768
+
+# Legacy settings are retained for older deployment files and documentation.
 embeddings:
   provider: "ollama"
   model: "nomic-embed-text"
   dimension: 768
-  ollama_endpoint: "http://192.168.105.44:11434"
-  base_url: "http://192.168.105.44:11434"
+  ollama_endpoint: "http://localhost:11434"
   timeout: 60
   cache_embeddings: true
   batch_size: 100
