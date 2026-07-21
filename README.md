@@ -9,7 +9,7 @@
   <img src="https://img.shields.io/badge/FastAPI-0.108+-009688?style=flat&logo=fastapi&logoColor=white" alt="FastAPI">
   <img src="https://img.shields.io/badge/React-19-61DAFB?style=flat&logo=react&logoColor=black" alt="React">
   <img src="https://img.shields.io/badge/Vite-8-646CFF?style=flat&logo=vite&logoColor=white" alt="Vite">
-  <img src="https://img.shields.io/badge/Ollama-local-AI-fff?style=flat&logo=ollama&logoColor=black" alt="Ollama">
+  <img src="https://img.shields.io/badge/Ollama-Local%20AI-fff?style=flat&logo=ollama&logoColor=black" alt="Ollama">
   <img src="https://img.shields.io/badge/ChromaDB-vectorDB-green?style=flat" alt="ChromaDB">
 </p>
 

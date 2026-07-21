@@ -94,6 +94,10 @@ class HttpClient {
 			throw new Error(`HTTP ${response.status}: ${errorData.message || response.statusText}`);
 		}
 
+    if (response.status === 204) {
+			return null;
+		}
+    
 		return response.json();
 	}
 

@@ -25,14 +25,14 @@ ai:
       chat:
         provider: "ollama"
         model: "mistral"
-        base_url: "http://localhost:11434"
+        base_url: "http://192.168.105.44:11434"
         timeout_seconds: 120
         temperature: 0.7
         max_tokens: 500
       embeddings:
         provider: "ollama"
         model: "nomic-embed-text"
-        base_url: "http://localhost:11434"
+        base_url: "http://192.168.105.44:11434"
         timeout_seconds: 60
         dimension: 768
     # Configure a free-tier OpenAI-compatible endpoint (for example Groq or OpenRouter).
@@ -49,7 +49,7 @@ ai:
       embeddings:
         provider: "ollama"
         model: "nomic-embed-text"
-        base_url: "http://localhost:11434"
+        base_url: "http://192.168.105.44:11434"
         timeout_seconds: 120
         dimension: 768
 
@@ -58,7 +58,7 @@ embeddings:
   provider: "ollama"
   model: "nomic-embed-text"
   dimension: 768
-  ollama_endpoint: "http://localhost:11434"
+  ollama_endpoint: "http://192.168.105.44:11434"
   timeout: 120
   cache_embeddings: true
   batch_size: 100
